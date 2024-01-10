@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 import SearchIcon from "@components/icons/search-icon";
+import Image from 'next/image';
+import like from "../../../../public/icons/whish-icon.svg"
 import { siteSettings } from "@settings/site-settings";
 import HeaderMenu from "@components/layout/header/header-menu";
 import Logo from "@components/ui/logo";
@@ -49,6 +51,7 @@ const Header: React.FC = () => {
                         >
                             <SearchIcon />
                         </button>
+                        
                         <div className="-mt-0.5 flex-shrink-0">
                             <AuthMenu
                                 isAuthorized={isAuthorized}
@@ -64,6 +67,14 @@ const Header: React.FC = () => {
                             >
                                 {t("text-account")}
                             </AuthMenu>
+                        </div>
+                        <div className="flex items-center">
+                            <Image 
+                                src={like}   
+                                alt="whishIcon"
+                                width={27} 
+                                height={27}
+                            />
                         </div>
                         <CartButton />
                     </div>

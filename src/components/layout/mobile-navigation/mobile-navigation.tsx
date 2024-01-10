@@ -1,5 +1,7 @@
 import Link from '@components/ui/link';
 import SearchIcon from '@components/icons/search-icon';
+import Image from 'next/image';
+import like from "../../../../public/icons/whish-icon.svg"
 import UserIcon from '@components/icons/user-icon';
 import MenuIcon from '@components/icons/menu-icon';
 import HomeIcon from '@components/icons/home-icon';
@@ -64,6 +66,14 @@ const BottomNavigation: React.FC = () => {
 				<Link href="/" className="flex-shrink-0">
 					<HomeIcon />
 				</Link>
+				<div className="flex items-center">
+					<Image 
+						src={like}   
+						alt="whishIcon"
+						width={25} 
+						height={25}
+					/>
+                </div>
 				<CartButton />
 				<AuthMenu
 					isAuthorized={isAuthorized}
