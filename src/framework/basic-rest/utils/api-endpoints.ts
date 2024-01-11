@@ -1,7 +1,7 @@
 export const API_ENDPOINTS = {
-    BASE_URL: "",
-    LOGIN: "/login",
-    REGISTER: "/register",
+    LOGIN: "accounts/login/",
+    REGISTER: "accounts/signup/",
+    VERIFY_OTP: "accounts/verify/",
     LOGOUT: "/logout",
     FORGET_PASSWORD: "/forget-password",
     CATEGORIES: "/categories.json",

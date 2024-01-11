@@ -1,31 +1,32 @@
 import { useUI } from "@contexts/ui.context";
-// import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
-// import http from "@framework/utils/http";
+import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
+import http from "@framework/utils/http";
 import Cookies from "js-cookie";
 import { useMutation } from "@tanstack/react-query";
 
 export interface SignUpInputType {
-  email: string;
-  password: string;
-  name: string;
+    email: string;
+    password: string;
+    name: string;
+    phone_number: string;
+    country_code: string;
 }
 async function signUp(input: SignUpInputType) {
-  // return http.post(API_ENDPOINTS.LOGIN, input);
-  return {
-    token: `${input.email}.${input.name}`.split("").reverse().join(""),
-  };
+    return http.post(API_ENDPOINTS.REGISTER, input);
 }
 export const useSignUpMutation = () => {
-  const { authorize, closeModal } = useUI();
-  return useMutation({
-    mutationFn: (input: SignUpInputType) => signUp(input),
-    onSuccess: (data) => {
-      Cookies.set("auth_token", data.token);
-      authorize();
-      closeModal();
-    },
-    onError: (data) => {
-      console.log(data, "login error response");
-    },
-  });
+    const { setModalView } = useUI();
+
+    return useMutation({
+        mutationFn: (input: SignUpInputType) => signUp(input),
+        onSuccess: (data, variables) => {
+            if (data?.data?.app_data?.StatusCode === 6000) {
+                Cookies.set("signup_mail", variables.email);
+                setModalView("ENTER_OTP");
+            }
+        },
+        onError: (data) => {
+            console.log(data, "login error response");
+        },
+    });
 };

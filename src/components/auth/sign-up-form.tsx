@@ -24,13 +24,20 @@ const SignUpForm: React.FC = () => {
         return openModal();
     }
 
-    function onSubmit({ name, email, password }: SignUpInputType) {
+    function onSubmit({
+        name,
+        email,
+        phone_number,
+        password,
+    }: SignUpInputType) {
+        let country_code = "91";
         signUp({
             name,
             email,
+            phone_number,
             password,
+            country_code,
         });
-        console.log(name, email, password, "sign form values");
     }
     return (
         <div className="py-5 px-5 sm:px-8 bg-white mx-auto rounded-lg w-full sm:w-96 md:w-450px border border-gray-300">
@@ -71,6 +78,19 @@ const SignUpForm: React.FC = () => {
                         errorKey={errors.name?.message}
                     />
                     <Input
+                        labelKey="Mobile"
+                        type="number"
+                        variant="solid"
+                        {...register("phone_number", {
+                            required: `${t("forms:mobile-required")}`,
+                            pattern: {
+                                value: /^[0-9]{10}$/,
+                                message: t("forms:mobile-error"),
+                            },
+                        })}
+                        errorKey={errors.phone_number?.message}
+                    />
+                    <Input
                         labelKey="forms:label-email"
                         type="email"
                         variant="solid"
@@ -83,6 +103,7 @@ const SignUpForm: React.FC = () => {
                         })}
                         errorKey={errors.email?.message}
                     />
+
                     <PasswordInput
                         labelKey="forms:label-password"
                         errorKey={errors.password?.message}

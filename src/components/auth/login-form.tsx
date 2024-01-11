@@ -90,13 +90,13 @@ const LoginForm: React.FC = () => {
                             </label>
                         </div>
                         <div className="flex ltr:ml-auto rtl:mr-auto">
-                            <button
+                            {/* <button
                                 type="button"
                                 onClick={handleForgetPassword}
                                 className="text-sm underline ltr:text-right rtl:text-left text-heading ltr:pl-3 rtl:pr-3 hover:no-underline focus:outline-none"
                             >
                                 {t("common:text-forgot-password")}
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                     <div className="relative">

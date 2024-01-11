@@ -1,24 +1,24 @@
 import { useUI } from "@contexts/ui.context";
 import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import http from "@framework/utils/http";
-import Cookies from "js-cookie";
 import { useMutation } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 
 export interface LoginInputType {
+    otp: string;
     email: string;
-    password: string;
-    remember_me: boolean;
 }
-async function login(input: LoginInputType) {
-    return http.post(API_ENDPOINTS.LOGIN, input);
+async function verify(input: LoginInputType) {
+    return http.post(API_ENDPOINTS.VERIFY_OTP, input);
 }
 
-export const useLoginMutation = () => {
+export const useVerifyMutation = () => {
     const { authorize, closeModal } = useUI();
     return useMutation({
-        mutationFn: (input: LoginInputType) => login(input),
+        mutationFn: (input: LoginInputType) => verify(input),
         onSuccess: (data) => {
             if (data?.data?.app_data?.StatusCode === 6000) {
+                Cookies.remove("signup_mail");
                 Cookies.set(
                     "auth_token",
                     data?.data?.app_data?.data?.access_token
