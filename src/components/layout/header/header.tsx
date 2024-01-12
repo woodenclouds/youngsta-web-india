@@ -40,14 +40,14 @@ const Header: React.FC = () => {
                     <div>
                         <Logo />
                     </div>  
-                    <div className="flex items-center cursor-pointer ">
+                    <div className=" items-center cursor-pointer  hidden max-lg:flex ">
                         <div className="mr-5 cursor-pointer">
-                        <Image 
-                            src={like}   
-                            alt="whishIcon"
-                            width={25} 
-                            height={25}
-                        />
+                            <Image 
+                                src={like}   
+                                alt="whishIcon"
+                                width={25} 
+                                height={25}
+                            />
                         </div>
                         <div className="cursor-pointer">
                             <Image 
@@ -91,7 +91,7 @@ const Header: React.FC = () => {
                                 {t("text-account")}
                             </AuthMenu>
                         </div>
-                        <div className="flex items-center cursor-pointer">
+                        <div className="flex items-center cursor-pointer .d-lg-none ">
                             <Image 
                                 src={like}   
                                 alt="whishIcon"
@@ -99,7 +99,7 @@ const Header: React.FC = () => {
                                 height={25}
                             />
                         </div>
-                        <div className="flex items-center cursor-pointer">
+                        <div className="flex items-center cursor-pointer  d-none">
                             <Image 
                                 src={wallet}  
                                 alt="whishIcon"
