@@ -5,8 +5,13 @@ import { useQuery } from "@tanstack/react-query";
 
 export const fetchCategories = async () => {
     const {
-        data: { data },
+        data: {
+            app_data: { data },
+        },
     } = await http.get(API_ENDPOINTS.CATEGORIES);
+
+    console.log("data", data);
+
     return {
         categories: {
             data: data as Category[],
@@ -16,7 +21,9 @@ export const fetchCategories = async () => {
 
 const fetchAncientCategories = async () => {
     const {
-        data: { data },
+        data: {
+            app_data: { data },
+        },
     } = await http.get(API_ENDPOINTS.CATEGORIES_ANCIENT);
     return {
         categories: {
