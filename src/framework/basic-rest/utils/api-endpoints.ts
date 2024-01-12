@@ -4,7 +4,7 @@ export const API_ENDPOINTS = {
     VERIFY_OTP: "accounts/verify/",
     LOGOUT: "/logout",
     FORGET_PASSWORD: "/forget-password",
-    CATEGORIES: "/categories.json",
+    CATEGORIES: "products/category/",
     CATEGORIES_2: "/categories.json",
     CATEGORIES_ANCIENT: "/categories_ancient.json",
     FEATURED_CATEGORIES: "/featured_categories.json",

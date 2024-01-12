@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import SearchIcon from "@components/icons/search-icon";
 import Image from 'next/image';
 import like from "../../../../public/icons/whish-icon.svg"
+import wallet from "../../../../public/icons/wallet.svg"
 import { siteSettings } from "@settings/site-settings";
 import HeaderMenu from "@components/layout/header/header-menu";
 import Logo from "@components/ui/logo";
@@ -35,8 +36,30 @@ const Header: React.FC = () => {
             className="relative z-20 w-full h-16 sm:h-20 lg:h-24"
         >
             <div className="fixed z-20 w-full h-16 px-4 text-gray-700 transition duration-200 ease-in-out bg-white innerSticky body-font sm:h-20 lg:h-24 md:px-8 lg:px-6">
-                <div className="flex items-center justify-center mx-auto max-w-[1920px] h-full w-full">
-                    <Logo />
+                <div className="flex items-center  mx-auto max-w-[1920px] h-full w-full justify-between">
+                    <div>
+                        <Logo />
+                    </div>  
+                    <div className=" items-center cursor-pointer  hidden max-lg:flex ">
+                        <div className="mr-5 cursor-pointer">
+                            <Image 
+                                src={like}   
+                                alt="whishIcon"
+                                width={25} 
+                                height={25}
+                            />
+                        </div>
+                        <div className="cursor-pointer">
+                            <Image 
+                                src={wallet}  
+                                alt="whishIcon"
+                                width={25} 
+                                height={25}
+                            />
+                        
+                        </div>
+                    </div>
+                
 
                     <HeaderMenu
                         data={site_header.menu}
@@ -68,12 +91,20 @@ const Header: React.FC = () => {
                                 {t("text-account")}
                             </AuthMenu>
                         </div>
-                        <div className="flex items-center">
+                        <div className="flex items-center cursor-pointer .d-lg-none ">
                             <Image 
                                 src={like}   
                                 alt="whishIcon"
-                                width={27} 
-                                height={27}
+                                width={25} 
+                                height={25}
+                            />
+                        </div>
+                        <div className="flex items-center cursor-pointer  d-none">
+                            <Image 
+                                src={wallet}  
+                                alt="whishIcon"
+                                width={25} 
+                                height={25}
                             />
                         </div>
                         <CartButton />

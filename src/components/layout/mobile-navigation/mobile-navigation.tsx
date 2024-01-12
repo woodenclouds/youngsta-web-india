@@ -66,14 +66,6 @@ const BottomNavigation: React.FC = () => {
 				<Link href="/" className="flex-shrink-0">
 					<HomeIcon />
 				</Link>
-				<div className="flex items-center">
-					<Image 
-						src={like}   
-						alt="whishIcon"
-						width={25} 
-						height={25}
-					/>
-                </div>
 				<CartButton />
 				<AuthMenu
 					isAuthorized={isAuthorized}
