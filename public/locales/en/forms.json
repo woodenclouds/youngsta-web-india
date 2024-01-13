@@ -24,6 +24,8 @@
     "label-new-password": "New Password",
     "label-subject": "Subject",
     "label-message": "Message",
+    "first-name": "First Name",
+    "label-end-name": "Last Name",
     "label-message-star": "Message *",
     "label-first-name": "First Name *",
     "label-your-rating": "Your Rating *",

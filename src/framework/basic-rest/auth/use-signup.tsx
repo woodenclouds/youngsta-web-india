@@ -7,7 +7,8 @@ import { useMutation } from "@tanstack/react-query";
 export interface SignUpInputType {
     email: string;
     password: string;
-    name: string;
+    first_name: string;
+    last_name: string
     phone_number: string;
     country_code: string;
 }
