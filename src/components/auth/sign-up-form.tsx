@@ -36,7 +36,7 @@ const SignUpForm: React.FC = () => {
             first_name,
             last_name,
             email,
-            phone_number,
+            phone_number:"0000",
             password,
             country_code,
         });

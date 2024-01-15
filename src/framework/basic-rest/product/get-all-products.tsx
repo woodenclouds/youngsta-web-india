@@ -14,7 +14,7 @@ const fetchProducts = async () => {
         },
     } = await http.get(API_ENDPOINTS.PRODUCTS);
     return {
-        data: shuffle(data),
+        data: shuffle(data.varients),
         paginatorInfo: {
             nextPageUrl: "",
         },

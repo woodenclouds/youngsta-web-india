@@ -4,7 +4,11 @@ import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import { useQuery } from "@tanstack/react-query";
 
 export const fetchOnSellingProducts = async () => {
-  const { data } = await http.get(API_ENDPOINTS.ON_SELLING_PRODUCTS);
+  const {
+    data: {
+        app_data: { data },
+    },
+  } = await http.get(API_ENDPOINTS.ON_SELLING_PRODUCTS);
   return data;
 };
 export const useOnSellingProductsQuery = (options: QueryOptionsType) => {

@@ -46,7 +46,7 @@ const AccountDetails: React.FC = () => {
         <div className="flex flex-col space-y-4 sm:space-y-5">
           <div className="flex flex-col sm:flex-row sm:gap-x-3 space-y-4 sm:space-y-0">
             <Input
-              labelKey="forms:label-first-name"
+              labelKey="First Name"
               {...register('firstName', {
                 required: 'forms:first-name-required',
               })}
@@ -55,7 +55,7 @@ const AccountDetails: React.FC = () => {
               errorKey={errors.firstName?.message}
             />
             <Input
-              labelKey="forms:label-last-name"
+              labelKey="Last Name"
               {...register('lastName', {
                 required: 'forms:last-name-required',
               })}
@@ -64,18 +64,18 @@ const AccountDetails: React.FC = () => {
               errorKey={errors.lastName?.message}
             />
           </div>
-          <Input
+          {/* <Input
             labelKey="forms:label-display-name"
             {...register('displayName', {
               required: 'forms:display-name-required',
             })}
             variant="solid"
             errorKey={errors.displayName?.message}
-          />
+          /> */}
           <div className="flex flex-col sm:flex-row sm:gap-x-3 space-y-4 sm:space-y-0">
             <Input
               type="tel"
-              labelKey="forms:label-phone"
+              labelKey="Phone"
               {...register('phoneNumber', {
                 required: 'forms:phone-required',
               })}
@@ -85,7 +85,7 @@ const AccountDetails: React.FC = () => {
             />
             <Input
               type="email"
-              labelKey="forms:label-email-star"
+              labelKey="Email"
               {...register('email', {
                 required: 'forms:email-required',
                 pattern: {

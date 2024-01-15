@@ -52,7 +52,7 @@ const LoginForm: React.FC = () => {
             >
                 <div className="flex flex-col space-y-3.5">
                     <Input
-                        labelKey="forms:label-email"
+                        labelKey="Email"
                         type="email"
                         variant="solid"
                         {...register("email", {
