@@ -10,7 +10,9 @@ export const fetchOnSellingProducts = async () => {
     },
   } = await http.get(API_ENDPOINTS.ON_SELLING_PRODUCTS);
   return data;
+
 };
+
 export const useOnSellingProductsQuery = (options: QueryOptionsType) => {
   return useQuery<Product[], Error>({
     queryKey: [API_ENDPOINTS.ON_SELLING_PRODUCTS, options],
