@@ -99,14 +99,14 @@ const Header: React.FC = () => {
                                 height={25}
                             />
                         </div>
-                        <div className="flex items-center cursor-pointer  d-none">
+                        <a  href={ROUTES.WALLET} className="flex items-center cursor-pointer  d-none">
                             <Image 
                                 src={wallet}  
                                 alt="whishIcon"
                                 width={25} 
                                 height={25}
                             />
-                        </div>
+                        </a> 
                         <CartButton />
                     </div>
                 </div>

@@ -30,6 +30,12 @@ export default function AccountPage() {
 				</Link>{" "}
 				{t("text-and")}{" "}
 				<Link
+					href={ROUTES.WALLET}
+					className="text-heading underline font-semibold"
+				>
+					{t("text-wallet")}
+				</Link>{" "}
+				<Link
 					href={ROUTES.CHANGE_PASSWORD}
 					className="text-heading underline font-semibold"
 				>

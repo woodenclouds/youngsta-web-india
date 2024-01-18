@@ -6,6 +6,7 @@ import {
   IoPersonOutline,
   IoSettingsOutline,
   IoLogOutOutline,
+  IoWallet
 } from 'react-icons/io5';
 import { ROUTES } from '@utils/routes';
 import { useLogoutMutation } from '@framework/auth/use-logout';
@@ -26,6 +27,11 @@ const accountMenu = [
     slug: ROUTES.ACCOUNT_DETAILS,
     name: 'text-account-details',
     icon: <IoPersonOutline className="w-5 h-5" />,
+  },
+  {
+    slug: ROUTES.WALLET,
+    name: 'Wallet',
+    icon: <IoWallet className="w-5 h-5" />,
   },
   {
     slug: ROUTES.CHANGE_PASSWORD,

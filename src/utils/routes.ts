@@ -10,6 +10,7 @@ export const ROUTES = {
   ACCOUNT: "/my-account",
   ORDERS: "/my-account/orders",
   ACCOUNT_DETAILS: "/my-account/account-details",
+  WALLET: "/my-account/wallet",
   CHANGE_PASSWORD: "/my-account/change-password",
   SHOPS: "/shops",
   LOGIN: "/signin",
