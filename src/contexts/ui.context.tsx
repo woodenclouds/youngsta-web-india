@@ -9,6 +9,7 @@ export interface State {
     displayModal: boolean;
     displayShop: boolean;
     displayCart: boolean;
+    displayWishlist: boolean;
     displaySearch: boolean;
     modalView: string;
     modalData: any;
@@ -23,6 +24,7 @@ const initialState = {
     displayModal: false,
     displayShop: false,
     displayCart: false,
+    displayWishlist: false,
     displaySearch: false,
     modalView: "LOGIN_VIEW",
     drawerView: null,
@@ -48,6 +50,12 @@ type Action =
       }
     | {
           type: "CLOSE_CART";
+      }
+    | {
+          type: "OPEN_WISHLIST";
+      }
+    | {
+          type: "CLOSE_WISHLIST";
       }
     | {
           type: "OPEN_SEARCH";
@@ -144,6 +152,18 @@ function uiReducer(state: State, action: Action) {
             return {
                 ...state,
                 displayCart: false,
+            };
+        }
+        case "OPEN_WISHLIST": {
+            return {
+                ...state,
+                displayWishlist: true,
+            };
+        }
+        case "CLOSE_WISHLIST": {
+            return {
+                ...state,
+                displayWishlist: false,
             };
         }
         case "OPEN_SEARCH": {
@@ -243,10 +263,17 @@ export const UIProvider: React.FC = (props) => {
         state.displaySidebar && dispatch({ type: "CLOSE_CART" });
     const openCart = () => dispatch({ type: "OPEN_CART" });
     const closeCart = () => dispatch({ type: "CLOSE_CART" });
+    const openWishlist = () => dispatch({ type: "OPEN_WISHLIST" });
+    const closeWishlist = () => dispatch({ type: "CLOSE_WISHLIST" });
+
     const toggleCart = () =>
         state.displaySidebar
             ? dispatch({ type: "CLOSE_CART" })
             : dispatch({ type: "OPEN_CART" });
+    const toggleWishlist = () =>
+        state.displaySidebar
+            ? dispatch({ type: "CLOSE_WISHLIST" })
+            : dispatch({ type: "OPEN_WISHLIST" });
     const closeCartIfPresent = () =>
         state.displaySidebar && dispatch({ type: "CLOSE_CART" });
 
@@ -282,6 +309,9 @@ export const UIProvider: React.FC = (props) => {
             closeSidebarIfPresent,
             openCart,
             closeCart,
+            openWishlist,
+            closeWishlist,
+            toggleWishlist,
             toggleCart,
             closeCartIfPresent,
             openFilter,

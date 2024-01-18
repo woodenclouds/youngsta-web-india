@@ -31,4 +31,13 @@ export const API_ENDPOINTS = {
     SEARCH: "/search.json",
     ORDERS: "/orders.json",
     ORDER: "/order.json",
+
+    // cart endpoints
+    ADD_TO_CART: "activities/add_to_cart/",
+    REMOVE_FROM_CART: "activities/remove_from_cart/",
+    EDIT_CART: "activities/edit_cart_item/",
+    VIEW_CART_ITEMS: "activities/view_cart_items/",
+
+    // wislist endpoints
+    VIEW_WISHLIST_ITEMS: "activities/view_wishlist_items/",
 };
