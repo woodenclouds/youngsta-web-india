@@ -12,18 +12,12 @@ import { useEffect, useState } from "react";
 
 type CartItemProps = {
     item: any;
-    setCartTotal: any;
     editCartItems?: any;
 };
 
-const CartItem: React.FC<CartItemProps> = ({
-    item,
-    setCartTotal,
-    editCartItems,
-}) => {
+const CartItem: React.FC<CartItemProps> = ({ item, editCartItems }) => {
     const { t } = useTranslation("common");
     const { clearItemFromCart } = useCart();
-
     const [totalPrice, setTotalPrice] = useState(item.price * item.quantity);
     const [quantity, setQuantity] = useState(item.quantity);
 
@@ -36,10 +30,6 @@ const CartItem: React.FC<CartItemProps> = ({
             setTotalPrice(item.price * quantity);
         }
     }, [quantity]);
-
-    useEffect(() => {
-        if (totalPrice > 0) setCartTotal((prev: number) => prev + totalPrice);
-    }, [totalPrice]);
 
     return (
         <motion.div
