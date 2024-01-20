@@ -5,7 +5,6 @@ import { fadeInOut } from "@utils/motion/fade-in-out";
 import { IoIosCloseCircle } from "react-icons/io";
 import Counter from "@components/common/counter";
 import { useCart } from "@contexts/cart/cart.context";
-import usePrice from "@framework/product/use-price";
 import { ROUTES } from "@utils/routes";
 import { generateCartItemName } from "@utils/generate-cart-item-name";
 import { useTranslation } from "next-i18next";
@@ -24,10 +23,6 @@ const CartItem: React.FC<CartItemProps> = ({
 }) => {
     const { t } = useTranslation("common");
     const { clearItemFromCart } = useCart();
-    const { price } = usePrice({
-        amount: item.price,
-        currencyCode: "USD",
-    });
 
     const [totalPrice, setTotalPrice] = useState(item.price * item.quantity);
     const [quantity, setQuantity] = useState(item.quantity);
@@ -37,12 +32,14 @@ const CartItem: React.FC<CartItemProps> = ({
     }, [item.price, item.quantity]);
 
     useEffect(() => {
-        if (quantity !== item.quantity) setTotalPrice(item.price * quantity);
+        if (quantity !== item.quantity) {
+            setTotalPrice(item.price * quantity);
+        }
     }, [quantity]);
 
     useEffect(() => {
         if (totalPrice > 0) setCartTotal((prev: number) => prev + totalPrice);
-    }, []);
+    }, [totalPrice]);
 
     return (
         <motion.div
@@ -87,7 +84,7 @@ const CartItem: React.FC<CartItemProps> = ({
                 </Link>
                 {/* @ts-ignore */}
                 <span className="text-sm text-gray-400 mb-2.5">
-                    {t("text-unit-price")} : &nbsp; {price}
+                    {t("text-unit-price")} : &nbsp; ${item?.price}
                 </span>
 
                 <div className="flex items-end justify-between">
