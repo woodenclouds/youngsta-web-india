@@ -33,22 +33,12 @@ export default function Home() {
                 />
             </Container>
 
-            {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
-
             <BannerBlock data={masonryBanner} />
             <Container>
                 <ProductsFlashSaleBlock date={"2024-03-01T01:02:03"} />
             </Container>
             <BannerSliderBlock />
             <Container>
-                {/* <CategoryBlock
-                    sectionHeading="text-shop-by-category"
-                    type="rounded"
-                />
-                <ProductsFeatured
-                    sectionHeading="text-featured-products"
-                    limit={5}
-                /> */}
                 <BannerCard
                     key={`banner--key${banner[0].id}`}
                     banner={banner[0]}
@@ -65,12 +55,7 @@ export default function Home() {
                     sectionHeading="text-on-selling-products"
                     categorySlug="/search"
                 />
-                {/* <ExclusiveBlock /> */}
                 <NewArrivalsProductFeed />
-                {/* <DownloadApps /> */}
-                {/* <Support /> */}
-                {/* <Instagram /> */}
-                {/* <Subscription className="px-5 py-12 bg-opacity-0 sm:px-16 xl:px-0 md:py-14 xl:py-16" /> */}
             </Container>
             <Divider className="mb-0" />
         </>

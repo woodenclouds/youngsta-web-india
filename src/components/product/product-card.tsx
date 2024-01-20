@@ -69,10 +69,6 @@ const ProductCard: FC<ProductProps> = ({
         return openModal();
     }
 
-    const thumbnail = (product.varients as any)[0]?.images.filter(
-        (item: any) => item.primary === true
-    )?.[0].image;
-
     return (
         <div
             className={cn(
@@ -124,7 +120,7 @@ const ProductCard: FC<ProductProps> = ({
                 )}
             >
                 <Image
-                    src={thumbnail ?? placeholderImage}
+                    src={product?.thumbnail ?? placeholderImage}
                     width={demoVariant === "ancient" ? 352 : imgWidth}
                     height={demoVariant === "ancient" ? 452 : imgHeight}
                     loading={imgLoading}

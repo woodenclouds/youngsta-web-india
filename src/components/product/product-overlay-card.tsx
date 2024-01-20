@@ -58,18 +58,15 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
     }
     console.log(product);
 
-    // console.log("product", product?.purchase_price);
-    const thumbnail = product.varients?.[0]?.images.filter(
-        (item) => item.primary === true
-    )?.[0].image;
-    
+    console.log("productproduct", product);
 
     return (
         <div
             onClick={handlePopupView}
             className={`${classes} cursor-pointer group flex flex-col bg-gray-200 ${
                 !disableBorderRadius && "rounded-md"
-            } relative items-center justify-between overflow-hidden`}>
+            } relative items-center justify-between overflow-hidden`}
+        >
             <div
                 className={cn(
                     "flex justify-center items-center p-4 h-full 3xl:min-h-[330px]",
@@ -77,9 +74,10 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
                         "!p-0": variant === "modern",
                     }
                 )}
-                title={product?.name}>
+                title={product?.name}
+            >
                 <Image
-                    src={thumbnail}
+                    src={product?.thumbnail}
                     width={size}
                     height={size}
                     objectFit="contain"
@@ -87,18 +85,6 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
                     alt={product?.name || "Product Image"}
                     className="transition duration-500 ease-in-out transform group-hover:scale-110"
                 />
-                {/* <Image
-                    src={
-                        product?.image?.original ??
-                        "/assets/placeholder/products/product-featured.png"
-                    }
-                    width={size}
-                    height={size}
-                    objectFit="contain"
-                    loading={imgLoading}
-                    alt={product?.name || "Product Image"}
-                    className="transition duration-500 ease-in-out transform group-hover:scale-110"
-                /> */}
             </div>
 
             {variant === "modern" && (
@@ -109,7 +95,8 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
                             "!py-0.5": variant === "modern",
                             "rounded-md ": !disableBorderRadius,
                         }
-                    )}>
+                    )}
+                >
                     Featured
                 </span>
             )}
@@ -122,14 +109,16 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
                             "text-[#22C55E] bg-transparent ltr:!left-auto rtl:!right-auto right-3.5 md:right-5 3xl:right-7 font-bold":
                                 variant === "modern",
                         }
-                    )}>
+                    )}
+                >
                     {discount} {variant === "modern" && " off"}
                 </span>
             )}
 
             <div
                 className="flex flex-col w-full px-4 pb-4 md:flex-row lg:flex-col 2xl:flex-row md:justify-between md:items-center lg:items-start 2xl:items-center md:px-5 3xl:px-7 md:pb-5 3xl:pb-7"
-                title={product?.name}>
+                title={product?.name}
+            >
                 <div className="overflow-hidden ltr:md:pr-2 rtl:md:pl-2 ltr:lg:pr-0 rtl:lg:pl-0 ltr:2xl:pr-2 rtl:2xl:pl-2">
                     <h2 className="mb-1 text-sm font-semibold truncate text-heading md:text-base xl:text-lg">
                         {product?.name}
@@ -146,18 +135,16 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
                     )}
                 </div>
 
-                {variant !== "modern" && (
-                    <div className="flex-shrink-0 flex flex-row-reverse md:flex-col lg:flex-row-reverse 2xl:flex-col items-center md:items-end lg:items-start 2xl:items-end justify-end ltr:md:text-right rtl:md:text-left lg:ltr:text-left rtl:text-right ltr:xl:text-right rtl:xl:text-left mt-2 md:-mt-0.5 lg:mt-2 2xl:-mt-0.5">
-                        {discount && (
-                            <del className="text-sm md:text-base lg:text-sm xl:text-base 3xl:text-lg">
-                                {basePrice}
-                            </del>
-                        )}
-                        <div className="text-heading font-segoe font-semibold text-base md:text-xl lg:text-base xl:text-xl 3xl:text-2xl 3xl:mt-0.5 ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
-                            {price}
-                        </div>
+                <div className="flex-shrink-0 flex flex-row-reverse md:flex-col lg:flex-row-reverse 2xl:flex-col items-center md:items-end lg:items-start 2xl:items-end justify-end ltr:md:text-right rtl:md:text-left lg:ltr:text-left rtl:text-right ltr:xl:text-right rtl:xl:text-left mt-2 md:-mt-0.5 lg:mt-2 2xl:-mt-0.5">
+                    {discount && (
+                        <del className="text-sm md:text-base lg:text-sm xl:text-base 3xl:text-lg">
+                            {basePrice}
+                        </del>
+                    )}
+                    <div className="text-heading font-segoe font-semibold text-base md:text-xl lg:text-base xl:text-xl 3xl:text-2xl 3xl:mt-0.5 ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
+                        ${product?.selling_price}
                     </div>
-                )}
+                </div>
             </div>
         </div>
     );

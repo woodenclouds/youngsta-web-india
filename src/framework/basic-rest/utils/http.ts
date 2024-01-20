@@ -17,7 +17,7 @@ http.interceptors.request.use(
         const token = getToken();
         config.headers = {
             ...config.headers,
-            Authorization: `${token ? "Bearer" + token : ""}`,
+            Authorization: `${token ? "Bearer " + token : ""}`,
         } as AxiosRequestHeaders; // Explicitly type the headers object
         return config;
     },

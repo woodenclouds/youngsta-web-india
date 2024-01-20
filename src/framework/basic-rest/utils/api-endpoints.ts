@@ -1,18 +1,17 @@
 export const API_ENDPOINTS = {
+    // authentication endpoints
     LOGIN: "accounts/login/",
     REGISTER: "accounts/signup/",
     VERIFY_OTP: "accounts/verify/",
     LOGOUT: "/logout",
+
     FORGET_PASSWORD: "/forget-password",
-    CATEGORIES: "products/category/",
     CATEGORIES_2: "/categories.json",
     CATEGORIES_ANCIENT: "/categories_ancient.json",
     FEATURED_CATEGORIES: "/featured_categories.json",
     COLLECTIONS: "/collections.json",
     BRANDS: "/brands.json",
     BRANDS_ANCIENT: "/brands_ancient.json",
-    PRODUCTS: "products/viewproduct/",
-    FEATURED_PRODUCTS: "products/viewproduct/",
     PRODUCTS_2: "/products_2.json",
     PRODUCTS_ANCIENT: "/products_ancient.json",
     FEATURED_PRODUCTS_ANCIENT: "/featured_products_ancient.json",
@@ -32,6 +31,11 @@ export const API_ENDPOINTS = {
     ORDERS: "/orders.json",
     ORDER: "/order.json",
 
+    // product endpoints
+    CATEGORIES: "products/category/",
+    PRODUCTS: "products/viewproduct/",
+    FEATURED_PRODUCTS: "products/viewproduct/",
+
     // cart endpoints
     ADD_TO_CART: "activities/add_to_cart/",
     REMOVE_FROM_CART: "activities/remove_from_cart/",
@@ -40,4 +44,7 @@ export const API_ENDPOINTS = {
 
     // wislist endpoints
     VIEW_WISHLIST_ITEMS: "activities/view_wishlist_items/",
+
+    // orders endpoints
+    VIEW_ORDERS: "activities/viewPurchase/",
 };

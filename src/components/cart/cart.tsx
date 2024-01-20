@@ -12,21 +12,28 @@ import { ROUTES } from "@utils/routes";
 import cn from "classnames";
 import { useTranslation } from "next-i18next";
 import { useFetchCartItemsQuery } from "@framework/cart/get-cart-items";
+import { useState } from "react";
+import { useEditCartMutation } from "@framework/cart/edit-cart";
 
 export default function Cart() {
     const { t } = useTranslation("common");
     const { closeCart } = useUI();
     const { items, total, isEmpty } = useCart();
-    const { price: cartTotal } = usePrice({
-        amount: total,
-        currencyCode: "USD",
-    });
 
     const { data } = useFetchCartItemsQuery({
         limit: 10,
     });
 
-    console.log("datacart", data);
+    const { mutate: editCart } = useEditCartMutation();
+
+    function editCartItems(item: any, quantity: number) {
+        let attribute_id = item?.attribute_id;
+        let id = item?.id;
+        editCart({ attribute_id, quantity, id });
+    }
+
+    const [cartTotal, setCartTotal] = useState(0);
+
     return (
         <div className="flex flex-col justify-between w-full h-full">
             <div className="w-full flex justify-between items-center relative ltr:pl-5 ltr:md:pl-7 rtl:pr-5 rtl:md:pr-7 py-0.5 border-b border-gray-100">
@@ -42,11 +49,16 @@ export default function Cart() {
                     <IoClose className="text-black mt-1 md:mt-0.5" />
                 </button>
             </div>
-            {!isEmpty ? (
+            {data?.length > 0 ? (
                 <Scrollbar className="flex-grow w-full cart-scrollbar">
                     <div className="w-full px-5 md:px-7">
-                        {items?.map((item) => (
-                            <CartItem item={item} key={item.id} />
+                        {data?.map((item) => (
+                            <CartItem
+                                item={item}
+                                key={item.id}
+                                setCartTotal={setCartTotal}
+                                editCartItems={editCartItems}
+                            />
                         ))}
                     </div>
                 </Scrollbar>
@@ -86,7 +98,7 @@ export default function Cart() {
                     </span>
                     <span className="rtl:mr-auto ltr:ml-auto flex-shrink-0 -mt-0.5 py-0.5 flex">
                         <span className="ltr:border-l rtl:border-r border-white ltr:pr-5 rtl:pl-5 py-0.5" />
-                        {cartTotal}
+                        ${cartTotal}
                     </span>
                 </Link>
             </div>

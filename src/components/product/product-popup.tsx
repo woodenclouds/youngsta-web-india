@@ -19,15 +19,24 @@ export default function ProductPopup() {
     } = useUI();
     const router = useRouter();
     const [quantity, setQuantity] = useState(1);
+    const [attribute_id, setSize] = useState("");
     const [attributes, setAttributes] = useState<{ [key: string]: string }>({});
     const [viewCartBtn, setViewCartBtn] = useState<boolean>(false);
 
     const variations = getVariations(data.variations);
-    const { id, slug, varients, name, description, price, purchase_price } =
-        data;
+    const {
+        id,
+        slug,
+        attribute,
+        name,
+        description,
+        price,
+        purchase_price,
+        thumbnail,
+    } = data;
     const { mutate: addToCart, isPending } = useAddToCartMutation();
 
-    console.log("8888 data", data);
+    console.log("slug", data);
 
     const isSelected = !isEmpty(variations)
         ? !isEmpty(attributes) &&
@@ -37,7 +46,7 @@ export default function ProductPopup() {
         : true;
 
     function addItemToTheCart() {
-        addToCart(id);
+        addToCart({ attribute_id, quantity, id });
         setViewCartBtn(true);
     }
 
@@ -48,23 +57,12 @@ export default function ProductPopup() {
         });
     }
 
-    function handleAttribute(attribute: any) {
-        setAttributes((prev) => ({
-            ...prev,
-            ...attribute,
-        }));
-    }
-
     function navigateToCartPage() {
         closeModal();
         setTimeout(() => {
             openCart();
         }, 300);
     }
-
-    const thumbnail = (varients as any)[0]?.images.filter(
-        (item: any) => item.primary === true
-    )?.[0].image;
 
     return (
         <div className="rounded-lg bg-white">
@@ -104,18 +102,13 @@ export default function ProductPopup() {
                         </div>
                     </div>
 
-                    {Object.keys(varients).map((varient) => {
-                        console.log("varients", varients);
-                        return (
-                            <ProductAttributes
-                                key={`popup-attribute-key${varient}`}
-                                title={varient}
-                                attributes={varients[0]?.images}
-                                active={attributes[0]}
-                                onClick={handleAttribute}
-                            />
-                        );
-                    })}
+                    <ProductAttributes
+                        key={`popup-attribute-key${attribute}`}
+                        title={"Size"}
+                        attributes={attribute}
+                        size={attribute_id}
+                        setSize={setSize}
+                    />
 
                     <div className="pt-2 md:pt-4">
                         <div className="flex items-center justify-between mb-4 gap-x-3 sm:gap-x-4">

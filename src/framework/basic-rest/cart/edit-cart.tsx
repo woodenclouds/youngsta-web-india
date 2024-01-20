@@ -2,22 +2,22 @@ import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import http from "@framework/utils/http";
 import { useMutation } from "@tanstack/react-query";
 
-export interface addCartInputType {
+export interface editCartInputType {
     attribute_id: string;
     quantity: number;
     id: number;
 }
-async function addToCart(input: addCartInputType) {
+async function editCart(input: editCartInputType) {
     let id = input?.id;
-    return http.post(`${API_ENDPOINTS.ADD_TO_CART}${id}/`, {
+    return http.put(`${API_ENDPOINTS.EDIT_CART}${id}/`, {
         attribute_id: input?.attribute_id,
         quantity: input?.quantity,
     });
 }
 
-export const useAddToCartMutation = () => {
+export const useEditCartMutation = () => {
     return useMutation({
-        mutationFn: (input: addCartInputType) => addToCart(input),
+        mutationFn: (input: editCartInputType) => editCart(input),
         onSuccess: (data) => {
             if (data?.data?.app_data?.StatusCode === 6000) {
             }
