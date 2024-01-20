@@ -46,7 +46,7 @@ const CheckoutForm: React.FC = () => {
         <div className="flex flex-col space-y-4 lg:space-y-5">
           <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0">
             <Input
-              labelKey="forms:label-first-name"
+              labelKey="First Name"
               {...register('firstName', {
                 required: 'forms:first-name-required',
               })}
@@ -55,9 +55,9 @@ const CheckoutForm: React.FC = () => {
               className="w-full lg:w-1/2 "
             />
             <Input
-              labelKey="forms:label-last-name"
+              labelKey="Last Name"
               {...register('lastName', {
-                required: 'forms:last-name-required',
+                required: 'Last Name',
               })}
               errorKey={errors.lastName?.message}
               variant="solid"
@@ -65,7 +65,7 @@ const CheckoutForm: React.FC = () => {
             />
           </div>
           <Input
-            labelKey="forms:label-address"
+            labelKey="Address"
             {...register('address', {
               required: 'forms:address-required',
             })}
@@ -75,7 +75,7 @@ const CheckoutForm: React.FC = () => {
           <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0">
             <Input
               type="tel"
-              labelKey="forms:label-phone"
+              labelKey="Phone"
               {...register('phone', {
                 required: 'forms:phone-required',
               })}
@@ -86,7 +86,7 @@ const CheckoutForm: React.FC = () => {
 
             <Input
               type="email"
-              labelKey="forms:label-email-star"
+              labelKey="Email"
               {...register('email', {
                 required: 'forms:email-required',
                 pattern: {
@@ -102,14 +102,14 @@ const CheckoutForm: React.FC = () => {
           </div>
           <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0">
             <Input
-              labelKey="forms:label-city"
+              labelKey="City"
               {...register('city')}
               variant="solid"
               className="w-full lg:w-1/2 "
             />
 
             <Input
-              labelKey="forms:label-postcode"
+              labelKey="Postcode"
               {...register('zipCode')}
               variant="solid"
               className="w-full lg:w-1/2 ltr:lg:ml-3 rtl:lg:mr-3 mt-2 md:mt-0"
