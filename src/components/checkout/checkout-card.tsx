@@ -3,9 +3,13 @@ import { useCart } from '@contexts/cart/cart.context';
 import { CheckoutItem } from '@components/checkout/checkout-card-item';
 import { CheckoutCardFooterItem } from './checkout-card-footer-item';
 import { useTranslation } from 'next-i18next';
+import { useFetchCartItemsQuery } from '@framework/cart/get-cart-items';
+import CartItem from '@components/cart/cart-item';
+import { useState } from 'react';
+import { useEditCartMutation } from '@framework/cart/edit-cart';
 
 const CheckoutCard: React.FC = () => {
-  const { items, total, isEmpty } = useCart();
+  const { total, isEmpty } = useCart();
   const { price: subtotal } = usePrice({
     amount: total,
     currencyCode: 'USD',
@@ -28,6 +32,16 @@ const CheckoutCard: React.FC = () => {
       price: subtotal,
     },
   ];
+  const [cartTotal, setCartTotal] = useState(0);
+  const { mutate: editCart } = useEditCartMutation();
+  function editCartItems(item: any, quantity: number) {
+    let attribute_id = item?.attribute_id;
+    let id = item?.id;
+    editCart({ attribute_id, quantity, id });
+  }
+  const { data: items} = useFetchCartItemsQuery({
+    limit: 10,
+  });
   return (
     <div className="pt-12 md:pt-0 ltr:2xl:pl-4 rtl:2xl:pr-4">
       <h2 className="text-lg md:text-xl xl:text-2xl font-bold text-heading mb-6 xl:mb-8">
@@ -39,11 +53,16 @@ const CheckoutCard: React.FC = () => {
           {t('text-sub-total')}
         </span>
       </div>
-      {!isEmpty ? (
-        items.map((item) => <CheckoutItem item={item} key={item.id} />)
-      ) : (
-        <p className="text-red-500 lg:px-3 py-4">{t('text-empty-cart')}</p>
-      )}
+      
+      {items?.map((item) => (
+              <CartItem
+                item={item}
+                key={item.id}
+                setCartTotal={setCartTotal}
+                editCartItems={editCartItems}
+              />
+            ))}
+
       {checkoutFooter.map((item: any) => (
         <CheckoutCardFooterItem item={item} key={item.id} />
       ))}

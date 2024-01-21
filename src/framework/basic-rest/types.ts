@@ -1,4 +1,4 @@
-import { QueryKey } from '@tanstack/react-query';
+import { QueryKey } from "@tanstack/react-query";
 
 export type CollectionsQueryOptionsType = {
   text?: string;
@@ -12,7 +12,7 @@ export type CategoriesQueryOptionsType = {
   category?: string;
   status?: string;
   limit?: number;
-  demoVariant?: 'ancient';
+  demoVariant?: "ancient";
 };
 export type ProductsQueryOptionsType = {
   type: string;
@@ -26,7 +26,7 @@ export type QueryOptionsType = {
   category?: string;
   status?: string;
   limit?: number;
-  demoVariant?: 'ancient';
+  demoVariant?: "ancient";
 };
 
 export type ShopsQueryOptionsType = {
@@ -133,4 +133,15 @@ export type Shop = {
   socialShare: any;
   created_at: string;
   updated_at: string;
+};
+
+export type Address = {
+  id: string | number;
+  first_name: string;
+  last_name: string;
+  address: string;
+  phone: string;
+  email: string;
+  city: string;
+  post_code: string;
 };
