@@ -134,3 +134,14 @@ export type Shop = {
     created_at: string;
     updated_at: string;
 };
+
+export type Address = {
+    id: string | number;
+    first_name: string;
+    last_name: string;
+    address: string;
+    phone: string;
+    email: string;
+    city: string;
+    post_code: string;
+};
