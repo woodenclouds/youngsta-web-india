@@ -30,8 +30,9 @@ export const API_ENDPOINTS = {
     SEARCH: "/search.json",
     ORDERS: "/orders.json",
     ORDER: "/order.json",
-    VIEW_ADDRESS : 'accounts/view_addresses/',
-    CHECKOUT:'activities/purchase_items/',
+    VIEW_ADDRESS: "accounts/view_addresses/",
+    CHECKOUT: "activities/purchase_items/",
+    ADD_ADDRESS: "accounts/add_address/",
 
     // product endpoints
     CATEGORIES: "products/category/",

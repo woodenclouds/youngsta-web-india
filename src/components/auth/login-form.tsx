@@ -11,6 +11,7 @@ const LoginForm: React.FC = () => {
     const { t } = useTranslation();
     const { setModalView, openModal, closeModal } = useUI();
     const { mutate: login, isPending } = useLoginMutation();
+    
 
     const {
         register,
@@ -24,17 +25,13 @@ const LoginForm: React.FC = () => {
             password,
             remember_me,
         });
-        console.log(email, password, remember_me, "data");
     }
 
     function handleSignUp() {
         setModalView("SIGN_UP_VIEW");
         return openModal();
     }
-    function handleForgetPassword() {
-        setModalView("FORGET_PASSWORD");
-        return openModal();
-    }
+
     return (
         <div className="w-full px-5 py-5 mx-auto overflow-hidden bg-white border border-gray-300 rounded-lg sm:w-96 md:w-450px sm:px-8">
             <div className="text-center mb-6 pt-2.5">
