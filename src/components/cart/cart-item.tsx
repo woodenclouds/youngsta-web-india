@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { fadeInOut } from "@utils/motion/fade-in-out";
 import { IoIosCloseCircle } from "react-icons/io";
 import Counter from "@components/common/counter";
-import { useCart } from "@contexts/cart/cart.context";
 import { ROUTES } from "@utils/routes";
 import { generateCartItemName } from "@utils/generate-cart-item-name";
 import { useTranslation } from "next-i18next";
@@ -22,7 +21,6 @@ const CartItem: React.FC<CartItemProps> = ({
     deleteCartItems,
 }) => {
     const { t } = useTranslation("common");
-    const { clearItemFromCart } = useCart();
     const [totalPrice, setTotalPrice] = useState(item.price * item.quantity);
     const [quantity, setQuantity] = useState(item.quantity);
 
