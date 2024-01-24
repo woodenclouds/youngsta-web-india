@@ -64,6 +64,8 @@ const ProductsBlock: React.FC<ProductsProps> = ({
 
             {error ? (
                 <Alert message={error} />
+            ) : !loading && products?.length <= 0 ? (
+                <Alert message={"No new arrivals found"} />
             ) : (
                 <div
                     className={cn(
