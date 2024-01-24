@@ -3,15 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 export interface CheckoutInputType {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  address: string;
-  city: string;
-  zipCode: string;
-  save: boolean;
-  note: string;
+  address_id:string
 }
 
 
@@ -23,6 +15,7 @@ export const useCheckoutMutation = () => {
   return useMutation({
     mutationFn: (input: CheckoutInputType) => checkout(input),
     onSuccess: (data) => {
+      if (data)
       console.log(data, "Checkout success response");
     },
     onError: (data) => {
