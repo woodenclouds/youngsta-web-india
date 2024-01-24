@@ -4,12 +4,20 @@ import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 import { useQuery } from '@tanstack/react-query';
 
 export const fetchNewArrivalProducts = async () => {
-  const { data } = await http.get(API_ENDPOINTS.NEW_ARRIVAL_PRODUCTS);
+  const {
+    data: {
+        app_data: { data },
+    },
+  } = await http.get(API_ENDPOINTS.NEW_ARRIVAL_PRODUCTS);
   return data as Product[];
 };
 
 const fetchNewArrivalAncientProducts = async () => {
-  const { data } = await http.get(API_ENDPOINTS.NEW_ARRIVAL_PRODUCTS_ANCIENT);
+  const {
+    data: {
+        app_data: { data },
+    },
+  } = await http.get(API_ENDPOINTS.NEW_ARRIVAL_PRODUCTS_ANCIENT);
   return data as Product[];
 };
 

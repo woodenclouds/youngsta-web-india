@@ -4,12 +4,20 @@ import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
 import { useQuery } from '@tanstack/react-query';
 
 export const fetchFlashSaleProducts = async () => {
-  const { data } = await http.get(API_ENDPOINTS.FLASH_SALE_PRODUCTS);
+  const {
+    data: {
+        app_data: { data },
+    },
+  } = await http.get(API_ENDPOINTS.FLASH_SALE_PRODUCTS);
   return data;
 };
 
 const fetchAncientFlashSaleProducts = async () => {
-  const { data } = await http.get(API_ENDPOINTS.FLASH_SALE_PRODUCTS_ANCIENT);
+  const {
+    data: {
+        app_data: { data },
+    },
+  } = await http.get(API_ENDPOINTS.FLASH_SALE_PRODUCTS_ANCIENT);
   return data;
 };
 

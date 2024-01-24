@@ -30,13 +30,13 @@ export default function Layout({ children }: React.PropsWithChildren<{}>) {
 						'Fastest E-commerce template built with React, NextJS, TypeScript, @tanstack/react-query and Tailwind CSS.',
 					images: [
 						{
-							url: '/assets/images/og-image-01.png',
+							url: "https://youngsta.s3.eu-north-1.amazonaws.com/og-image-01.png",
 							width: 800,
 							height: 600,
 							alt: 'Og Image Alt',
 						},
 						{
-							url: '/assets/images/og-image-01.png',
+							url: "https://youngsta.s3.eu-north-1.amazonaws.com/og-image-01.png",
 							width: 900,
 							height: 800,
 							alt: 'Og Image Alt Second',

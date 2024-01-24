@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import SearchIcon from "@components/icons/search-icon";
-import Image from 'next/image';
-import like from "../../../../public/icons/whish-icon.svg"
-import wallet from "../../../../public/icons/wallet.svg"
+import Image from "next/image";
+import like from "../../../../public/icons/whish-icon.svg";
+import wallet from "../../../../public/icons/wallet.svg";
 import { siteSettings } from "@settings/site-settings";
 import HeaderMenu from "@components/layout/header/header-menu";
 import Logo from "@components/ui/logo";
@@ -19,7 +19,9 @@ const CartButton = dynamic(() => import("@components/cart/cart-button"), {
 type DivElementRef = React.MutableRefObject<HTMLDivElement>;
 const { site_header } = siteSettings;
 const Header: React.FC = () => {
-    const { openSearch, openModal, setModalView, isAuthorized } = useUI();
+    const { openSearch, openModal, setModalView, isAuthorized, openWishlist } =
+        useUI();
+
     const { t } = useTranslation("common");
     const siteHeaderRef = useRef() as DivElementRef;
     addActiveScroll(siteHeaderRef);
@@ -39,27 +41,25 @@ const Header: React.FC = () => {
                 <div className="flex items-center  mx-auto max-w-[1920px] h-full w-full justify-between">
                     <div>
                         <Logo />
-                    </div>  
+                    </div>
                     <div className=" items-center cursor-pointer  hidden max-lg:flex ">
                         <div className="mr-5 cursor-pointer">
-                            <Image 
-                                src={like}   
+                            <Image
+                                src={like}
                                 alt="whishIcon"
-                                width={25} 
+                                width={25}
                                 height={25}
                             />
                         </div>
                         <div className="cursor-pointer">
-                            <Image 
-                                src={wallet}  
+                            <Image
+                                src={wallet}
                                 alt="whishIcon"
-                                width={25} 
+                                width={25}
                                 height={25}
                             />
-                        
                         </div>
                     </div>
-                
 
                     <HeaderMenu
                         data={site_header.menu}
@@ -74,7 +74,7 @@ const Header: React.FC = () => {
                         >
                             <SearchIcon />
                         </button>
-                        
+
                         <div className="-mt-0.5 flex-shrink-0">
                             <AuthMenu
                                 isAuthorized={isAuthorized}
@@ -91,22 +91,28 @@ const Header: React.FC = () => {
                                 {t("text-account")}
                             </AuthMenu>
                         </div>
-                        <div className="flex items-center cursor-pointer .d-lg-none ">
-                            <Image 
-                                src={like}   
+                        <div
+                            className="flex items-center cursor-pointer .d-lg-none "
+                            onClick={openWishlist}
+                        >
+                            <Image
+                                src={like}
                                 alt="whishIcon"
-                                width={25} 
+                                width={25}
                                 height={25}
                             />
                         </div>
-                        <div className="flex items-center cursor-pointer  d-none">
-                            <Image 
-                                src={wallet}  
+                        <a
+                            href={ROUTES.WALLET}
+                            className="flex items-center cursor-pointer  d-none"
+                        >
+                            <Image
+                                src={wallet}
                                 alt="whishIcon"
-                                width={25} 
+                                width={25}
                                 height={25}
                             />
-                        </div>
+                        </a>
                         <CartButton />
                     </div>
                 </div>

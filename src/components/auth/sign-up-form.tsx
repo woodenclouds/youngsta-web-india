@@ -25,16 +25,18 @@ const SignUpForm: React.FC = () => {
     }
 
     function onSubmit({
-        name,
+        first_name,
+        last_name,
         email,
         phone_number,
         password,
     }: SignUpInputType) {
         let country_code = "91";
         signUp({
-            name,
+            first_name,
+            last_name,
             email,
-            phone_number,
+            phone_number:"0000",
             password,
             country_code,
         });
@@ -69,29 +71,26 @@ const SignUpForm: React.FC = () => {
             >
                 <div className="flex flex-col space-y-4">
                     <Input
-                        labelKey="forms:label-name"
+                        labelKey="First Name"
                         type="text"
                         variant="solid"
-                        {...register("name", {
-                            required: "forms:name-required",
+                        {...register("first_name", {
+                            required: "forms:first_name-required",
                         })}
-                        errorKey={errors.name?.message}
+                        errorKey={errors.first_name?.message}
                     />
-                    <Input
-                        labelKey="Mobile"
-                        type="number"
+                     <Input
+                        labelKey="Last Name"
+                        type="text"
                         variant="solid"
-                        {...register("phone_number", {
-                            required: `${t("forms:mobile-required")}`,
-                            pattern: {
-                                value: /^[0-9]{10}$/,
-                                message: t("forms:mobile-error"),
-                            },
+                        {...register("last_name", {
+                            required: "forms:last_name-required",
                         })}
-                        errorKey={errors.phone_number?.message}
+                        errorKey={errors.last_name?.message}
                     />
+                    
                     <Input
-                        labelKey="forms:label-email"
+                        labelKey="Email"
                         type="email"
                         variant="solid"
                         {...register("email", {

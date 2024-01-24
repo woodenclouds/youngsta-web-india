@@ -10,7 +10,6 @@ export const fetchCategories = async () => {
         },
     } = await http.get(API_ENDPOINTS.CATEGORIES);
 
-    console.log("data", data);
 
     return {
         categories: {

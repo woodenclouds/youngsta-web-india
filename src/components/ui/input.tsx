@@ -55,7 +55,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
       <div className={className}>
         {labelKey && (
           <label htmlFor={name} className="block text-gray-600 font-semibold text-sm leading-none mb-3 cursor-pointer">
-            {t(labelKey)}
+            {labelKey}
           </label>
         )}
         <input
