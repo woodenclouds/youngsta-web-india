@@ -1,9 +1,7 @@
 import Scrollbar from "@components/common/scrollbar";
-import { useCart } from "@contexts/cart/cart.context";
 import { motion } from "framer-motion";
 import { fadeInOut } from "@utils/motion/fade-in-out";
 import { useUI } from "@contexts/ui.context";
-import usePrice from "@framework/product/use-price";
 import { IoClose } from "react-icons/io5";
 import CartItem from "./cart-item";
 import EmptyCart from "./empty-cart";
@@ -14,6 +12,7 @@ import { useTranslation } from "next-i18next";
 import { useFetchCartItemsQuery } from "@framework/cart/get-cart-items";
 import { useEffect, useState } from "react";
 import { useEditCartMutation } from "@framework/cart/edit-cart";
+import { usedeleteCartMutation } from "@framework/cart/delet-from-cart";
 
 export default function Cart() {
     const { t } = useTranslation("common");
@@ -26,6 +25,7 @@ export default function Cart() {
     const [cartItems, setCartItems] = useState(data);
 
     const { mutate: editCart } = useEditCartMutation();
+    const { mutate: deleteFromCart } = usedeleteCartMutation();
 
     function editCartItems(item: any, quantity: number) {
         let attribute_id = item?.attribute_id;
@@ -39,6 +39,13 @@ export default function Cart() {
             return cartItem;
         });
 
+        setCartItems(updatedItems);
+    }
+
+    function deleteCartItems(id: any) {
+        deleteFromCart({ id });
+
+        const updatedItems = cartItems?.filter((item) => item.id !== id);
         setCartItems(updatedItems);
     }
 
@@ -78,6 +85,7 @@ export default function Cart() {
                                 item={item}
                                 key={item.id}
                                 editCartItems={editCartItems}
+                                deleteCartItems={deleteCartItems}
                             />
                         ))}
                     </div>
