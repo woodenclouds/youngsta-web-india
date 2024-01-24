@@ -1,35 +1,25 @@
-import { QueryOptionsType, Product } from '@framework/types';
-import http from '@framework/utils/http';
-import { API_ENDPOINTS } from '@framework/utils/api-endpoints';
-import { useQuery } from '@tanstack/react-query';
+import { QueryOptionsType, Product } from "@framework/types";
+import http from "@framework/utils/http";
+import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
+import { useQuery } from "@tanstack/react-query";
 
 export const fetchNewArrivalProducts = async () => {
-  const {
-    data: {
-        app_data: { data },
-    },
-  } = await http.get(API_ENDPOINTS.NEW_ARRIVAL_PRODUCTS);
-  return data as Product[];
-};
+    const {
+        data: {
+            app_data: { data, status },
+        },
+    } = await http.get(API_ENDPOINTS.NEW_ARRIVAL_PRODUCTS);
 
-const fetchNewArrivalAncientProducts = async () => {
-  const {
-    data: {
-        app_data: { data },
-    },
-  } = await http.get(API_ENDPOINTS.NEW_ARRIVAL_PRODUCTS_ANCIENT);
-  return data as Product[];
+    if (status === 6000) {
+        return data as Product[];
+    } else {
+        return [] as Product[];
+    }
 };
 
 export const useNewArrivalProductsQuery = (options: QueryOptionsType) => {
-  if (options.demoVariant === 'ancient') {
     return useQuery<Product[], Error>({
-      queryKey: [API_ENDPOINTS.NEW_ARRIVAL_PRODUCTS_ANCIENT, options],
-      queryFn: fetchNewArrivalAncientProducts
+        queryKey: [API_ENDPOINTS.PRODUCTS_ANCIENT, options],
+        queryFn: fetchNewArrivalProducts,
     });
-  }
-  return useQuery<Product[], Error>({
-    queryKey: [API_ENDPOINTS.PRODUCTS_ANCIENT, options],
-    queryFn: fetchNewArrivalProducts
-  });
 };
