@@ -9,13 +9,21 @@ const fetchProducts = async ({
     queryKey: [string, { param: string }];
 }) => {
     const [, options] = queryKey;
+    console.log("options", options);
+    const queryString = Object.keys(options)
+        .map(
+            (key) =>
+                `${encodeURIComponent(key)}=${encodeURIComponent(options[key])}`
+        )
+        .join("&");
 
     const {
         data: {
             app_data: { data },
         },
     } = await http.get(
-        `${API_ENDPOINTS.PRODUCTS}${options?.param ? options?.param : ""}`
+        // `${API_ENDPOINTS.PRODUCTS}${options?.param ? options?.param : ""}`
+        `${API_ENDPOINTS.PRODUCTS}${queryString ? `?${queryString}` : ""}`
     );
 
     return {

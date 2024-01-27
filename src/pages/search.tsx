@@ -18,7 +18,7 @@ export default function Shop() {
 
     return (
         <>
-            <ShopDiscount />
+            {/* <ShopDiscount /> */}
             <Container>
                 <div className={`flex pt-8 pb-16 lg:pb-20`}>
                     <div className="flex-shrink-0 ltr:pr-24 rtl:pl-24 hidden lg:block w-96">

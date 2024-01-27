@@ -13,12 +13,14 @@ type CartItemProps = {
     item: any;
     editCartItems?: any;
     deleteCartItems?: any;
+    isCheckout?: boolean;
 };
 
 const CartItem: React.FC<CartItemProps> = ({
     item,
     editCartItems,
     deleteCartItems,
+    isCheckout,
 }) => {
     const { t } = useTranslation("common");
     const [totalPrice, setTotalPrice] = useState(item.price * item.quantity);
@@ -56,13 +58,15 @@ const CartItem: React.FC<CartItemProps> = ({
                     alt={item.name || "Product Image"}
                     className="object-cover bg-gray-300"
                 />
-                <div
-                    className="absolute top-0 flex items-center justify-center w-full h-full transition duration-200 ease-in-out bg-black ltr:left-0 rtl:right-0 bg-opacity-30 md:bg-opacity-0 md:group-hover:bg-opacity-30"
-                    onClick={() => deleteCartItems(item.id)}
-                    role="button"
-                >
-                    <IoIosCloseCircle className="relative text-2xl text-white transition duration-300 ease-in-out transform md:scale-0 md:opacity-0 md:group-hover:scale-100 md:group-hover:opacity-100" />
-                </div>
+                {!isCheckout && (
+                    <div
+                        className="absolute top-0 flex items-center justify-center w-full h-full transition duration-200 ease-in-out bg-black ltr:left-0 rtl:right-0 bg-opacity-30 md:bg-opacity-0 md:group-hover:bg-opacity-30"
+                        onClick={() => deleteCartItems(item.id)}
+                        role="button"
+                    >
+                        <IoIosCloseCircle className="relative text-2xl text-white transition duration-300 ease-in-out transform md:scale-0 md:opacity-0 md:group-hover:scale-100 md:group-hover:opacity-100" />
+                    </div>
+                )}
             </div>
 
             <div className="flex flex-col w-full overflow-hidden">

@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import isEmpty from "lodash/isEmpty";
 import { ROUTES } from "@utils/routes";
 import { useUI } from "@contexts/ui.context";
 import Button from "@components/ui/button";
 import Counter from "@components/common/counter";
 import { ProductAttributes } from "@components/product/product-attributes";
-import { getVariations } from "@framework/utils/get-variations";
 import { useTranslation } from "next-i18next";
 import { useAddToCartMutation } from "@framework/cart/add-to-cart";
 
@@ -20,30 +18,19 @@ export default function ProductPopup() {
     const router = useRouter();
     const [quantity, setQuantity] = useState(1);
     const [attribute_id, setSize] = useState("");
-    const [attributes, setAttributes] = useState<{ [key: string]: string }>({});
     const [viewCartBtn, setViewCartBtn] = useState<boolean>(false);
 
-    const variations = getVariations(data.variations);
     const {
         id,
-        slug,
         attribute,
         name,
         description,
         price,
-        purchase_price,
+        selling_price,
         thumbnail,
     } = data;
+
     const { mutate: addToCart, isPending } = useAddToCartMutation();
-
-    console.log("slug", data);
-
-    const isSelected = !isEmpty(variations)
-        ? !isEmpty(attributes) &&
-          Object.keys(variations).every((variation) =>
-              attributes.hasOwnProperty(variation)
-          )
-        : true;
 
     function addItemToTheCart() {
         addToCart({ attribute_id, quantity, id });
@@ -52,7 +39,7 @@ export default function ProductPopup() {
 
     function navigateToProductPage() {
         closeModal();
-        router.push(`${ROUTES.PRODUCT}/${slug}`, undefined, {
+        router.push(`${ROUTES.PRODUCT}/${id}`, undefined, {
             locale: router.locale,
         });
     }
@@ -92,7 +79,7 @@ export default function ProductPopup() {
 
                         <div className="flex items-center mt-3">
                             <div className="text-heading font-semibold text-base md:text-xl lg:text-2xl">
-                                {purchase_price}
+                                ${selling_price}
                             </div>
                             {price && (
                                 <del className="font-segoe text-gray-400 text-base lg:text-xl ltr:pl-2.5 rtl:pr-2.5 -mt-0.5 md:mt-0">
@@ -123,15 +110,16 @@ export default function ProductPopup() {
                                     )
                                 }
                                 disableDecrement={quantity === 1}
+                                setQuantity={() => {}}
                             />
                             <Button
                                 onClick={addItemToTheCart}
                                 variant="flat"
                                 className={`w-full h-11 md:h-12 px-1.5 ${
-                                    !isSelected &&
+                                    !attribute_id &&
                                     "bg-gray-400 hover:bg-gray-400"
                                 }`}
-                                disabled={!isSelected}
+                                disabled={!attribute_id}
                                 loading={isPending}
                             >
                                 {t("text-add-to-cart")}

@@ -23,7 +23,7 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
 
     const { t } = useTranslation("common");
 
-    console.log("data", data);
+    console.log("query", query);
 
     return (
         <>
