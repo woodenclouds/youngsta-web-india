@@ -46,7 +46,8 @@ export const API_ENDPOINTS = {
     VIEW_CART_ITEMS: "activities/view_cart_items/",
 
     // wislist endpoints
-    VIEW_WISHLIST_ITEMS: "activities/view_wishlist_items/",
+    VIEW_WISHLIST_ITEMS: "activities/view_wishlist/",
+    REMOVE_WISHLIST_ITEMS: "activities/delete_wishlist_item/",
 
     // orders endpoints
     VIEW_ORDERS: "activities/viewPurchase/",

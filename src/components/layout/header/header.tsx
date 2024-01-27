@@ -43,7 +43,10 @@ const Header: React.FC = () => {
                         <Logo />
                     </div>
                     <div className=" items-center cursor-pointer  hidden max-lg:flex ">
-                        <div className="mr-5 cursor-pointer">
+                        <div
+                            className="mr-5 cursor-pointer"
+                            onClick={openWishlist}
+                        >
                             <Image
                                 src={like}
                                 alt="whishIcon"
@@ -51,14 +54,14 @@ const Header: React.FC = () => {
                                 height={25}
                             />
                         </div>
-                        <div className="cursor-pointer">
+                        <a className="cursor-pointer" href={ROUTES.WALLET}>
                             <Image
                                 src={wallet}
                                 alt="whishIcon"
                                 width={25}
                                 height={25}
                             />
-                        </div>
+                        </a>
                     </div>
 
                     <HeaderMenu
