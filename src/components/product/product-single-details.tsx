@@ -185,31 +185,10 @@ const ProductSingleDetails: React.FC = () => {
                                 {data?.category ? data?.category : "N/A"}
                             </Link>
                         </li>
-                        {/* <>
-                            {data?.tags && Array.isArray(data.tags) && (
-                                <li className="productTags">
-                                    <span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
-                                        Tags:
-                                    </span>
-                                    {data.tags.map((tag) => (
-                                        <Link
-                                            key={tag.id}
-                                            href={tag.slug}
-                                            className="inline-block ltr:pr-1.5 rtl:pl-1.5 transition hover:underline hover:text-heading ltr:last:pr-0 rtl:last:pl-0"
-                                        >
-                                            {tag.name}
-                                            <span className="text-heading">
-                                                ,
-                                            </span>
-                                        </Link>
-                                    ))}
-                                </li>
-                            )}
-                        </> */}
                     </ul>
                 </div>
 
-                {/* <ProductMetaReview data={data} /> */}
+                <ProductMetaReview data={data} />
             </div>
         </div>
     );

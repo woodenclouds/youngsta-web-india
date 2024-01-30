@@ -24,9 +24,9 @@ import { SunglassIcon } from "@components/icons/sunglass-icon";
 import { SneakerIcon } from "@components/icons/sneaker-icon";
 
 export const siteSettings = {
-    name: "ChawkBazar",
+    name: "Youngsta",
     description:
-        "Fastest E-commerce template built with React, NextJS, TypeScript, @tanstack/react-query and Tailwind CSS.",
+        "Discover the latest trends with Youngsta – your ultimate destination for cutting-edge fashion and accessories. Shop the freshest styles for the young and the restless. Free shipping, easy returns, and unbeatable deals await!",
     author: {
         name: "REDQ",
         websiteUrl: "https://redq.io",
@@ -34,7 +34,7 @@ export const siteSettings = {
     },
     logo: {
         url: "/assets/images/logo.png",
-        alt: "ChawkBazar",
+        alt: "Youngsta",
         href: "/",
         width: 148,
         height: 99,
