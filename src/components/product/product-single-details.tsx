@@ -52,7 +52,7 @@ const ProductSingleDetails: React.FC = () => {
             setAddToCartLoader(false);
             console.log("Addeddata", data);
 
-            toast("Added to the bag", {
+            toast("Added to the Wishlist", {
                 progressClassName: "fancy-progress-bar",
                 position: width > 768 ? "bottom-right" : "top-right",
                 autoClose: 2000,
