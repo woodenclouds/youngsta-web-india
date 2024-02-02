@@ -9,7 +9,6 @@ const fetchProducts = async ({
     queryKey: [string, { param: string }];
 }) => {
     const [, options] = queryKey;
-    console.log("options", options);
     const queryString = Object.keys(options)
         .map(
             (key) =>

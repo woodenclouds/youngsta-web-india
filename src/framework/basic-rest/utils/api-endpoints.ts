@@ -18,12 +18,10 @@ export const API_ENDPOINTS = {
     TOP_SELLER_PRODUCTS: "/products_top_seller.json",
     ON_SELLING_PRODUCTS: "products/viewproduct/?search=on-selling-products",
     PRODUCT: "/product.json",
-    RELATED_PRODUCTS: "/related_products.json",
     BEST_SELLER_PRODUCTS: "/products_best_seller.json",
     NEW_ARRIVAL_PRODUCTS: "products/viewproduct/?search=new-arrival-products",
     POPULAR_PRODUCTS: "/products_popular.json",
     NEW_ARRIVAL_PRODUCTS_ANCIENT: "/products_new_arrival.json",
-    FLASH_SALE_PRODUCTS: "products/viewproduct/",
     FLASH_SALE_PRODUCTS_ANCIENT: "/products_flash_sale_ancient.json",
     SHOPS: "/shops.json",
     SHOP: "/shop.json",
@@ -38,6 +36,8 @@ export const API_ENDPOINTS = {
     CATEGORIES: "products/category/",
     PRODUCTS: "products/viewproduct/",
     FEATURED_PRODUCTS: "products/viewproduct/?search=featured-products",
+    FLASH_SALE_PRODUCTS: "products/viewproduct/?search=flash-sale-products",
+    RELATED_PRODUCTS: "products/get-related-product/",
 
     // cart endpoints
     ADD_TO_CART: "activities/add_to_cart/",

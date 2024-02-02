@@ -32,7 +32,7 @@ const ProductsFeatured: React.FC<ProductsProps> = ({
         demoVariant,
     });
     console.log(data);
-    
+
     return (
         <div className={className}>
             <SectionHeader

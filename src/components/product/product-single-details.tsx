@@ -3,12 +3,7 @@ import Button from "@components/ui/button";
 import Counter from "@components/common/counter";
 import { useRouter } from "next/router";
 import { useProductQuery } from "@framework/product/get-product";
-import { getVariations } from "@framework/utils/get-variations";
-import usePrice from "@framework/product/use-price";
-import { useCart } from "@contexts/cart/cart.context";
-import { generateCartItem } from "@utils/generate-cart-item";
 import { ProductAttributes } from "./product-attributes";
-import isEmpty from "lodash/isEmpty";
 import Link from "@components/ui/link";
 import { toast } from "react-toastify";
 import { useWindowSize } from "@utils/use-window-size";
@@ -35,7 +30,7 @@ const ProductSingleDetails: React.FC = () => {
         width: 0,
         height: 0,
     });
-    const { mutate: addToCart, isPending } = useAddToCartMutation();
+    const { mutate: addToCart } = useAddToCartMutation();
 
     const { data, isLoading } = useProductQuery(slug as string);
     const [quantity, setQuantity] = useState(1);
@@ -73,8 +68,6 @@ const ProductSingleDetails: React.FC = () => {
             });
         }
     }
-
-    console.log("StatusCode", data);
 
     return (
         <div className="block lg:grid grid-cols-9 gap-x-10 xl:gap-x-14 pt-7 pb-10 lg:pb-14 2xl:pb-20 items-start">

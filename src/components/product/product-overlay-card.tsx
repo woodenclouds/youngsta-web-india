@@ -4,10 +4,13 @@ import usePrice from "@framework/product/use-price";
 import { Product } from "@framework/types";
 import Text from "@components/ui/text";
 import cn from "classnames";
-import like from "../../../public/icons/whish-icon.svg"
+import like from "../../../public/icons/whish-icon.svg";
 import { toast } from "react-toastify";
 
-import { useAddToCartMutation, useAddToWishlistMutation } from "@framework/wishlist/add-to-wishlist";
+import {
+    useAddToCartMutation,
+    useAddToWishlistMutation,
+} from "@framework/wishlist/add-to-wishlist";
 import { useSsrCompatible } from "@utils/use-ssr-compatible";
 import { useWindowSize } from "react-use";
 
@@ -17,6 +20,7 @@ interface ProductProps {
     imgLoading?: "eager" | "lazy";
     variant?: "left" | "center" | "combined" | "flat" | "modern";
     disableBorderRadius?: boolean;
+    category?: string;
 }
 
 const ProductOverlayCard: React.FC<ProductProps> = ({
@@ -25,6 +29,7 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
     variant = "left",
     imgLoading = "lazy",
     disableBorderRadius = false,
+    category,
 }) => {
     let size = 260;
     let classes;
@@ -67,7 +72,7 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
         return openModal();
     }
 
-    const onSuccess = ()=>{
+    const onSuccess = () => {
         toast("Added to the bag", {
             progressClassName: "fancy-progress-bar",
             position: width > 768 ? "bottom-right" : "top-right",
@@ -77,36 +82,32 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
             pauseOnHover: true,
             draggable: true,
         });
-    }
+    };
 
-
-
-    const { mutate: addToWishList, } = useAddToWishlistMutation();
+    const { mutate: addToWishList } = useAddToWishlistMutation();
 
     function addItemToWishList(id: any) {
         addToWishList({ id });
-        onSuccess()
+        onSuccess();
     }
 
-    console.log("product",product)
+    console.log("product", product);
 
     return (
         <div
             onClick={handlePopupView}
             className={`${classes} cursor-pointer group flex flex-col bg-gray-200 ${
                 !disableBorderRadius && "rounded-md"
-            } relative items-center justify-between overflow-hidden relative`}
+            } relative items-center justify-between overflow-hidden`}
         >
-            <div className="absolute right-[62px] top-[25px] bg-[#fff] p-[11px] flex items-center z-[1] rounded-[50%]" onClick={(e)=>{
-                e.stopPropagation()
-                addItemToWishList(product?.id)
-            }} >
-                <Image
-                    src={like}
-                    height={20}
-                    width={20}
-                    className="z-[1]"
-                />
+            <div
+                className="absolute right-[62px] top-[25px] bg-[#fff] p-[11px] flex items-center z-[1] rounded-[50%]"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    addItemToWishList(product?.id);
+                }}
+            >
+                <Image src={like} height={20} width={20} className="z-[1]" />
             </div>
             <div
                 className={cn(

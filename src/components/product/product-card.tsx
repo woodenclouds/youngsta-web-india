@@ -37,6 +37,7 @@ interface ProductProps {
     bgGray?: boolean;
     demoVariant?: "ancient";
     disableBorderRadius?: boolean;
+    isScroll?: boolean;
 }
 
 const ProductCard: FC<ProductProps> = ({
@@ -55,6 +56,7 @@ const ProductCard: FC<ProductProps> = ({
     bgGray = false,
     demoVariant,
     disableBorderRadius = false,
+    isScroll,
 }) => {
     const { openModal, setModalView, setModalData } = useUI();
     const placeholderImage = `/assets/placeholder/products/product-${variant}.svg`;
@@ -72,7 +74,9 @@ const ProductCard: FC<ProductProps> = ({
     return (
         <div
             className={cn(
-                `group box-border overflow-hidden flex ${
+                `${
+                    isScroll ? "fit-content mr-[15px]" : ""
+                }  group box-border overflow-hidden flex ${
                     !disableBorderRadius && "rounded-md"
                 } cursor-pointer`,
                 {
