@@ -4,15 +4,12 @@ import usePrice from "@framework/product/use-price";
 import { Product } from "@framework/types";
 import Text from "@components/ui/text";
 import cn from "classnames";
-import like from "../../../public/icons/whish-icon.svg";
 import { toast } from "react-toastify";
-
-import {
-    useAddToCartMutation,
-    useAddToWishlistMutation,
-} from "@framework/wishlist/add-to-wishlist";
+import { FaRegHeart } from "react-icons/fa";
+import { useAddToWishlistMutation } from "@framework/wishlist/add-to-wishlist";
 import { useSsrCompatible } from "@utils/use-ssr-compatible";
 import { useWindowSize } from "react-use";
+import { useState } from "react";
 
 interface ProductProps {
     product: Product;
@@ -66,6 +63,8 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
         baseAmount: product.price,
         currencyCode: "USD",
     });
+    const [isActive, setIsActive] = useState(false);
+
     function handlePopupView() {
         setModalData({ data: product });
         setModalView("PRODUCT_VIEW");
@@ -86,10 +85,13 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
 
     const { mutate: addToWishList } = useAddToWishlistMutation();
 
-    function addItemToWishList(id: any) {
-        addToWishList({ id });
+    const handleToggleAndAddToWishList = (productId) => {
+        console.log("Clicked!");
+        addToWishList({ id: productId });
         onSuccess();
-    }
+        setIsActive(!isActive);
+        console.log("isActive:", isActive);
+    };
 
     console.log("product", product);
 
@@ -101,13 +103,22 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
             } relative items-center justify-between overflow-hidden`}
         >
             <div
-                className="absolute right-[62px] top-[25px] bg-[#fff] p-[11px] flex items-center z-[1] rounded-[50%]"
+                className={`absolute right-[62px] top-[25px] bg-[#ffff] p-[11px] flex items-center z-[1] rounded-[50%] cursor-pointer ${
+                    isActive ? "text-red-500" : ""
+                }`}
                 onClick={(e) => {
                     e.stopPropagation();
-                    addItemToWishList(product?.id);
+                    handleToggleAndAddToWishList(product?.id);
                 }}
             >
-                <Image src={like} height={20} width={20} className="z-[1]" />
+                {/* <Image
+                    src={like}
+                    height={20}
+                    width={20}
+                    className="z-[1]"
+                /> */}
+                {/* <CiHeart className={` w-[28px] h-[28px]  cursor-pointer ${isActive ? 'text-red-500' : ''}`}/>    */}
+                <FaRegHeart className="w-[20px] h-[20px]" />
             </div>
             <div
                 className={cn(

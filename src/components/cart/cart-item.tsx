@@ -14,6 +14,7 @@ type CartItemProps = {
     editCartItems?: any;
     deleteCartItems?: any;
     isCheckout?: boolean;
+    isWishlist?: boolean;
 };
 
 const CartItem: React.FC<CartItemProps> = ({
@@ -21,6 +22,7 @@ const CartItem: React.FC<CartItemProps> = ({
     editCartItems,
     deleteCartItems,
     isCheckout,
+    isWishlist,
 }) => {
     const { t } = useTranslation("common");
     const [totalPrice, setTotalPrice] = useState(item.price * item.quantity);
@@ -71,7 +73,7 @@ const CartItem: React.FC<CartItemProps> = ({
 
             <div className="flex flex-col w-full overflow-hidden">
                 <Link
-                    href={`${ROUTES.PRODUCT}/${item?.slug}`}
+                    href={`${ROUTES.PRODUCT}/${item?.product_info?.id}`}
                     className="truncate text-sm text-heading mb-1.5 -mt-1"
                 >
                     {generateCartItemName(
@@ -83,20 +85,21 @@ const CartItem: React.FC<CartItemProps> = ({
                 <span className="text-sm text-gray-400 mb-2.5">
                     {t("text-unit-price")} : &nbsp; ${item?.price}
                 </span>
-
-                <div className="flex items-end justify-between">
-                    <Counter
-                        quantity={quantity}
-                        setQuantity={setQuantity}
-                        onIncrement={editCartItems}
-                        onDecrement={editCartItems}
-                        item={item}
-                        variant="dark"
-                    />
-                    <span className="text-sm font-semibold leading-5 md:text-base text-heading">
-                        ${totalPrice}
-                    </span>
-                </div>
+                {isWishlist ? null : (
+                    <div className="flex items-end justify-between">
+                        <Counter
+                            quantity={quantity}
+                            setQuantity={setQuantity}
+                            onIncrement={editCartItems}
+                            onDecrement={editCartItems}
+                            item={item}
+                            variant="dark"
+                        />
+                        <span className="text-sm font-semibold leading-5 md:text-base text-heading">
+                            ${totalPrice}
+                        </span>
+                    </div>
+                )}
             </div>
         </motion.div>
     );

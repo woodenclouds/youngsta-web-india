@@ -34,12 +34,13 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
                     <ProductFeedLoader limit={20} uniqueKey="search-product" />
                 ) : (
                     data?.data?.map((product) => {
-                        return (
+                        return (                  
                             <ProductCard
                                 key={`product--key${product.id}`}
                                 product={product}
                                 variant="grid"
-                            />
+                            />   
+                            
                         );
                     })
                 )}

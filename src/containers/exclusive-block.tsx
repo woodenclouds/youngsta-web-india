@@ -3,8 +3,6 @@ import Link from "@components/ui/link";
 import { useTranslation } from "next-i18next";
 
 const data = {
-    exclusiveName: "text-new-year",
-    year: 2021,
     exclusiveData: [
         {
             id: 1,
@@ -78,33 +76,6 @@ const ExclusiveBlock: React.FC<Props> = ({
                         >
                             {t(`${item.buttonText}`)}
                         </Link>
-                        {data.exclusiveName && (
-                            <div
-                                className={`z-0 absolute top-10 xl:top-12 2xl:top-16 3xl:top-24 uppercase text-black opacity-10 text-xl xl:text-2xl 3xl:text-3xl tracking-widest leading-5 ${
-                                    item.id === 2
-                                        ? "ltr:left-5 rtl:right-5 ltr:xl:left-7 rtl:xl:right-7"
-                                        : "ltr:right-5 rtl:left-5 ltr:xl:right-7 rtl:xl:left-7"
-                                }`}
-                            >
-                                {item.id !== 2
-                                    ? t(`${data.exclusiveName}`)
-                                    : t("text-exclusive")}
-                            </div>
-                        )}
-
-                        {data.year && (
-                            <div
-                                className={`exclusiveYear absolute top-16 xl:top-20 2xl:top-24 3xl:top-32 ltr:left-0 rtl:right-0 z-10 text-black font-bold leading-none tracking-widest ${
-                                    item.id === 2
-                                        ? "ltr:text-left rtl:text-right pl-4 ltr:left-0 rtl:right-0"
-                                        : "ltr:text-right rtl:text-left ltr:right-0 rtl:left-0"
-                                }`}
-                            >
-                                {item.id !== 2
-                                    ? data.year.toString().slice(0, 2)
-                                    : data.year.toString().slice(2, 4)}
-                            </div>
-                        )}
                     </div>
                 ))}
             </div>

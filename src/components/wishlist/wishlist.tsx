@@ -48,6 +48,7 @@ export default function Wishlist() {
                                 item={item}
                                 key={item.id}
                                 deleteCartItems={deleteWishlistItems}
+                                isWishlist={true}
                             />
                         ))}
                     </div>
