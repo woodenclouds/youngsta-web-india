@@ -16,7 +16,7 @@ export const fetchRelatedProducts = async ({
             app_data: { data },
         },
     } = await http.get(
-        `${API_ENDPOINTS.RELATED_PRODUCTS}?product_code=${options?.slug}`
+        `${API_ENDPOINTS.RELATED_PRODUCTS}?product_id=${options?.slug}`
     );
     return data;
 };
