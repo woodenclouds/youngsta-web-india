@@ -39,12 +39,14 @@ export default function Collections({ slug }: any) {
                                     </ActiveLink>
                                 </BreadcrumbItems>
                             </div>
+                           
                             <CollectionFilters />
                         </StickyBox>
                     </div>
 
                     <div className="w-full ltr:lg:-ml-9 rtl:lg:-mr-9">
                         <CollectionTopBar />
+                        
                         <ProductGrid param={`?collections=${slug}`} />
                     </div>
                 </div>
