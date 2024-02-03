@@ -28,8 +28,8 @@ export const siteSettings = {
     description:
         "Discover the latest trends with Youngsta – your ultimate destination for cutting-edge fashion and accessories. Shop the freshest styles for the young and the restless. Free shipping, easy returns, and unbeatable deals await!",
     author: {
-        name: "REDQ",
-        websiteUrl: "https://redq.io",
+        name: "Youngsta",
+        websiteUrl: "/",
         address: "",
     },
     logo: {

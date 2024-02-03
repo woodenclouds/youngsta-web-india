@@ -11,6 +11,7 @@ import { ROUTES } from "@utils/routes";
 import { addActiveScroll } from "@utils/add-active-scroll";
 import dynamic from "next/dynamic";
 import { useTranslation } from "next-i18next";
+import UserIcon from "@components/icons/user-icon";
 const AuthMenu = dynamic(() => import("./auth-menu"), { ssr: false });
 const CartButton = dynamic(() => import("@components/cart/cart-button"), {
     ssr: false,
@@ -77,23 +78,7 @@ const Header: React.FC = () => {
                         >
                             <SearchIcon />
                         </button>
-
-                        <div className="-mt-0.5 flex-shrink-0">
-                            <AuthMenu
-                                isAuthorized={isAuthorized}
-                                href={ROUTES.ACCOUNT}
-                                className="text-sm font-semibold xl:text-base text-heading"
-                                btnProps={{
-                                    className:
-                                        "text-sm xl:text-base text-heading font-semibold focus:outline-none",
-                                    // @ts-ignore
-                                    children: t("text-sign-in"),
-                                    onClick: handleLogin,
-                                }}
-                            >
-                                {t("text-account")}
-                            </AuthMenu>
-                        </div>
+                        <CartButton />
                         <div
                             className="flex items-center cursor-pointer .d-lg-none "
                             onClick={openWishlist}
@@ -105,6 +90,24 @@ const Header: React.FC = () => {
                                 height={25}
                             />
                         </div>
+
+                        <div className="flex content-end flex-shrink-0">
+                            <AuthMenu
+                                isAuthorized={isAuthorized}
+                                href={ROUTES.ACCOUNT}
+                                className="text-sm font-semibold xl:text-base text-heading"
+                                btnProps={{
+                                    className:
+                                        "text-sm xl:text-base text-heading font-semibold focus:outline-none",
+                                    // @ts-ignore
+                                    children: <UserIcon />,
+                                    onClick: handleLogin,
+                                }}
+                            >
+                                <UserIcon />
+                            </AuthMenu>
+                        </div>
+
                         <a
                             href={ROUTES.WALLET}
                             className="flex items-center cursor-pointer  d-none"
@@ -116,7 +119,6 @@ const Header: React.FC = () => {
                                 height={25}
                             />
                         </a>
-                        <CartButton />
                     </div>
                 </div>
             </div>
