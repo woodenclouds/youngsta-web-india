@@ -45,7 +45,6 @@ const ProductSingleDetails: React.FC = () => {
 
             addToCart({ attribute_id, quantity, id: slug });
             setAddToCartLoader(false);
-            console.log("Addeddata", data);
 
             toast("Added to the Wishlist", {
                 progressClassName: "fancy-progress-bar",

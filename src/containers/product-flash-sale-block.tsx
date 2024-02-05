@@ -44,7 +44,6 @@ function ProductFlashSaleWrapper({
     hideCountdown,
     date,
 }: React.PropsWithChildren<WrapperProps>) {
-    console.log("date", date);
     return (
         <>
             <div

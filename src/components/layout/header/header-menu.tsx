@@ -12,6 +12,10 @@ interface MenuProps {
 
 const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
     const { t } = useTranslation("menu");
+
+    function formatString(str: string) {
+        return str.toLowerCase().replace(/\s+/g, "-");
+    }
     return (
         <nav
             className={classNames(
@@ -22,30 +26,26 @@ const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
             {data?.map((item: any) => (
                 <div
                     className={`menuItem group cursor-pointer py-7 ${
-                        item.subMenu ? "relative" : ""
+                        item.children ? "relative" : ""
                     }`}
                     key={item.id}
                 >
                     <Link
-                        href={item.path}
+                        href={`/category/${formatString(item?.name)}`}
                         className="relative inline-flex items-center px-3 py-2 text-sm font-normal xl:text-base text-heading xl:px-4 group-hover:text-black"
                     >
-                        {t(item.label)}
-                        {(item?.columns || item.subMenu) && (
+                        {t(item.name)}
+                        {item?.children?.length > 0 && (
                             <span className="opacity-30 text-xs mt-1 xl:mt-0.5 w-4 flex justify-end">
                                 <FaChevronDown className="transition duration-300 ease-in-out transform group-hover:-rotate-180" />
                             </span>
                         )}
                     </Link>
 
-                    {item?.columns && Array.isArray(item.columns) && (
-                        <MegaMenu columns={item.columns} />
-                    )}
-
-                    {item?.subMenu && Array.isArray(item.subMenu) && (
-                        <div className="absolute invisible bg-gray-200 opacity-0 group-hover:visible subMenu shadow-header ltr:left-0 rtl:right-0 group-hover:opacity-100">
+                    {item?.children && Array.isArray(item.children) && (
+                        <div className="absolute invisible bg-gray-200 opacity-0 group-hover:visible children shadow-header ltr:left-0 rtl:right-0 group-hover:opacity-100">
                             <ul className="py-5 text-sm text-body">
-                                {item.subMenu.map(
+                                {item.children.map(
                                     (menu: any, index: number) => {
                                         const dept: number = 1;
                                         const menuName: string = `sidebar-menu-${dept}-${index}`;
@@ -54,7 +54,7 @@ const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
                                             <ListMenu
                                                 dept={dept}
                                                 data={menu}
-                                                hasSubMenu={menu.subMenu}
+                                                hasSubMenu={menu.children}
                                                 menuName={menuName}
                                                 key={menuName}
                                                 menuIndex={index}

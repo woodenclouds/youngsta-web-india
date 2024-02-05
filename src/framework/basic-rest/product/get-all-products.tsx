@@ -21,7 +21,6 @@ const fetchProducts = async ({
             app_data: { data },
         },
     } = await http.get(
-        // `${API_ENDPOINTS.PRODUCTS}${options?.param ? options?.param : ""}`
         `${API_ENDPOINTS.PRODUCTS}${queryString ? `?${queryString}` : ""}`
     );
 

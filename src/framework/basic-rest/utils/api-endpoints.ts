@@ -38,6 +38,7 @@ export const API_ENDPOINTS = {
     FEATURED_PRODUCTS: "products/viewproduct/?search=featured-products",
     FLASH_SALE_PRODUCTS: "products/viewproduct/?search=flash-sale-products",
     RELATED_PRODUCTS: "products/get-related-product/",
+    HEADER_MENU: "products/view-category/",
 
     // cart endpoints
     ADD_TO_CART: "activities/add_to_cart/",

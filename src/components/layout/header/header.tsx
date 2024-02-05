@@ -10,8 +10,8 @@ import { useUI } from "@contexts/ui.context";
 import { ROUTES } from "@utils/routes";
 import { addActiveScroll } from "@utils/add-active-scroll";
 import dynamic from "next/dynamic";
-import { useTranslation } from "next-i18next";
 import UserIcon from "@components/icons/user-icon";
+import { useHeaderMenuQuery } from "@framework/category/get-header-menu";
 const AuthMenu = dynamic(() => import("./auth-menu"), { ssr: false });
 const CartButton = dynamic(() => import("@components/cart/cart-button"), {
     ssr: false,
@@ -23,7 +23,6 @@ const Header: React.FC = () => {
     const { openSearch, openModal, setModalView, isAuthorized, openWishlist } =
         useUI();
 
-    const { t } = useTranslation("common");
     const siteHeaderRef = useRef() as DivElementRef;
     addActiveScroll(siteHeaderRef);
 
@@ -31,6 +30,8 @@ const Header: React.FC = () => {
         setModalView("LOGIN_VIEW");
         return openModal();
     }
+
+    const { data } = useHeaderMenuQuery({});
 
     return (
         <header
@@ -66,7 +67,7 @@ const Header: React.FC = () => {
                     </div>
 
                     <HeaderMenu
-                        data={site_header.menu}
+                        data={data?.length > 0 ? data : []}
                         className="hidden lg:flex ltr:md:ml-6 rtl:md:mr-6 ltr:xl:ml-10 rtl:xl:mr-10"
                     />
 
@@ -107,18 +108,6 @@ const Header: React.FC = () => {
                                 <UserIcon />
                             </AuthMenu>
                         </div>
-
-                        <a
-                            href={ROUTES.WALLET}
-                            className="flex items-center cursor-pointer  d-none"
-                        >
-                            <Image
-                                src={wallet}
-                                alt="whishIcon"
-                                width={25}
-                                height={25}
-                            />
-                        </a>
                     </div>
                 </div>
             </div>

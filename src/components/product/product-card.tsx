@@ -81,11 +81,9 @@ const ProductCard: FC<ProductProps> = ({
     const [isActive, setIsActive] = useState(false);
     const { mutate: addToWishList } = useAddToWishlistMutation();
     const handleToggleAndAddToWishList = (productId) => {
-        console.log("Clicked!");
         addToWishList({ id: productId });
         onSuccess();
         setIsActive(!isActive);
-        console.log("isActive:", isActive);
     };
 
     const { width } = useSsrCompatible(useWindowSize(), {

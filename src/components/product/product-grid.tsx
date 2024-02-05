@@ -5,7 +5,6 @@ import { useProductsQuery } from "@framework/product/get-all-products";
 import { useRouter } from "next/router";
 import ProductFeedLoader from "@components/ui/loaders/product-feed-loader";
 import { useTranslation } from "next-i18next";
-import { Product } from "@framework/types";
 interface ProductGridProps {
     className?: string;
 }
@@ -18,12 +17,10 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
         hasNextPage,
         data,
         error,
-    } = useProductsQuery({ limit: 10, ...query });
+    } = useProductsQuery({ limit: 10, ...query, category: query?.slug });
     if (error) return <p>{error.message}</p>;
 
     const { t } = useTranslation("common");
-
-    console.log("query", query);
 
     return (
         <>
@@ -34,13 +31,12 @@ export const ProductGrid: FC<ProductGridProps> = ({ className = "" }) => {
                     <ProductFeedLoader limit={20} uniqueKey="search-product" />
                 ) : (
                     data?.data?.map((product) => {
-                        return (                  
+                        return (
                             <ProductCard
                                 key={`product--key${product.id}`}
                                 product={product}
                                 variant="grid"
-                            />   
-                            
+                            />
                         );
                     })
                 )}

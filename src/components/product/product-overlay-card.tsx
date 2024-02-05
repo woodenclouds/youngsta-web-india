@@ -86,14 +86,10 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
     const { mutate: addToWishList } = useAddToWishlistMutation();
 
     const handleToggleAndAddToWishList = (productId) => {
-        console.log("Clicked!");
         addToWishList({ id: productId });
         onSuccess();
         setIsActive(!isActive);
-        console.log("isActive:", isActive);
     };
-
-    console.log("product", product);
 
     return (
         <div
