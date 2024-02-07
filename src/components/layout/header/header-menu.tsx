@@ -14,7 +14,7 @@ const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
     const { t } = useTranslation("menu");
 
     function formatString(str: string) {
-        return str.toLowerCase().replace(/\s+/g, "-");
+        return str?.toLowerCase().replace(/\s+/g, "-");
     }
     return (
         <nav

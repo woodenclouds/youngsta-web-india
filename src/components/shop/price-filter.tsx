@@ -80,7 +80,7 @@ export const PriceFilter = () => {
                     <CheckBox
                         key={item.id}
                         label={item.name}
-                        name={item.name.toLowerCase()}
+                        name={item?.name?.toLowerCase()}
                         checked={selectedPrice === item.slug}
                         value={item.slug}
                         onChange={handlePriceItemClick}

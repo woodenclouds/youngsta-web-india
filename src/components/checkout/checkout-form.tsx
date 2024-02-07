@@ -34,8 +34,6 @@ const CheckoutForm: React.FC = () => {
 
     const [addressId, setAddressId] = useState<string | undefined>(undefined);
 
-    console.log("addressId", addressId);
-
     const {
         register,
         handleSubmit,
