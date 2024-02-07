@@ -18,7 +18,6 @@ const CartButton = dynamic(() => import("@components/cart/cart-button"), {
 });
 
 type DivElementRef = React.MutableRefObject<HTMLDivElement>;
-const { site_header } = siteSettings;
 const Header: React.FC = () => {
     const { openSearch, openModal, setModalView, isAuthorized, openWishlist } =
         useUI();
@@ -56,14 +55,6 @@ const Header: React.FC = () => {
                                 height={25}
                             />
                         </div>
-                        <a className="cursor-pointer" href={ROUTES.WALLET}>
-                            <Image
-                                src={wallet}
-                                alt="whishIcon"
-                                width={25}
-                                height={25}
-                            />
-                        </a>
                     </div>
 
                     <HeaderMenu
