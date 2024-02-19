@@ -12,7 +12,7 @@ const AuthCheck = ({ children }) => {
 
     function handleLogin() {
         setModalView("LOGIN_VIEW");
-        router.push("/");
+        // router.push("/");
         return openModal();
     }
 

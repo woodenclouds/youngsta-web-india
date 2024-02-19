@@ -2,8 +2,6 @@ import React, { useRef } from "react";
 import SearchIcon from "@components/icons/search-icon";
 import Image from "next/image";
 import like from "../../../../public/icons/whish-icon.svg";
-import wallet from "../../../../public/icons/wallet.svg";
-import { siteSettings } from "@settings/site-settings";
 import HeaderMenu from "@components/layout/header/header-menu";
 import Logo from "@components/ui/logo";
 import { useUI } from "@contexts/ui.context";
@@ -70,10 +68,14 @@ const Header: React.FC = () => {
                         >
                             <SearchIcon />
                         </button>
-                        <CartButton />
+
+                        <CartButton
+                            isAuthorized={isAuthorized}
+                            handleLogin={handleLogin}
+                        />
                         <div
                             className="flex items-center cursor-pointer .d-lg-none "
-                            onClick={openWishlist}
+                            onClick={isAuthorized ? openWishlist : handleLogin}
                         >
                             <Image
                                 src={like}

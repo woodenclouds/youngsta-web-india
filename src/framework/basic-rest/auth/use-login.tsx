@@ -19,22 +19,32 @@ export const useLoginMutation = () => {
     const [isLoading, setLoading] = useState(false);
 
     const mutation = useMutation({
-        mutationFn: (input: LoginInputType) => {
+        // Modify this function to also return the input email
+        mutationFn: async (input: LoginInputType) => {
             setLoading(true);
-            return login(input);
+            const response = await login(input);
+            // Return both the response and the input email
+            return { response, email: input.email };
         },
-        onSuccess: (data) => {
+        onSuccess: ({ response, email }) => {
+            // Destructure to get the email
             setLoading(false);
-            if (data?.data?.app_data?.StatusCode === 6000) {
+            if (response?.data?.app_data?.StatusCode === 6000) {
                 Cookies.set(
                     "auth_token",
-                    data?.data?.app_data?.data?.access_token
+                    response?.data?.app_data?.data?.access_token
                 );
+                Cookies.set(
+                    "refferal_code",
+                    response?.data?.app_data?.data?.refferal_code
+                );
+                Cookies.set("email", email);
                 authorize();
                 closeModal();
             } else {
                 setError(
-                    data?.data?.app_data?.data?.message || "An error occurred"
+                    response?.data?.app_data?.data?.message ||
+                        "An error occurred"
                 );
             }
         },

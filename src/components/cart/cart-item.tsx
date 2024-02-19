@@ -25,16 +25,18 @@ const CartItem: React.FC<CartItemProps> = ({
     isWishlist,
 }) => {
     const { t } = useTranslation("common");
-    const [totalPrice, setTotalPrice] = useState(item.price * item.quantity);
+    const [totalPrice, setTotalPrice] = useState(
+        item?.product_info?.selling_price * item.quantity
+    );
     const [quantity, setQuantity] = useState(item.quantity);
 
     useEffect(() => {
-        setTotalPrice(item.price * item.quantity);
-    }, [item.price, item.quantity]);
+        setTotalPrice(item?.product_info?.selling_price * item.quantity);
+    }, [item?.product_info?.selling_price, item.quantity]);
 
     useEffect(() => {
         if (quantity !== item.quantity) {
-            setTotalPrice(item.price * quantity);
+            setTotalPrice(item?.product_info?.selling_price * quantity);
         }
     }, [quantity]);
 
@@ -83,7 +85,8 @@ const CartItem: React.FC<CartItemProps> = ({
                 </Link>
                 {/* @ts-ignore */}
                 <span className="text-sm text-gray-400 mb-2.5">
-                    {t("text-unit-price")} : &nbsp; ${item?.price}
+                    {t("text-unit-price")} : &nbsp; $
+                    {item?.product_info?.selling_price}
                 </span>
                 {isWishlist ? null : (
                     <div className="flex items-end justify-between">

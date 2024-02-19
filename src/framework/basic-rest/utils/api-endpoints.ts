@@ -1,13 +1,6 @@
 export const API_ENDPOINTS = {
-    // authentication endpoints
-    LOGIN: "accounts/login/",
-    REGISTER: "accounts/signup/",
-    VERIFY_OTP: "accounts/verify/",
-    LOGOUT: "/logout",
-
     FORGET_PASSWORD: "/forget-password",
     CATEGORIES_2: "/categories.json",
-    CATEGORIES_ANCIENT: "/categories_ancient.json",
     FEATURED_CATEGORIES: "/featured_categories.json",
     COLLECTIONS: "/collections.json",
     BRANDS: "/brands.json",
@@ -23,14 +16,18 @@ export const API_ENDPOINTS = {
     POPULAR_PRODUCTS: "/products_popular.json",
     NEW_ARRIVAL_PRODUCTS_ANCIENT: "/products_new_arrival.json",
     FLASH_SALE_PRODUCTS_ANCIENT: "/products_flash_sale_ancient.json",
-    SHOPS: "/shops.json",
-    SHOP: "/shop.json",
-    SEARCH: "/search.json",
-    ORDERS: "/orders.json",
-    ORDER: "/order.json",
+
+    // account endpoints
     VIEW_ADDRESS: "accounts/view_addresses/",
-    CHECKOUT: "activities/purchase_items/",
     ADD_ADDRESS: "accounts/add_address/",
+    CREATE_REFERAL: "activities/create-refferal/",
+
+    // authentication endpoints
+    LOGIN: "accounts/login/",
+    REGISTER: "accounts/signup/",
+    VERIFY_OTP: "accounts/verify/",
+    LOGOUT: "/logout",
+    CHANGE_PASSWORD: "accounts/change-password/",
 
     // product endpoints
     CATEGORIES: "products/category/",
@@ -53,4 +50,7 @@ export const API_ENDPOINTS = {
 
     // orders endpoints
     VIEW_ORDERS: "activities/viewPurchase/",
+    CHECKOUT: "activities/purchase_items/",
+    ORDERS: "activities/orders/",
+    WALLET: "activities/wallet/",
 };

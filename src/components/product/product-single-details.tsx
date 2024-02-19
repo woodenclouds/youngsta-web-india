@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@components/ui/button";
 import Counter from "@components/common/counter";
 import { useRouter } from "next/router";
@@ -12,6 +12,10 @@ import { SwiperSlide } from "swiper/react";
 import ProductMetaReview from "@components/product/product-meta-review";
 import { useSsrCompatible } from "@utils/use-ssr-compatible";
 import { useAddToCartMutation } from "@framework/cart/add-to-cart";
+import { FaShareAlt } from "react-icons/fa";
+import Cookies from "js-cookie";
+import http from "@framework/utils/http";
+import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 
 const productGalleryCarouselResponsive = {
     "768": {
@@ -24,8 +28,18 @@ const productGalleryCarouselResponsive = {
 
 const ProductSingleDetails: React.FC = () => {
     const {
-        query: { slug },
+        query: { slug, refferal_code },
     } = useRouter();
+
+    useEffect(() => {
+        const email = Cookies.get("email");
+        if (refferal_code) {
+            http.post(`${API_ENDPOINTS.CREATE_REFERAL}${slug}/`, {
+                refferal_code: refferal_code,
+                email: email,
+            });
+        }
+    }, [refferal_code]);
     const { width } = useSsrCompatible(useWindowSize(), {
         width: 0,
         height: 0,
@@ -67,6 +81,34 @@ const ProductSingleDetails: React.FC = () => {
             });
         }
     }
+
+    const renderShareFunction = async () => {
+        const refferal_code = Cookies.get("refferal_code");
+        const path = `${window.location.href}?refferal_code=${refferal_code}`;
+
+        try {
+            await navigator.clipboard.writeText(path);
+            toast("Product link copied", {
+                progressClassName: "fancy-progress-bar",
+                position: width > 768 ? "bottom-right" : "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+        } catch (err) {
+            toast(`Failed to copy ${err}`, {
+                progressClassName: "fancy-progress-bar",
+                position: width > 768 ? "bottom-right" : "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+        }
+    };
 
     return (
         <div className="block lg:grid grid-cols-9 gap-x-10 xl:gap-x-14 pt-7 pb-10 lg:pb-14 2xl:pb-20 items-start">
@@ -110,15 +152,19 @@ const ProductSingleDetails: React.FC = () => {
 
             <div className="col-span-4 pt-8 lg:pt-0">
                 <div className="pb-7 mb-7 border-b border-gray-300">
-                    <h2 className="text-heading text-lg md:text-xl lg:text-2xl 2xl:text-3xl font-bold hover:text-black mb-3.5">
+                    <h2 className="text-heading text-lg md:text-xl lg:text-2xl 2xl:text-3xl font-bold hover:text-black mb-3.5 relative">
                         {data?.name}
+                        <FaShareAlt
+                            onClick={renderShareFunction}
+                            className="cursor-pointer rtl:mr-1 absolute top-0 right-0"
+                        />
                     </h2>
                     <p className="text-body text-sm lg:text-base leading-6 lg:leading-8">
                         {data?.description}
                     </p>
                     <div className="flex items-center mt-5">
                         <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
-                            {data?.selling_price}
+                            ${data?.selling_price}
                         </div>
                         {/* {discount && (
                             <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
