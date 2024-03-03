@@ -13,10 +13,14 @@ export interface LoginInputType {
 async function login(input: LoginInputType) {
     return http.post(API_ENDPOINTS.LOGIN, input);
 }
+export const getAuthToken = () => {
+    return Cookies.get('auth_token');
+  };
 export const useLoginMutation = () => {
     const { authorize, closeModal } = useUI();
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setLoading] = useState(false);
+    
 
     const mutation = useMutation({
         // Modify this function to also return the input email

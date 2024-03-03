@@ -10,6 +10,7 @@ import { addActiveScroll } from "@utils/add-active-scroll";
 import dynamic from "next/dynamic";
 import UserIcon from "@components/icons/user-icon";
 import { useHeaderMenuQuery } from "@framework/category/get-header-menu";
+import Cookies from "js-cookie";
 const AuthMenu = dynamic(() => import("./auth-menu"), { ssr: false });
 const CartButton = dynamic(() => import("@components/cart/cart-button"), {
     ssr: false,
@@ -29,6 +30,10 @@ const Header: React.FC = () => {
     }
 
     const { data } = useHeaderMenuQuery({});
+    const accessToken = Cookies.get("auth_token")
+
+    console.log(accessToken,"accessTokenaccessTokenaccessToken");
+    
 
     return (
         <header
@@ -41,6 +46,7 @@ const Header: React.FC = () => {
                     <div>
                         <Logo />
                     </div>
+                    
                     <div className=" items-center cursor-pointer  hidden max-lg:flex ">
                         <div
                             className="mr-5 cursor-pointer"
@@ -73,17 +79,20 @@ const Header: React.FC = () => {
                             isAuthorized={isAuthorized}
                             handleLogin={handleLogin}
                         />
-                        <div
-                            className="flex items-center cursor-pointer .d-lg-none "
-                            onClick={isAuthorized ? openWishlist : handleLogin}
-                        >
-                            <Image
-                                src={like}
-                                alt="whishIcon"
-                                width={25}
-                                height={25}
-                            />
-                        </div>
+                        {accessToken && (
+                            <div
+                                className="flex items-center cursor-pointer .d-lg-none "
+                                onClick={isAuthorized ? openWishlist : handleLogin}
+                                >
+                                <Image
+                                    src={like}
+                                    alt="whishIcon"
+                                    width={25}
+                                    height={25}
+                                />
+                            </div>
+                        )}
+                        
 
                         <div className="flex content-end flex-shrink-0">
                             <AuthMenu
