@@ -19,6 +19,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useSsrCompatible } from "@utils/use-ssr-compatible";
 import { useWindowSize } from "react-use";
+import Cookies from "js-cookie";
 
 interface ProductProps {
     product: Product;
@@ -103,6 +104,8 @@ const ProductCard: FC<ProductProps> = ({
         });
     };
 
+    const accessToken = Cookies.get("auth_token")
+
     return (
         <div
             className={cn(
@@ -139,24 +142,20 @@ const ProductCard: FC<ProductProps> = ({
             role="button"
             title={product?.name}
         >
-            <div
-                className={`absolute right-[6px] top-[6px] bg-[#ffff] p-[11px] flex items-center z-[1] rounded-[50%] cursor-pointer ${
-                    isActive ? "text-red-500" : ""
-                }`}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    handleToggleAndAddToWishList(product?.id);
-                }}
-            >
-                {/* <Image
-                    src={like}
-                    height={20}
-                    width={20}
-                    className="z-[1]"
-                /> */}
-                {/* <CiHeart className={` w-[28px] h-[28px]  cursor-pointer ${isActive ? 'text-red-500' : ''}`}/>    */}
+            {accessToken && (
+                <div
+                    className={`absolute right-[6px] top-[6px] bg-[#ffff] p-[11px] flex items-center z-[1] rounded-[50%] cursor-pointer ${
+                        isActive ? "text-red-500" : ""
+                    }`}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggleAndAddToWishList(product?.id);
+                    }}
+                >
                 <FaRegHeart className="w-[20px] h-[20px]" />
-            </div>
+                </div>
+            )}
+            
             <div
                 className={cn(
                     "flex",

@@ -107,13 +107,7 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
                     handleToggleAndAddToWishList(product?.id);
                 }}
             >
-                {/* <Image
-                    src={like}
-                    height={20}
-                    width={20}
-                    className="z-[1]"
-                /> */}
-                {/* <CiHeart className={` w-[28px] h-[28px]  cursor-pointer ${isActive ? 'text-red-500' : ''}`}/>    */}
+               
                 <FaRegHeart className="w-[20px] h-[20px]" />
             </div>
             <div
