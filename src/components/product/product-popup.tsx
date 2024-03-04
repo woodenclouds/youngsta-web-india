@@ -7,6 +7,7 @@ import Counter from "@components/common/counter";
 import { ProductAttributes } from "@components/product/product-attributes";
 import { useTranslation } from "next-i18next";
 import { useAddToCartMutation } from "@framework/cart/add-to-cart";
+import Cookies from "js-cookie";
 
 export default function ProductPopup() {
     const { t } = useTranslation("common");
@@ -31,6 +32,7 @@ export default function ProductPopup() {
     } = data;
 
     const { mutate: addToCart, isPending } = useAddToCartMutation();
+    const accessToken = Cookies.get("auth_token")
 
     function addItemToTheCart() {
         addToCart({ attribute_id, quantity, id });
@@ -98,33 +100,36 @@ export default function ProductPopup() {
                     />
 
                     <div className="pt-2 md:pt-4">
-                        <div className="flex items-center justify-between mb-4 gap-x-3 sm:gap-x-4">
-                            <Counter
-                                quantity={quantity}
-                                onIncrement={() =>
-                                    setQuantity((prev) => prev + 1)
-                                }
-                                onDecrement={() =>
-                                    setQuantity((prev) =>
-                                        prev !== 1 ? prev - 1 : 1
-                                    )
-                                }
-                                disableDecrement={quantity === 1}
-                                setQuantity={() => {}}
-                            />
-                            <Button
-                                onClick={addItemToTheCart}
-                                variant="flat"
-                                className={`w-full h-11 md:h-12 px-1.5 ${
-                                    !attribute_id &&
-                                    "bg-gray-400 hover:bg-gray-400"
-                                }`}
-                                disabled={!attribute_id}
-                                loading={isPending}
-                            >
-                                {t("text-add-to-cart")}
-                            </Button>
-                        </div>
+                        {accessToken && (
+                             <div className="flex items-center justify-between mb-4 gap-x-3 sm:gap-x-4">
+                             <Counter
+                                 quantity={quantity}
+                                 onIncrement={() =>
+                                     setQuantity((prev) => prev + 1)
+                                 }
+                                 onDecrement={() =>
+                                     setQuantity((prev) =>
+                                         prev !== 1 ? prev - 1 : 1
+                                     )
+                                 }
+                                 disableDecrement={quantity === 1}
+                                 setQuantity={() => {}}
+                             />
+                             <Button
+                                 onClick={addItemToTheCart}
+                                 variant="flat"
+                                 className={`w-full h-11 md:h-12 px-1.5 ${
+                                     !attribute_id &&
+                                     "bg-gray-400 hover:bg-gray-400"
+                                 }`}
+                                 disabled={!attribute_id}
+                                 loading={isPending}
+                             >
+                                 {t("text-add-to-cart")}
+                             </Button>
+                         </div>
+                        )}
+                       
 
                         {viewCartBtn && !isPending && (
                             <button

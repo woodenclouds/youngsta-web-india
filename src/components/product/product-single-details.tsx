@@ -50,6 +50,7 @@ const ProductSingleDetails: React.FC = () => {
     const [quantity, setQuantity] = useState(1);
     const [addToCartLoader, setAddToCartLoader] = useState<boolean>(false);
     const [attribute_id, setSize] = useState("");
+    const accessToken = Cookies.get("auth_token")
 
     if (isLoading) return <p>Loading...</p>;
 
@@ -183,7 +184,9 @@ const ProductSingleDetails: React.FC = () => {
                         setSize={setSize}
                     />
                 </div>
-                <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  border-b border-gray-300 py-8">
+                
+                {accessToken && (
+                    <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  border-b border-gray-300 py-8">
                     <Counter
                         quantity={quantity}
                         onIncrement={() => setQuantity((prev) => prev + 1)}
@@ -204,6 +207,8 @@ const ProductSingleDetails: React.FC = () => {
                         <span className="py-2 3xl:px-8">Add to cart</span>
                     </Button>
                 </div>
+                )}
+                
                 <div className="py-6">
                     <ul className="text-sm space-y-5 pb-1">
                         {/* <li>
