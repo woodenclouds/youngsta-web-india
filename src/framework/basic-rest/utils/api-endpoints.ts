@@ -9,10 +9,10 @@ export const API_ENDPOINTS = {
     PRODUCTS_ANCIENT: "/products_ancient.json",
     FEATURED_PRODUCTS_ANCIENT: "/featured_products_ancient.json",
     TOP_SELLER_PRODUCTS: "/products_top_seller.json",
-    ON_SELLING_PRODUCTS: "products/viewproduct/?search=on-selling-products",
+    ON_SELLING_PRODUCTS: "products/viewproduct/?tags=on-selling-products",
     PRODUCT: "/product.json",
     BEST_SELLER_PRODUCTS: "/products_best_seller.json",
-    NEW_ARRIVAL_PRODUCTS: "products/viewproduct/?search=new-arrival-products",
+    NEW_ARRIVAL_PRODUCTS: "products/viewproduct/?tags=new-arrival-products",
     POPULAR_PRODUCTS: "/products_popular.json",
     NEW_ARRIVAL_PRODUCTS_ANCIENT: "/products_new_arrival.json",
     FLASH_SALE_PRODUCTS_ANCIENT: "/products_flash_sale_ancient.json",
@@ -32,8 +32,8 @@ export const API_ENDPOINTS = {
     // product endpoints
     CATEGORIES: "products/category/",
     PRODUCTS: "products/viewproduct/",
-    FEATURED_PRODUCTS: "products/viewproduct/?search=featured-products",
-    FLASH_SALE_PRODUCTS: "products/viewproduct/?search=flash-sale-products",
+    FEATURED_PRODUCTS: "products/viewproduct/?tags=featured-products",
+    FLASH_SALE_PRODUCTS: "products/viewproduct/?tags=flash-sale-products",
     RELATED_PRODUCTS: "products/get-related-product/",
     HEADER_MENU: "products/view-category/",
 
