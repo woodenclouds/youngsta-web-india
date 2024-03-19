@@ -24,7 +24,7 @@ export const ProductAttributes: React.FC<Props> = ({
             <h3 className="text-base md:text-lg text-heading font-semibold mb-2.5 capitalize">
                 {title}
             </h3>
-            <ul className="flex flex-wrap colors ltr:-mr-3 rtl:-ml-3">
+            <ul className=" list-none flex flex-wrap colors ltr:-mr-3 rtl:-ml-3">
                 {attributes?.map(({ id, value, meta, image }) => (
                     <li
                         key={`${value}-${id}`}

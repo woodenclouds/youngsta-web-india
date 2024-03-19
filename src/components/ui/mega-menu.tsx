@@ -22,7 +22,7 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ children }) => {
             <div className="grid grid-cols-5">
                 {children?.map((column: any) => (
                     <ul
-                        className="pt-6 even:bg-gray-150 pb-7 2xl:pb-8 2xl:pt-7"
+                        className="list-none pt-6 even:bg-gray-150 pb-7 2xl:pb-8 2xl:pt-7"
                         key={column.id}
                     >
                         <React.Fragment key={column.id}>

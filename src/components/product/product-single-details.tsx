@@ -215,7 +215,7 @@ const ProductSingleDetails: React.FC = () => {
                 </div>
 
                 <div className="py-6">
-                    <ul className="text-sm space-y-5 pb-1">
+                    <ul className="list-none text-sm space-y-5 pb-1">
                         {/* <li>
                             <span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
                                 SKU:
