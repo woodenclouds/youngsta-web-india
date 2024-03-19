@@ -1,4 +1,5 @@
 import Input from "@components/ui/input";
+import emailjs from "emailjs-com";
 import Button from "@components/ui/button";
 import { useForm } from "react-hook-form";
 import TextArea from "@components/ui/text-area";
@@ -16,19 +17,42 @@ const ContactForm: React.FC = () => {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm<ContactFormValues>();
-    function onSubmit(values: ContactFormValues) {}
     const { t } = useTranslation();
+
+    const onSubmit = async (values: ContactFormValues) => {
+        try {
+            await emailjs.send(
+                "YOUR_SERVICE_ID",
+
+                "YOUR_TEMPLATE_ID",
+
+                {
+                    from_name: values.name,
+                    from_email: values.email,
+                    to_email: "youngstatech@gmail.com",
+                    subject: values.subject,
+                    message_html: values.message,
+                },
+
+                "YOUR_USER_ID"
+            );
+            alert("Your message has been sent successfully!");
+            reset();
+        } catch (error) {
+            console.error("There was an error sending your message:", error);
+        }
+    };
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
             className="w-full mx-auto flex flex-col justify-center "
-            noValidate
-        >
+            noValidate>
             <div className="flex flex-col space-y-5">
                 <div className="flex flex-col md:flex-row space-y-5 md:space-y-0">
                     <Input
-                        labelKey="forms:label-name-required"
+                        labelKey="Name"
                         placeholderKey="forms:placeholder-name"
                         {...register("name", {
                             required: "forms:name-required",
@@ -38,7 +62,7 @@ const ContactForm: React.FC = () => {
                         variant="solid"
                     />
                     <Input
-                        labelKey="forms:label-email-required"
+                        labelKey="Email"
                         type="email"
                         placeholderKey="forms:placeholder-email"
                         {...register("email", {
@@ -54,7 +78,7 @@ const ContactForm: React.FC = () => {
                     />
                 </div>
                 <Input
-                    labelKey="forms:label-subject"
+                    labelKey="Subject"
                     {...register("subject", { required: "forms:name-subject" })}
                     className="relative"
                     placeholderKey="forms:placeholder-subject"
@@ -70,8 +94,7 @@ const ContactForm: React.FC = () => {
                 <div className="relative">
                     <Button
                         type="submit"
-                        className="h-12 lg:h-14 mt-1 text-sm lg:text-base w-full sm:w-auto"
-                    >
+                        className="h-12 lg:h-14 mt-1 text-sm lg:text-base w-full sm:w-auto">
                         {t("common:button-send-message")}
                     </Button>
                 </div>
