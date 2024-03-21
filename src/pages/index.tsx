@@ -45,16 +45,17 @@ export default function Home() {
 
             <BannerSliderBlock />
             <Container>
+                <BannerWithProducts
+                    sectionHeading="text-on-selling-products"
+                    categorySlug="/search"
+                />
                 <BannerCard
                     key={`banner--key${banner[1].id}`}
                     banner={banner[1]}
                     href={`${ROUTES.COLLECTIONS}/${banner[1].slug}`}
                     className="mb-12 lg:mb-14 xl:mb-16 pb-0.5 lg:pb-1 xl:pb-0"
                 />
-                <BannerWithProducts
-                    sectionHeading="text-on-selling-products"
-                    categorySlug="/search"
-                />
+
                 <NewArrivalsProductFeed />
             </Container>
             <Divider className="mb-0" />

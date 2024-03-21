@@ -76,7 +76,7 @@ function ProductFlashSaleWrapper({
 const renderer = ({ days, hours, minutes, seconds, completed }: any) => {
     if (completed) {
         // Render a completed state
-        return <span>Time Over!</span>;
+        // return <span>Time Over!</span>;
     } else {
         // Render a countdown
         return (
