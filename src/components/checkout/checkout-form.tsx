@@ -24,6 +24,7 @@ interface AddAddressInputType {
     zipCode: string;
     save: boolean;
     note: string;
+    state: string;
 }
 
 const CheckoutForm: React.FC = () => {
@@ -99,8 +100,7 @@ const CheckoutForm: React.FC = () => {
                 {addresses?.map((address, index) => (
                     <div
                         key={index}
-                        className="p-3 w-1/4 rounded-lg shadow-md ring-2 ring-offset-3 ring-gray-500"
-                    >
+                        className="p-3 w-1/4 rounded-lg shadow-md ring-2 ring-offset-3 ring-gray-500">
                         <input
                             type="radio"
                             name="address"
@@ -112,6 +112,7 @@ const CheckoutForm: React.FC = () => {
                         </h4>
                         <h4>{address.address}</h4>
                         <h4>{address.city}</h4>
+                        <h4>{address.state}</h4>
                         <h4>{address.post_code}</h4>
                     </div>
                 ))}
@@ -119,8 +120,7 @@ const CheckoutForm: React.FC = () => {
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="w-full mx-auto flex flex-col justify-center "
-                noValidate
-            >
+                noValidate>
                 <div className="flex flex-col space-y-4 lg:space-y-5">
                     <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0">
                         <Input
@@ -177,7 +177,7 @@ const CheckoutForm: React.FC = () => {
                             className="w-full lg:w-1/2 ltr:lg:ml-3 rtl:lg:mr-3 mt-2 md:mt-0"
                         />
                     </div>
-                    <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0">
+                    <div className="flex flex-col lg:flex-row space-y-5 lg:space-y-0">
                         <Input
                             labelKey="City"
                             {...register("city")}
@@ -186,10 +186,19 @@ const CheckoutForm: React.FC = () => {
                         />
 
                         <Input
+                            labelKey="State"
+                            {...register("state")}
+                            variant="solid"
+                            className=" w-full lg:w-1/2 ltr:lg:ml-3 rtl:lg:mr-3 mt-2 md:mt-0"
+                        />
+                    </div>
+                    <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0">
+                        {" "}
+                        <Input
                             labelKey="Postcode"
                             {...register("zipCode")}
                             variant="solid"
-                            className="w-full lg:w-1/2 ltr:lg:ml-3 rtl:lg:mr-3 mt-2 md:mt-0"
+                            className="w-full lg:w-1/2"
                         />
                     </div>
                     <div className="relative flex items-center ">
@@ -211,8 +220,7 @@ const CheckoutForm: React.FC = () => {
                                     e.preventDefault();
                                     makePayment(addressId);
                                 }
-                            }}
-                        >
+                            }}>
                             {addressId
                                 ? t("common:button-place-order")
                                 : "Add Address"}

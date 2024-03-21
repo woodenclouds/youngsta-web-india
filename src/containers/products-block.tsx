@@ -88,28 +88,31 @@ const ProductsBlock: React.FC<ProductsProps> = ({
                             "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5":
                                 variant === "gridModern",
                         }
-                    )}
-                >
+                    )}>
                     {loading && !products?.length ? (
                         <ProductFeedLoader
                             limit={limit}
                             uniqueKey={uniqueKey}
                         />
                     ) : (
-                        products?.map((product: Product) => (
-                            <ProductCard
-                                showCategory={showCategory}
-                                showRating={showRating}
-                                hideProductDescription={hideProductDescription}
-                                key={`product--key${product.id}`}
-                                product={product}
-                                imgWidth={imgWidth}
-                                imgHeight={imgHeight}
-                                variant={variant}
-                                demoVariant={demoVariant}
-                                disableBorderRadius={disableBorderRadius}
-                            />
-                        ))
+                        products
+                            ?.slice(0, 8)
+                            .map((product: Product) => (
+                                <ProductCard
+                                    showCategory={showCategory}
+                                    showRating={showRating}
+                                    hideProductDescription={
+                                        hideProductDescription
+                                    }
+                                    key={`product--key${product.id}`}
+                                    product={product}
+                                    imgWidth={imgWidth}
+                                    imgHeight={imgHeight}
+                                    variant={variant}
+                                    demoVariant={demoVariant}
+                                    disableBorderRadius={disableBorderRadius}
+                                />
+                            ))
                     )}
                 </div>
             )}
