@@ -8,6 +8,7 @@ import { ROUTES } from "@utils/routes";
 import { generateCartItemName } from "@utils/generate-cart-item-name";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
+import { countryData } from "../../utils/currencies";
 
 type CartItemProps = {
     item: any;
@@ -85,7 +86,7 @@ const CartItem: React.FC<CartItemProps> = ({
                 </Link>
                 {/* @ts-ignore */}
                 <span className="text-sm text-gray-400 mb-2.5">
-                    {t("text-unit-price")} : &nbsp; $
+                    {t("text-unit-price")} : &nbsp; {countryData?.symbol}
                     {item?.product_info?.selling_price}
                 </span>
                 {isWishlist ? null : (
@@ -99,7 +100,8 @@ const CartItem: React.FC<CartItemProps> = ({
                             variant="dark"
                         />
                         <span className="text-sm font-semibold leading-5 md:text-base text-heading">
-                            ${totalPrice}
+                            {countryData?.symbol}
+                            {totalPrice}
                         </span>
                     </div>
                 )}

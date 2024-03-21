@@ -11,10 +11,7 @@ import ProductViewIcon from "@components/icons/product-view-icon";
 import ProductWishIcon from "@components/icons/product-wish-icon";
 import ProductCompareIcon from "@components/icons/product-compare-icon";
 import RatingDisplay from "@components/common/rating-display";
-import {
-    useAddToCartMutation,
-    useAddToWishlistMutation,
-} from "@framework/wishlist/add-to-wishlist";
+import { useAddToWishlistMutation } from "@framework/wishlist/add-to-wishlist";
 import { FaRegHeart } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useSsrCompatible } from "@utils/use-ssr-compatible";
@@ -81,7 +78,7 @@ const ProductCard: FC<ProductProps> = ({
     }
     const [isActive, setIsActive] = useState(false);
     const { mutate: addToWishList } = useAddToWishlistMutation();
-    const handleToggleAndAddToWishList = (productId) => {
+    const handleToggleAndAddToWishList = (productId: any) => {
         addToWishList({ id: productId });
         onSuccess();
         setIsActive(!isActive);
@@ -104,7 +101,7 @@ const ProductCard: FC<ProductProps> = ({
         });
     };
 
-    const accessToken = Cookies.get("auth_token")
+    const accessToken = Cookies.get("auth_token");
 
     return (
         <div
@@ -152,10 +149,10 @@ const ProductCard: FC<ProductProps> = ({
                         handleToggleAndAddToWishList(product?.id);
                     }}
                 >
-                <FaRegHeart className="w-[20px] h-[20px]" />
+                    <FaRegHeart className="w-[20px] h-[20px]" />
                 </div>
             )}
-            
+
             <div
                 className={cn(
                     "flex",
@@ -173,7 +170,7 @@ const ProductCard: FC<ProductProps> = ({
                 )}
             >
                 <Image
-                    src={product?.thumbnail ?? placeholderImage}
+                    src={product?.thumbnail as string}
                     width={demoVariant === "ancient" ? 352 : imgWidth}
                     height={demoVariant === "ancient" ? 452 : imgHeight}
                     loading={imgLoading}

@@ -7,7 +7,7 @@ export interface addCartInputType {
     quantity: number;
     id: number;
 }
-async function addToCart(input: addCartInputType) {
+async function addToCart(input: any) {
     let id = input?.id;
     return http.post(`${API_ENDPOINTS.ADD_TO_CART}${id}/`, {
         attribute_id: input?.attribute_id,
@@ -15,11 +15,14 @@ async function addToCart(input: addCartInputType) {
     });
 }
 
-export const useAddToCartMutation = () => {
+export const useAddToCartMutation = (onSuccess: any, onError: any) => {
     return useMutation({
         mutationFn: (input: addCartInputType) => addToCart(input),
         onSuccess: (data) => {
             if (data?.data?.app_data?.StatusCode === 6000) {
+                onSuccess();
+            } else {
+                onError(data?.data?.app_data?.data);
             }
         },
         onError: (data) => {

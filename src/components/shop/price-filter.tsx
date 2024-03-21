@@ -2,45 +2,46 @@ import { CheckBox } from "@components/ui/checkbox";
 import { useRouter } from "next/router";
 import React from "react";
 import { useTranslation } from "next-i18next";
+import { countryData } from "@utils/currencies";
 const priceFilterItems = [
     {
         id: "1",
-        name: "Under $50",
+        name: `Under ${countryData?.symbol}50`,
         slug: "0-50",
     },
     {
         id: "2",
-        name: "$50 to $100",
+        name: `${countryData?.symbol}50 to ${countryData?.symbol}100`,
         slug: "50-100",
     },
     {
         id: "3",
-        name: "$100 to $150",
+        name: `${countryData?.symbol}100 to ${countryData?.symbol}150`,
         slug: "100-150",
     },
     {
         id: "4",
-        name: "$150 to $200",
+        name: `${countryData?.symbol}150 to ${countryData?.symbol}200`,
         slug: "150-200",
     },
     {
         id: "5",
-        name: "$200 to $300",
+        name: `${countryData?.symbol}200 to ${countryData?.symbol}300`,
         slug: "200-300",
     },
     {
         id: "6",
-        name: "$300 to $500",
+        name: `${countryData?.symbol}300 to ${countryData?.symbol}500`,
         slug: "300-500",
     },
     {
         id: "7",
-        name: "$500 to $1000",
+        name: `${countryData?.symbol}500 to ${countryData?.symbol}1000`,
         slug: "500-1000",
     },
     {
         id: "8",
-        name: "Over $1000",
+        name: `Over ${countryData?.symbol}1000`,
         slug: "1000-",
     },
 ];

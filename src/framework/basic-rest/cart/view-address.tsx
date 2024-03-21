@@ -33,7 +33,7 @@ export const fetchAddresses = async ({
     }
 };
 
-export const useAddresses = (options?: UseAddressesOptions) => {
+export const useAddresses = (options?: any) => {
     return useQuery({
         queryKey: ["addresses", options],
         queryFn: fetchAddresses,

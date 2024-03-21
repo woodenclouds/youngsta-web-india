@@ -9,9 +9,10 @@ export default function CartButton({
     isAuthorized: boolean;
     handleLogin: () => void;
 }) {
-    const { openCart } = useUI();
+    const { openCart, is_cart_updated } = useUI();
     const { data } = useFetchCartItemsQuery({
         limit: 10,
+        is_cart_updated,
     });
     function handleCartOpen() {
         return openCart();
@@ -25,9 +26,11 @@ export default function CartButton({
         >
             <CartIcon />
             <span className="cart-counter-badge flex items-center justify-center bg-heading text-white absolute -top-2.5 xl:-top-3 rounded-full ltr:-right-2.5 ltr:xl:-right-3 rtl:-left-2.5 rtl:xl:-left-3 font-bold">
-                {data?.length > 10
+                {Array.isArray(data) && data?.length > 10
                     ? "10+"
-                    : data?.length > 1 && data?.length < 10
+                    : Array.isArray(data) &&
+                      data?.length > 1 &&
+                      data?.length < 10
                     ? data?.length
                     : "0"}
             </span>

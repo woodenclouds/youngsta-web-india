@@ -10,6 +10,7 @@ import { useAddToWishlistMutation } from "@framework/wishlist/add-to-wishlist";
 import { useSsrCompatible } from "@utils/use-ssr-compatible";
 import { useWindowSize } from "react-use";
 import { useState } from "react";
+import { countryData } from "@utils/currencies";
 
 interface ProductProps {
     product: Product;
@@ -107,7 +108,6 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
                     handleToggleAndAddToWishList(product?.id);
                 }}
             >
-               
                 <FaRegHeart className="w-[20px] h-[20px]" />
             </div>
             <div
@@ -185,7 +185,8 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
                         </del>
                     )}
                     <div className="text-heading font-segoe font-semibold text-base md:text-xl lg:text-base xl:text-xl 3xl:text-2xl 3xl:mt-0.5 ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
-                        ${product?.selling_price}
+                        {countryData?.symbol}
+                        {product?.selling_price}
                     </div>
                 </div>
             </div>

@@ -10,8 +10,6 @@ import { useCheckoutMutation } from "@framework/auth/use-checkout";
 import { useState } from "react";
 import Script from "next/script";
 import { getToken } from "@framework/utils/get-token";
-import http from "@framework/utils/http";
-import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import { usePlaceOrderMutation } from "@framework/checkout/place-order";
 
 interface AddAddressInputType {
@@ -42,17 +40,7 @@ const CheckoutForm: React.FC = () => {
             currency: "INR",
             amount: response.amount,
             order_id: response.order_id,
-            handler: function (response: any) {
-                // Validate payment at server - using webhooks is a better idea.
-                // alert(response.razorpay_payment_id);
-                // alert(response.razorpay_order_id);
-                // alert(response.razorpay_signature);
-            },
-            prefill: {
-                name: "John Doe",
-                email: "jdoe@example.com",
-                contact: "9876543210",
-            },
+            handler: function (response: any) {},
         };
         const paymentObject = new window.Razorpay(options);
         paymentObject.open();
@@ -96,25 +84,26 @@ const CheckoutForm: React.FC = () => {
                 {t("text-shipping-address")}
             </h2>
             <div className="flex gap-3 mb-4 flex-wrap">
-                {addresses?.map((address, index) => (
-                    <div
-                        key={index}
-                        className="p-3 w-1/4 rounded-lg shadow-md ring-2 ring-offset-3 ring-gray-500"
-                    >
-                        <input
-                            type="radio"
-                            name="address"
-                            id={`address${index}`}
-                            onChange={() => setAddressId(address?.id)}
-                        />
-                        <h4>
-                            {address.first_name} {address.last_name}
-                        </h4>
-                        <h4>{address.address}</h4>
-                        <h4>{address.city}</h4>
-                        <h4>{address.post_code}</h4>
-                    </div>
-                ))}
+                {Array.isArray(addresses) &&
+                    addresses?.map((address: any, index: any) => (
+                        <div
+                            key={index}
+                            className="p-3 w-1/4 rounded-lg shadow-md ring-2 ring-offset-3 ring-gray-500"
+                        >
+                            <input
+                                type="radio"
+                                name="address"
+                                id={`address${index}`}
+                                onChange={() => setAddressId(address?.id)}
+                            />
+                            <h4>
+                                {address.first_name} {address.last_name}
+                            </h4>
+                            <h4>{address.address}</h4>
+                            <h4>{address.city}</h4>
+                            <h4>{address.post_code}</h4>
+                        </div>
+                    ))}
             </div>
             <form
                 onSubmit={handleSubmit(onSubmit)}

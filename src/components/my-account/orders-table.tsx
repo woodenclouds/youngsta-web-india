@@ -5,6 +5,7 @@ import { useWindowSize } from "@utils/use-window-size";
 import { useTranslation } from "next-i18next";
 import { useSsrCompatible } from "@utils/use-ssr-compatible";
 import { useOrderedItemsQuery } from "@framework/orders/get-orders";
+import { countryData } from "@utils/currencies";
 
 const OrdersTable: React.FC = () => {
     const { width } = useSsrCompatible(useWindowSize(), {
@@ -70,7 +71,8 @@ const OrdersTable: React.FC = () => {
                                         {item?.status?.status}
                                     </td>
                                     <td className="px-4 py-5 ltr:text-left rtl:text-right lg:text-center text-heading">
-                                        ${item?.total_amount} for{" "}
+                                        {countryData?.symbol}
+                                        {item?.total_amount} for{" "}
                                         {item?.purchase_items?.length} items
                                     </td>
                                     {/* <td className="px-4 py-5 ltr:text-right rtl:text-left text-heading">
@@ -115,7 +117,8 @@ const OrdersTable: React.FC = () => {
                                 <li className="flex items-center justify-between">
                                     {t("text-total")}
                                     <span className="font-normal">
-                                        ${item?.total_amount} for{" "}
+                                        {countryData?.symbol}
+                                        {item?.total_amount} for{" "}
                                         {item?.purchase_items?.length} items{" "}
                                     </span>
                                 </li>

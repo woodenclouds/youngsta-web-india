@@ -17,6 +17,7 @@ import Cookies from "js-cookie";
 import http from "@framework/utils/http";
 import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import { useUI } from "@contexts/ui.context";
+import { countryData } from "@utils/currencies";
 
 const productGalleryCarouselResponsive = {
     "768": {
@@ -31,7 +32,7 @@ const ProductSingleDetails: React.FC = () => {
     const {
         query: { slug, refferal_code },
     } = useRouter();
-    const { isAuthorized, setModalView, openModal } = useUI();
+    const { isAuthorized, setModalView, openModal, changeCart } = useUI();
 
     useEffect(() => {
         const email = Cookies.get("email");
@@ -46,13 +47,37 @@ const ProductSingleDetails: React.FC = () => {
         width: 0,
         height: 0,
     });
-    const { mutate: addToCart } = useAddToCartMutation();
+
+    const successCart = () => {
+        changeCart();
+        toast("Added to the Wishlist", {
+            progressClassName: "fancy-progress-bar",
+            position: width > 768 ? "bottom-right" : "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
+
+    const errorCart = (data: any) => {
+        toast.error(data?.message, {
+            progressClassName: "fancy-progress-bar",
+            position: width > 768 ? "bottom-right" : "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
+    const { mutate: addToCart } = useAddToCartMutation(successCart, errorCart);
 
     const { data, isLoading } = useProductQuery(slug as string);
     const [quantity, setQuantity] = useState(1);
     const [addToCartLoader, setAddToCartLoader] = useState<boolean>(false);
     const [attribute_id, setSize] = useState("");
-    const accessToken = Cookies.get("auth_token");
 
     if (isLoading) return <p>Loading...</p>;
 
@@ -64,19 +89,8 @@ const ProductSingleDetails: React.FC = () => {
     function addItemToTheCart() {
         if (attribute_id) {
             setAddToCartLoader(true);
-
             addToCart({ attribute_id, quantity, id: slug });
             setAddToCartLoader(false);
-
-            toast("Added to the Wishlist", {
-                progressClassName: "fancy-progress-bar",
-                position: width > 768 ? "bottom-right" : "top-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
         } else {
             toast("Please select you size", {
                 progressClassName: "fancy-progress-bar",
@@ -129,32 +143,34 @@ const ProductSingleDetails: React.FC = () => {
                     className="product-gallery"
                     buttonGroupClassName="hidden"
                 >
-                    {data?.images?.map((item, index: number) => (
-                        <SwiperSlide key={`product-gallery-key-${index}`}>
-                            <div className="col-span-1 transition duration-150 ease-in hover:opacity-90">
+                    {Array.isArray(data?.images) &&
+                        data?.images?.map((item: any, index: number) => (
+                            <SwiperSlide key={`product-gallery-key-${index}`}>
+                                <div className="col-span-1 transition duration-150 ease-in hover:opacity-90">
+                                    <img
+                                        src={item?.image ?? data?.thumbnail}
+                                        alt={`${data?.name}--${index}`}
+                                        className="object-cover w-full"
+                                    />
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                </Carousel>
+            ) : (
+                <div className="col-span-5 grid grid-cols-2 gap-2.5">
+                    {Array.isArray(data?.images) &&
+                        data?.images?.map((item, index: number) => (
+                            <div
+                                key={index}
+                                className="col-span-1 transition duration-150 ease-in hover:opacity-90"
+                            >
                                 <img
                                     src={item?.image ?? data?.thumbnail}
                                     alt={`${data?.name}--${index}`}
                                     className="object-cover w-full"
                                 />
                             </div>
-                        </SwiperSlide>
-                    ))}
-                </Carousel>
-            ) : (
-                <div className="col-span-5 grid grid-cols-2 gap-2.5">
-                    {data?.images?.map((item, index: number) => (
-                        <div
-                            key={index}
-                            className="col-span-1 transition duration-150 ease-in hover:opacity-90"
-                        >
-                            <img
-                                src={item?.image ?? data?.thumbnail}
-                                alt={`${data?.name}--${index}`}
-                                className="object-cover w-full"
-                            />
-                        </div>
-                    ))}
+                        ))}
                 </div>
             )}
 
@@ -172,7 +188,8 @@ const ProductSingleDetails: React.FC = () => {
                     </p>
                     <div className="flex items-center mt-5">
                         <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
-                            ${data?.selling_price}
+                            {countryData?.symbol}
+                            {data?.selling_price}
                         </div>
                         {/* {discount && (
                             <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">

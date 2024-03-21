@@ -4,6 +4,7 @@ import { useFetchCartItemsQuery } from "@framework/cart/get-cart-items";
 import CartItem from "@components/cart/cart-item";
 import { useEffect, useState } from "react";
 import { useEditCartMutation } from "@framework/cart/edit-cart";
+import { countryData } from "@utils/currencies";
 
 const CheckoutCard: React.FC = () => {
     const { t } = useTranslation("common");
@@ -20,7 +21,7 @@ const CheckoutCard: React.FC = () => {
 
     const calculateTotalPrice = () => {
         return items?.reduce(
-            (total, item) => total + item?.price * item?.quantity,
+            (total, item: any) => total + item?.price * item?.quantity,
             0
         );
     };
@@ -35,7 +36,7 @@ const CheckoutCard: React.FC = () => {
         {
             id: 1,
             name: "Subtotal",
-            price: `$${cartTotal}`,
+            price: `${countryData?.symbol}${cartTotal}`,
         },
         {
             id: 2,
@@ -45,7 +46,7 @@ const CheckoutCard: React.FC = () => {
         {
             id: 3,
             name: "Total",
-            price: `$${cartTotal}`,
+            price: `${countryData?.symbol}${cartTotal}`,
         },
     ];
 
