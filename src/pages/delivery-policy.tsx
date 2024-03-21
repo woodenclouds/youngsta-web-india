@@ -1,7 +1,7 @@
 import Layout from "@components/layout/layout";
 import Container from "@components/ui/container";
 import PageHeader from "@components/ui/page-header";
-import { privacyPolicy } from "@settings/privacy-settings";
+import { deliveryPolicy } from "@settings/delivery-policy";
 import { Link, Element } from "react-scroll";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
@@ -21,7 +21,7 @@ export default function PrivacyPage() {
                     <div className="flex flex-col md:flex-row">
                         <nav className="mb-8 md:w-72 xl:w-3/12 md:mb-0">
                             <ol className="sticky z-10 md:top-16 lg:top-28">
-                                {privacyPolicy?.map((item, index) => (
+                                {deliveryPolicy?.map((item, index) => (
                                     <li key={item.id}>
                                         <Link
                                             spy={true}
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
                         {/* End of section scroll spy menu */}
 
                         <div className="pt-0 md:w-9/12 ltr:md:pl-8 rtl:md:pr-8 lg:pt-2">
-                            {privacyPolicy?.map((item) => (
+                            {deliveryPolicy?.map((item) => (
                                 // @ts-ignore
                                 <Element
                                     key={item.title}

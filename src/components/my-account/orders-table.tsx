@@ -88,7 +88,7 @@ const OrdersTable: React.FC = () => {
                 ) : (
                     <div className="w-full space-y-4">
                         {data?.map((item: any) => (
-                            <ul className="flex flex-col px-4 pt-5 pb-6 space-y-5 text-sm font-semibold border border-gray-300 rounded-md text-heading">
+                            <ul className=" list-none flex flex-col px-4 pt-5 pb-6 space-y-5 text-sm font-semibold border border-gray-300 rounded-md text-heading">
                                 <li className="flex items-center justify-between">
                                     {t("text-order")}
                                     <span className="font-normal">

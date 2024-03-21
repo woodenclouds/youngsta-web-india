@@ -16,6 +16,7 @@ import { FaShareAlt } from "react-icons/fa";
 import Cookies from "js-cookie";
 import http from "@framework/utils/http";
 import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
+import { useUI } from "@contexts/ui.context";
 
 const productGalleryCarouselResponsive = {
     "768": {
@@ -30,6 +31,7 @@ const ProductSingleDetails: React.FC = () => {
     const {
         query: { slug, refferal_code },
     } = useRouter();
+    const { isAuthorized, setModalView, openModal } = useUI();
 
     useEffect(() => {
         const email = Cookies.get("email");
@@ -50,9 +52,14 @@ const ProductSingleDetails: React.FC = () => {
     const [quantity, setQuantity] = useState(1);
     const [addToCartLoader, setAddToCartLoader] = useState<boolean>(false);
     const [attribute_id, setSize] = useState("");
-    const accessToken = Cookies.get("auth_token")
+    const accessToken = Cookies.get("auth_token");
 
     if (isLoading) return <p>Loading...</p>;
+
+    function handleLogin() {
+        setModalView("LOGIN_VIEW");
+        return openModal();
+    }
 
     function addItemToTheCart() {
         if (attribute_id) {
@@ -184,9 +191,8 @@ const ProductSingleDetails: React.FC = () => {
                         setSize={setSize}
                     />
                 </div>
-                
-                {accessToken && (
-                    <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  border-b border-gray-300 py-8">
+
+                <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  border-b border-gray-300 py-8">
                     <Counter
                         quantity={quantity}
                         onIncrement={() => setQuantity((prev) => prev + 1)}
@@ -196,21 +202,20 @@ const ProductSingleDetails: React.FC = () => {
                         disableDecrement={quantity === 1}
                     />
                     <Button
-                        onClick={addItemToTheCart}
+                        onClick={isAuthorized ? addItemToTheCart : handleLogin}
                         variant="slim"
                         className={`w-full md:w-6/12 xl:w-full ${
                             !attribute_id && "bg-gray-400 hover:bg-gray-400"
                         }`}
-                        disabled={!attribute_id}
+                        // disabled={!attribute_id}
                         loading={addToCartLoader}
                     >
                         <span className="py-2 3xl:px-8">Add to cart</span>
                     </Button>
                 </div>
-                )}
-                
+
                 <div className="py-6">
-                    <ul className="text-sm space-y-5 pb-1">
+                    <ul className="list-none text-sm space-y-5 pb-1">
                         {/* <li>
                             <span className="font-semibold text-heading inline-block ltr:pr-2 rtl:pl-2">
                                 SKU:

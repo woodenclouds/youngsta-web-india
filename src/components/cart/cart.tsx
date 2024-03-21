@@ -126,7 +126,7 @@ export default function Cart() {
                     </span>
                     <span className="rtl:mr-auto ltr:ml-auto flex-shrink-0 -mt-0.5 py-0.5 flex">
                         <span className="ltr:border-l rtl:border-r border-white ltr:pr-5 rtl:pl-5 py-0.5" />
-                        ${cartTotal}
+                        {cartTotal}
                     </span>
                 </Link>
             </div>

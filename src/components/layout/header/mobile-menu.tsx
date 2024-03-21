@@ -126,7 +126,7 @@ export default function MobileMenu() {
         return (
             <ul className="pt-0.5">
                 {data?.map((menu: any, index: number) => {
-                    const menuName: string = `sidebar-submenu-${dept}-${menuIndex}-${index}`;
+                    const menuName: string = `sidebar-submenu-${dept}-${menuIndex}-${index} list-none`;
 
                     return (
                         <ListMenu
@@ -161,7 +161,7 @@ export default function MobileMenu() {
 
                 <Scrollbar className="flex-grow mb-auto menu-scrollbar">
                     <div className="flex flex-col px-0 py-7 lg:px-2 text-heading">
-                        <ul className="mobileMenu">
+                        <ul className="mobileMenu list-none">
                             {data?.map((menu: any, index: any) => {
                                 const dept: number = 1;
                                 const menuName: string = `sidebar-menu-${dept}-${index}`;

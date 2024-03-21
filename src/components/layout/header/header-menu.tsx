@@ -44,7 +44,7 @@ const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
 
                     {item?.children && Array.isArray(item.children) && (
                         <div className="absolute invisible bg-gray-200 opacity-0 group-hover:visible children shadow-header ltr:left-0 rtl:right-0 group-hover:opacity-100">
-                            <ul className="py-5 text-sm text-body">
+                            <ul className="py-5 text-sm text-body list-none">
                                 {item.children.map(
                                     (menu: any, index: number) => {
                                         const dept: number = 1;

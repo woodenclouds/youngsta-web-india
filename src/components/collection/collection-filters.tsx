@@ -25,7 +25,7 @@ export const CollectionFilters: React.FC = () => {
 				</div>
 			</div>
 			<div className="block pb-7">
-				<ul className="mt-2 flex flex-col space-y-5">
+				<ul className="mt-2 flex flex-col space-y-5 list-none">
 					{items?.map((item: any) => (
 						<li key={item.id} className="text-sm lg:text-[15px] cursor-pointer">
 							<ActiveLink href={`${ROUTES.COLLECTIONS}/${item.slug}`}>
