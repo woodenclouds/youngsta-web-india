@@ -32,7 +32,7 @@ const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
                 >
                     <Link
                         href={`/category/${formatString(item?.name)}`}
-                        className="relative inline-flex items-center px-3 py-2 text-sm font-normal xl:text-base text-heading xl:px-4 group-hover:text-black"
+                        className="capitalize relative inline-flex items-center px-3 py-2 text-sm font-normal xl:text-base text-heading xl:px-4 group-hover:text-black"
                     >
                         {t(item.name)}
                         {item?.children?.length > 0 && (
