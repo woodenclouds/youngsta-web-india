@@ -227,12 +227,12 @@ const ProductSingleDetails: React.FC = () => {
                         <span className="py-2 3xl:px-8">Add to cart</span>
                     </Button>
                 </div>
-                <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  border-b border-gray-300 pt-[24px] pb-[24px] max-[517px]:flex-wrap">
-                    <p>
+                <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  border-b border-gray-300 pt-[24px] pb-[24px] flex-wrap">
+                    <h4 className="max-[517px]:mb-[16px]">
                         Earn ₹ {data?.referal_Amount} by sharing this product!
-                    </p>
+                    </h4>
                     <button
-                        className="bg-[#fff] border-solid border-2 border-[#F5B528] px-[24px] py-[10px] rounded cursor-pointer text-[#000]"
+                        className="bg-[#fff] border-solid border-2 border-[#F5B528] px-[24px] py-[10px] rounded cursor-pointer text-[#000] max-[517px]:mb-[16px]"
                         onClick={renderShareFunction}>
                         Copy Referral Link
                     </button>
