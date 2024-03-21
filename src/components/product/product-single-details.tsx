@@ -141,8 +141,7 @@ const ProductSingleDetails: React.FC = () => {
                     }}
                     breakpoints={productGalleryCarouselResponsive}
                     className="product-gallery"
-                    buttonGroupClassName="hidden"
-                >
+                    buttonGroupClassName="hidden">
                     {Array.isArray(data?.images) &&
                         data?.images?.map((item: any, index: number) => (
                             <SwiperSlide key={`product-gallery-key-${index}`}>
@@ -162,8 +161,7 @@ const ProductSingleDetails: React.FC = () => {
                         data?.images?.map((item, index: number) => (
                             <div
                                 key={index}
-                                className="col-span-1 transition duration-150 ease-in hover:opacity-90"
-                            >
+                                className="col-span-1 transition duration-150 ease-in hover:opacity-90">
                                 <img
                                     src={item?.image ?? data?.thumbnail}
                                     alt={`${data?.name}--${index}`}
@@ -225,17 +223,17 @@ const ProductSingleDetails: React.FC = () => {
                             !attribute_id && "bg-gray-400 hover:bg-gray-400"
                         }`}
                         // disabled={!attribute_id}
-                        loading={addToCartLoader}
-                    >
+                        loading={addToCartLoader}>
                         <span className="py-2 3xl:px-8">Add to cart</span>
                     </Button>
                 </div>
-                <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  border-b border-gray-300 pt-[24px] pb-[24px]">
-                    <p>Earn ₹ 100 by sharing this product!</p>
+                <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  border-b border-gray-300 pt-[24px] pb-[24px] max-[517px]:flex-wrap">
+                    <p>
+                        Earn ₹ {data?.referal_Amount} by sharing this product!
+                    </p>
                     <button
                         className="bg-[#fff] border-solid border-2 border-[#F5B528] px-[24px] py-[10px] rounded cursor-pointer text-[#000]"
-                        onClick={renderShareFunction}
-                    >
+                        onClick={renderShareFunction}>
                         Copy Referral Link
                     </button>
                 </div>
@@ -254,8 +252,7 @@ const ProductSingleDetails: React.FC = () => {
                             </span>
                             <Link
                                 href="/"
-                                className="transition hover:underline hover:text-heading"
-                            >
+                                className="transition hover:underline hover:text-heading">
                                 {data?.category ? data?.category : "N/A"}
                             </Link>
                         </li>
