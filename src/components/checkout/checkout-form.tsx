@@ -8,6 +8,11 @@ import { useAddresses } from "@framework/cart/view-address";
 import { useTranslation } from "next-i18next";
 import { useCheckoutMutation } from "@framework/auth/use-checkout";
 import { useState } from "react";
+import Script from "next/script";
+import { getToken } from "@framework/utils/get-token";
+import http from "@framework/utils/http";
+import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
+import { usePlaceOrderMutation } from "@framework/checkout/place-order";
 
 interface AddAddressInputType {
     firstName: string;
@@ -24,13 +29,41 @@ interface AddAddressInputType {
 const CheckoutForm: React.FC = () => {
     const { t } = useTranslation();
     const { mutate: checkout } = useCheckoutMutation();
+    const token = getToken();
 
     const handleAddAddressSuccess = () => {
         setUpdated(!isUpdated);
     };
+
+    const razorPayFunction = (response: any) => {
+        console.log("response", response);
+        const options = {
+            name: "data.name",
+            currency: "INR",
+            amount: response.amount,
+            order_id: response.order_id,
+            handler: function (response: any) {
+                // Validate payment at server - using webhooks is a better idea.
+                // alert(response.razorpay_payment_id);
+                // alert(response.razorpay_order_id);
+                // alert(response.razorpay_signature);
+            },
+            prefill: {
+                name: "John Doe",
+                email: "jdoe@example.com",
+                contact: "9876543210",
+            },
+        };
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+        paymentObject.on("payment.failed", function (response: any) {
+            alert("Payment failed. Please try again. Contact support for help");
+        });
+    };
     const { mutate: addAddress, isPending } = useAddAddressMutation(
         handleAddAddressSuccess
     );
+    const { mutate: placeOrder } = usePlaceOrderMutation(razorPayFunction);
 
     const [addressId, setAddressId] = useState<string | undefined>(undefined);
 
@@ -49,8 +82,16 @@ const CheckoutForm: React.FC = () => {
         limit: isUpdated,
     });
 
+    const makePayment = async (id: string) => {
+        placeOrder({ address: id });
+    };
+
     return (
         <>
+            <Script
+                id="razorpay-checkout-js"
+                src="https://checkout.razorpay.com/v1/checkout.js"
+            />
             <h2 className="text-lg md:text-xl xl:text-2xl font-bold text-heading mb-6 xl:mb-8">
                 {t("text-shipping-address")}
             </h2>
@@ -168,7 +209,7 @@ const CheckoutForm: React.FC = () => {
                             onClick={(e) => {
                                 if (addressId) {
                                     e.preventDefault();
-                                    checkout({ input: addressId });
+                                    makePayment(addressId);
                                 }
                             }}
                         >

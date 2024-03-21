@@ -30,10 +30,7 @@ const Header: React.FC = () => {
     }
 
     const { data } = useHeaderMenuQuery({});
-    const accessToken = Cookies.get("auth_token")
-
-    console.log(accessToken,"accessTokenaccessTokenaccessToken");
-    
+    const accessToken = Cookies.get("auth_token");
 
     return (
         <header
@@ -46,7 +43,7 @@ const Header: React.FC = () => {
                     <div>
                         <Logo />
                     </div>
-                    
+
                     <div className=" items-center cursor-pointer  hidden max-lg:flex ">
                         <div
                             className="mr-5 cursor-pointer"
@@ -82,8 +79,10 @@ const Header: React.FC = () => {
                         {accessToken && (
                             <div
                                 className="flex items-center cursor-pointer .d-lg-none "
-                                onClick={isAuthorized ? openWishlist : handleLogin}
-                                >
+                                onClick={
+                                    isAuthorized ? openWishlist : handleLogin
+                                }
+                            >
                                 <Image
                                     src={like}
                                     alt="whishIcon"
@@ -92,7 +91,6 @@ const Header: React.FC = () => {
                                 />
                             </div>
                         )}
-                        
 
                         <div className="flex content-end flex-shrink-0">
                             <AuthMenu
