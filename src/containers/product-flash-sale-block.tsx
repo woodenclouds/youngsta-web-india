@@ -52,8 +52,7 @@ function ProductFlashSaleWrapper({
                 } rounded-md ${
                     !disableSectionPadding &&
                     "pt-5 md:pt-6 lg:pt-7 pb-5 lg:pb-7 px-4 md:px-5 lg:px-7"
-                }`}
-            >
+                }`}>
                 <div className="flex justify-between items-center flex-wrap mb-5 md:mb-6">
                     <SectionHeader
                         sectionHeading={sectionHeading || ""}
@@ -138,11 +137,9 @@ const ProductsFlashSaleBlock: React.FC<ProductsProps> = ({
                 date={date}
                 disableSectionPadding={disableSectionPadding}
                 disableSectionBorder={disableSectionBorder}
-                hideCountdown={hideCountdown}
-            >
+                hideCountdown={hideCountdown}>
                 <div
-                    className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-${TwoXlCols} gap-x-3 md:gap-x-5 xl:gap-x-7 gap-y-4 lg:gap-y-5 xl:lg:gap-y-6 2xl:gap-y-8`}
-                >
+                    className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-${TwoXlCols} gap-x-3 md:gap-x-5 xl:gap-x-7 gap-y-4 lg:gap-y-5 xl:lg:gap-y-6 2xl:gap-y-8`}>
                     {Array.from({ length: limit || 10 }).map((_, idx) => (
                         <ProductCardGridLoader
                             key={idx}
@@ -161,8 +158,7 @@ const ProductsFlashSaleBlock: React.FC<ProductsProps> = ({
                 date={date}
                 disableSectionPadding={disableSectionPadding}
                 disableSectionBorder={disableSectionBorder}
-                hideCountdown={hideCountdown}
-            >
+                hideCountdown={hideCountdown}>
                 <Alert message={error?.message} />
             </ProductFlashSaleWrapper>
         );
@@ -174,13 +170,11 @@ const ProductsFlashSaleBlock: React.FC<ProductsProps> = ({
             date={date}
             disableSectionPadding={disableSectionPadding}
             disableSectionBorder={disableSectionBorder}
-            hideCountdown={hideCountdown}
-        >
+            hideCountdown={hideCountdown}>
             <div
                 className={`grid grid-cols- ${
                     data?.length <= 0 ? "!block" : ""
-                }`}
-            >
+                }`}>
                 <div className="flex w-full max-w-full overflow-x-scroll">
                     {data?.length > 0 ? (
                         data?.map((product: any) => (

@@ -20,26 +20,31 @@ export default function Home() {
     return (
         <>
             <ExclusiveBlock className="mb-12 md:mb-14 xl:mb-16 px-2.5 mx-auto max-w-[1920px]" />
-            <Container>
+            {/* <Container>
                 <CategoryBlock sectionHeading="text-shop-by-category" />
                 <ProductsFeatured
                     sectionHeading="text-featured-products"
                     variant="center"
                 />
-            </Container>
-
-            <BannerBlock data={masonryBanner} />
+            </Container> */}
             <Container>
                 <ProductsFlashSaleBlock date={"2024-03-01T01:02:03"} />
-            </Container>
-            <BannerSliderBlock />
-            <Container>
                 <BannerCard
                     key={`banner--key${banner[0].id}`}
                     banner={banner[0]}
                     href={`${ROUTES.COLLECTIONS}/${banner[0].slug}`}
                     className="mb-12 lg:mb-14 xl:mb-16 pb-0.5 lg:pb-1 xl:pb-0"
                 />
+                <ProductsFeatured
+                    sectionHeading="text-featured-products"
+                    variant="center"
+                />
+            </Container>
+
+            {/* <BannerBlock data={masonryBanner} /> */}
+
+            <BannerSliderBlock />
+            <Container>
                 <BannerCard
                     key={`banner--key${banner[1].id}`}
                     banner={banner[1]}
