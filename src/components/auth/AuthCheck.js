@@ -16,11 +16,11 @@ const AuthCheck = ({ children }) => {
         return openModal();
     }
 
-    useEffect(() => {
-        if (!token && router?.pathname !== "/") {
-            handleLogin();
-        }
-    }, [token, router?.pathname]);
+    // useEffect(() => {
+    //     if (!token && router?.pathname !== "/") {
+    //         handleLogin();
+    //     }
+    // }, [token, router?.pathname]);
 
     return <>{children}</>;
 };

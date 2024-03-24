@@ -16,10 +16,6 @@ export const useChangePasswordMutation = (renderToast?: any) => {
             renderToast("Password changed successfully");
         },
         onError: (response) => {
-            console.log(
-                "error",
-                response?.response?.data?.app_data?.data?.message
-            );
             renderToast(response?.response?.data?.app_data?.data?.message);
         },
     });

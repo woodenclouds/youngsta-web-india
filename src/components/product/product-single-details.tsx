@@ -92,7 +92,7 @@ const ProductSingleDetails: React.FC = () => {
             addToCart({ attribute_id, quantity, id: slug });
             setAddToCartLoader(false);
         } else {
-            toast("Please select you size", {
+            toast.error("Please select you size", {
                 progressClassName: "fancy-progress-bar",
                 position: width > 768 ? "bottom-right" : "top-right",
                 autoClose: 2000,
@@ -108,9 +108,31 @@ const ProductSingleDetails: React.FC = () => {
         const refferal_code = Cookies.get("refferal_code");
         const path = `${window.location.href}?refferal_code=${refferal_code}`;
 
-        try {
-            await navigator.clipboard.writeText(path);
-            toast("Product link copied", {
+        if (refferal_code) {
+            try {
+                await navigator.clipboard.writeText(path);
+                toast("Product link copied", {
+                    progressClassName: "fancy-progress-bar",
+                    position: width > 768 ? "bottom-right" : "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+            } catch (err) {
+                toast.error(`Failed to copy ${err}`, {
+                    progressClassName: "fancy-progress-bar",
+                    position: width > 768 ? "bottom-right" : "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
+            }
+        } else {
+            toast.error(`PLease login to copy the link`, {
                 progressClassName: "fancy-progress-bar",
                 position: width > 768 ? "bottom-right" : "top-right",
                 autoClose: 2000,
@@ -119,16 +141,7 @@ const ProductSingleDetails: React.FC = () => {
                 pauseOnHover: true,
                 draggable: true,
             });
-        } catch (err) {
-            toast(`Failed to copy ${err}`, {
-                progressClassName: "fancy-progress-bar",
-                position: width > 768 ? "bottom-right" : "top-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-            });
+            handleLogin();
         }
     };
 
@@ -141,7 +154,8 @@ const ProductSingleDetails: React.FC = () => {
                     }}
                     breakpoints={productGalleryCarouselResponsive}
                     className="product-gallery"
-                    buttonGroupClassName="hidden">
+                    buttonGroupClassName="hidden"
+                >
                     {Array.isArray(data?.images) &&
                         data?.images?.map((item: any, index: number) => (
                             <SwiperSlide key={`product-gallery-key-${index}`}>
@@ -161,7 +175,8 @@ const ProductSingleDetails: React.FC = () => {
                         data?.images?.map((item, index: number) => (
                             <div
                                 key={index}
-                                className="col-span-1 transition duration-150 ease-in hover:opacity-90">
+                                className="col-span-1 transition duration-150 ease-in hover:opacity-90"
+                            >
                                 <img
                                     src={item?.image ?? data?.thumbnail}
                                     alt={`${data?.name}--${index}`}
@@ -223,7 +238,8 @@ const ProductSingleDetails: React.FC = () => {
                             !attribute_id && "bg-gray-400 hover:bg-gray-400"
                         }`}
                         // disabled={!attribute_id}
-                        loading={addToCartLoader}>
+                        loading={addToCartLoader}
+                    >
                         <span className="py-2 3xl:px-8">Add to cart</span>
                     </Button>
                 </div>
@@ -233,7 +249,8 @@ const ProductSingleDetails: React.FC = () => {
                     </h4>
                     <button
                         className="bg-[#fff] border-solid border-2 border-[#F5B528] px-[24px] py-[10px] rounded cursor-pointer text-[#000] max-[517px]:mb-[16px]"
-                        onClick={renderShareFunction}>
+                        onClick={renderShareFunction}
+                    >
                         Copy Referral Link
                     </button>
                 </div>
@@ -252,7 +269,8 @@ const ProductSingleDetails: React.FC = () => {
                             </span>
                             <Link
                                 href="/"
-                                className="transition hover:underline hover:text-heading">
+                                className="transition hover:underline hover:text-heading"
+                            >
                                 {data?.category ? data?.category : "N/A"}
                             </Link>
                         </li>

@@ -58,12 +58,8 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
         height: 0,
     });
 
-    const { openModal, setModalView, setModalData } = useUI();
-    const { price, basePrice, discount } = usePrice({
-        amount: product.sale_price ? product.sale_price : product.price,
-        baseAmount: product.price,
-        currencyCode: "USD",
-    });
+    const { openModal, setModalView, setModalData, isAuthorized } = useUI();
+
     const [isActive, setIsActive] = useState(false);
 
     function handlePopupView() {
@@ -72,8 +68,8 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
         return openModal();
     }
 
-    const onSuccess = () => {
-        toast("Added to the bag", {
+    const onSuccess = (data: any) => {
+        toast(data?.message, {
             progressClassName: "fancy-progress-bar",
             position: width > 768 ? "bottom-right" : "top-right",
             autoClose: 2000,
@@ -84,12 +80,35 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
         });
     };
 
-    const { mutate: addToWishList } = useAddToWishlistMutation();
+    const onError = (data: any) => {
+        toast.error(data?.message, {
+            progressClassName: "fancy-progress-bar",
+            position: width > 768 ? "bottom-right" : "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
 
-    const handleToggleAndAddToWishList = (productId) => {
-        addToWishList({ id: productId });
-        onSuccess();
-        setIsActive(!isActive);
+    const { mutate: addToWishList } = useAddToWishlistMutation(
+        onSuccess,
+        onError
+    );
+
+    function handleLogin() {
+        setModalView("LOGIN_VIEW");
+        return openModal();
+    }
+
+    const handleToggleAndAddToWishList = (productId: any) => {
+        if (isAuthorized) {
+            addToWishList({ id: productId });
+            setIsActive(!isActive);
+        } else {
+            handleLogin();
+        }
     };
 
     return (
@@ -101,7 +120,7 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
         >
             <div
                 className={`absolute right-[62px] top-[25px] bg-[#ffff] p-[11px] flex items-center z-[1] rounded-[50%] cursor-pointer ${
-                    isActive ? "text-red-500" : ""
+                    isActive || product?.is_wishlist ? "text-red-500" : ""
                 }`}
                 onClick={(e) => {
                     e.stopPropagation();
@@ -144,20 +163,6 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
                 </span>
             )}
 
-            {discount && (
-                <span
-                    className={cn(
-                        "absolute top-3.5 md:top-5 3xl:top-7 ltr:left-3.5 rtl:right-3.5 ltr:md:left-5 rtl:md:right-5 ltr:3xl:left-7 rtl:3xl:right-7 bg-heading text-white text-10px md:text-sm leading-5 rounded-md inline-block px-2 xl:px-3 pt-0.5 pb-1",
-                        {
-                            "text-[#22C55E] bg-transparent ltr:!left-auto rtl:!right-auto right-3.5 md:right-5 3xl:right-7 font-bold":
-                                variant === "modern",
-                        }
-                    )}
-                >
-                    {discount} {variant === "modern" && " off"}
-                </span>
-            )}
-
             <div
                 className="flex flex-col w-full px-4 pb-4 md:flex-row lg:flex-col 2xl:flex-row md:justify-between md:items-center lg:items-start 2xl:items-center md:px-5 3xl:px-7 md:pb-5 3xl:pb-7"
                 title={product?.name}
@@ -179,11 +184,6 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
                 </div>
 
                 <div className="flex-shrink-0 flex flex-row-reverse md:flex-col lg:flex-row-reverse 2xl:flex-col items-center md:items-end lg:items-start 2xl:items-end justify-end ltr:md:text-right rtl:md:text-left lg:ltr:text-left rtl:text-right ltr:xl:text-right rtl:xl:text-left mt-2 md:-mt-0.5 lg:mt-2 2xl:-mt-0.5">
-                    {discount && (
-                        <del className="text-sm md:text-base lg:text-sm xl:text-base 3xl:text-lg">
-                            {basePrice}
-                        </del>
-                    )}
                     <div className="text-heading font-segoe font-semibold text-base md:text-xl lg:text-base xl:text-xl 3xl:text-2xl 3xl:mt-0.5 ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
                         {countryData?.symbol}
                         {product?.selling_price}

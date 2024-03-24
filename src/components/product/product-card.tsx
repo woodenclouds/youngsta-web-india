@@ -64,8 +64,7 @@ const ProductCard: FC<ProductProps> = ({
     disableBorderRadius = false,
     isScroll,
 }) => {
-    const { openModal, setModalView, setModalData } = useUI();
-    const placeholderImage = `/assets/placeholder/products/product-${variant}.svg`;
+    const { openModal, setModalView, setModalData, isAuthorized } = useUI();
     const { price, basePrice, discount } = usePrice({
         amount: product.sale_price ? product.sale_price : product.price,
         baseAmount: product.price,
@@ -76,21 +75,8 @@ const ProductCard: FC<ProductProps> = ({
         setModalView("PRODUCT_VIEW");
         return openModal();
     }
-    const [isActive, setIsActive] = useState(false);
-    const { mutate: addToWishList } = useAddToWishlistMutation();
-    const handleToggleAndAddToWishList = (productId: any) => {
-        addToWishList({ id: productId });
-        onSuccess();
-        setIsActive(!isActive);
-    };
-
-    const { width } = useSsrCompatible(useWindowSize(), {
-        width: 0,
-        height: 0,
-    });
-
-    const onSuccess = () => {
-        toast("Added to the bag", {
+    const onSuccess = (data: any) => {
+        toast(data?.message, {
             progressClassName: "fancy-progress-bar",
             position: width > 768 ? "bottom-right" : "top-right",
             autoClose: 2000,
@@ -100,6 +86,41 @@ const ProductCard: FC<ProductProps> = ({
             draggable: true,
         });
     };
+
+    const onError = (data: any) => {
+        toast.error(data?.message, {
+            progressClassName: "fancy-progress-bar",
+            position: width > 768 ? "bottom-right" : "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
+    const [isActive, setIsActive] = useState(false);
+    const { mutate: addToWishList } = useAddToWishlistMutation(
+        onSuccess,
+        onError
+    );
+
+    function handleLogin() {
+        setModalView("LOGIN_VIEW");
+        return openModal();
+    }
+    const handleToggleAndAddToWishList = (productId: any) => {
+        if (isAuthorized) {
+            addToWishList({ id: productId });
+            setIsActive(!isActive);
+        } else {
+            handleLogin();
+        }
+    };
+
+    const { width } = useSsrCompatible(useWindowSize(), {
+        width: 0,
+        height: 0,
+    });
 
     const accessToken = Cookies.get("auth_token");
 

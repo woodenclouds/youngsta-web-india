@@ -8,7 +8,6 @@ const Wallet: React.FC = () => {
         limit: 10,
     });
 
-    console.log("useWalletItemsQuery", data);
     return (
         <div className="flex justify-between flex-wrap">
             <div className="w-[48%] max-lg:w-[100%]">
