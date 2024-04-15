@@ -1,6 +1,6 @@
 import cn from "classnames";
 import Image from "next/image";
-import type { FC } from "react";
+import { useState, type FC } from "react";
 import { useUI } from "@contexts/ui.context";
 import usePrice from "@framework/product/use-price";
 import { Product } from "@framework/types";
@@ -11,6 +11,12 @@ import ProductViewIcon from "@components/icons/product-view-icon";
 import ProductWishIcon from "@components/icons/product-wish-icon";
 import ProductCompareIcon from "@components/icons/product-compare-icon";
 import RatingDisplay from "@components/common/rating-display";
+import { useAddToWishlistMutation } from "@framework/wishlist/add-to-wishlist";
+import { FaRegHeart } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { useSsrCompatible } from "@utils/use-ssr-compatible";
+import { useWindowSize } from "react-use";
+import Cookies from "js-cookie";
 
 interface ProductProps {
     product: Product;
@@ -37,6 +43,7 @@ interface ProductProps {
     bgGray?: boolean;
     demoVariant?: "ancient";
     disableBorderRadius?: boolean;
+    isScroll?: boolean;
 }
 
 const ProductCard: FC<ProductProps> = ({
@@ -55,9 +62,9 @@ const ProductCard: FC<ProductProps> = ({
     bgGray = false,
     demoVariant,
     disableBorderRadius = false,
+    isScroll,
 }) => {
-    const { openModal, setModalView, setModalData } = useUI();
-    const placeholderImage = `/assets/placeholder/products/product-${variant}.svg`;
+    const { openModal, setModalView, setModalData, isAuthorized } = useUI();
     const { price, basePrice, discount } = usePrice({
         amount: product.sale_price ? product.sale_price : product.price,
         baseAmount: product.price,
@@ -68,11 +75,61 @@ const ProductCard: FC<ProductProps> = ({
         setModalView("PRODUCT_VIEW");
         return openModal();
     }
+    const onSuccess = (data: any) => {
+        toast(data?.message, {
+            progressClassName: "fancy-progress-bar",
+            position: width > 768 ? "bottom-right" : "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
+
+    const onError = (data: any) => {
+        toast.error(data?.message, {
+            progressClassName: "fancy-progress-bar",
+            position: width > 768 ? "bottom-right" : "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
+    const [isActive, setIsActive] = useState(false);
+    const { mutate: addToWishList } = useAddToWishlistMutation(
+        onSuccess,
+        onError
+    );
+
+    function handleLogin() {
+        setModalView("LOGIN_VIEW");
+        return openModal();
+    }
+    const handleToggleAndAddToWishList = (productId: any) => {
+        if (isAuthorized) {
+            addToWishList({ id: productId });
+            setIsActive(!isActive);
+        } else {
+            handleLogin();
+        }
+    };
+
+    const { width } = useSsrCompatible(useWindowSize(), {
+        width: 0,
+        height: 0,
+    });
+
+    const accessToken = Cookies.get("auth_token");
 
     return (
         <div
             className={cn(
-                `group box-border overflow-hidden flex ${
+                `relative ${
+                    isScroll ? "fit-content mr-[15px]" : ""
+                }  group box-border overflow-hidden flex ${
                     !disableBorderRadius && "rounded-md"
                 } cursor-pointer`,
                 {
@@ -103,6 +160,20 @@ const ProductCard: FC<ProductProps> = ({
             role="button"
             title={product?.name}
         >
+            {accessToken && (
+                <div
+                    className={`absolute right-[6px] top-[6px] bg-[#ffff] p-[11px] flex items-center z-[1] rounded-[50%] cursor-pointer ${
+                        isActive ? "text-red-500" : ""
+                    }`}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggleAndAddToWishList(product?.id);
+                    }}
+                >
+                    <FaRegHeart className="w-[20px] h-[20px]" />
+                </div>
+            )}
+
             <div
                 className={cn(
                     "flex",
@@ -120,7 +191,7 @@ const ProductCard: FC<ProductProps> = ({
                 )}
             >
                 <Image
-                    src={product?.thumbnail ?? placeholderImage}
+                    src={product?.thumbnail as string}
                     width={demoVariant === "ancient" ? 352 : imgWidth}
                     height={demoVariant === "ancient" ? 452 : imgHeight}
                     loading={imgLoading}

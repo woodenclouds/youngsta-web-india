@@ -10,8 +10,7 @@ import { useTranslation } from "next-i18next";
 const LoginForm: React.FC = () => {
     const { t } = useTranslation();
     const { setModalView, openModal, closeModal } = useUI();
-    const { mutate: login, isPending } = useLoginMutation();
-    
+    const { mutate: login, error, setError, isLoading } = useLoginMutation();
 
     const {
         register,
@@ -20,6 +19,7 @@ const LoginForm: React.FC = () => {
     } = useForm<LoginInputType>();
 
     function onSubmit({ email, password, remember_me }: LoginInputType) {
+        setError(null);
         login({
             email,
             password,
@@ -63,7 +63,7 @@ const LoginForm: React.FC = () => {
                     />
                     <PasswordInput
                         labelKey="forms:label-password"
-                        errorKey={errors.password?.message}
+                        errorKey={error ? error : errors.password?.message}
                         {...register("password", {
                             required: `${t("forms:password-required")}`,
                         })}
@@ -86,21 +86,13 @@ const LoginForm: React.FC = () => {
                                 {t("forms:label-remember-me")}
                             </label>
                         </div>
-                        <div className="flex ltr:ml-auto rtl:mr-auto">
-                            {/* <button
-                                type="button"
-                                onClick={handleForgetPassword}
-                                className="text-sm underline ltr:text-right rtl:text-left text-heading ltr:pl-3 rtl:pr-3 hover:no-underline focus:outline-none"
-                            >
-                                {t("common:text-forgot-password")}
-                            </button> */}
-                        </div>
+                        <div className="flex ltr:ml-auto rtl:mr-auto"></div>
                     </div>
                     <div className="relative">
                         <Button
                             type="submit"
-                            loading={isPending}
-                            disabled={isPending}
+                            loading={isLoading}
+                            disabled={isLoading}
                             className="h-11 md:h-12 w-full mt-1.5"
                         >
                             {t("common:text-login")}

@@ -28,7 +28,6 @@ const EnterOtp: React.FC = () => {
             otp,
             email,
         });
-        console.log(otp, "data");
     }
 
     return (

@@ -10,11 +10,12 @@ async function deleteFromCart(input: deleteCartInputType) {
     return http.post(`${API_ENDPOINTS.REMOVE_FROM_CART}${id}/`, {});
 }
 
-export const usedeleteCartMutation = () => {
+export const usedeleteCartMutation = (onSuccess: any) => {
     return useMutation({
-        mutationFn: (input: deleteCartInputType) => deleteFromCart(input),
+        mutationFn: (input: any) => deleteFromCart(input),
         onSuccess: (data) => {
             if (data?.data?.app_data?.StatusCode === 6000) {
+                onSuccess();
             }
         },
         onError: (data) => {

@@ -23,6 +23,11 @@ export const useVerifyMutation = () => {
                     "auth_token",
                     data?.data?.app_data?.data?.access_token
                 );
+                Cookies.set(
+                    "refferal_code",
+                    data?.data?.app_data?.data?.refferal_code
+                );
+
                 authorize();
                 closeModal();
             }

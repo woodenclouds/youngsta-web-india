@@ -28,7 +28,6 @@ const SignUpForm: React.FC = () => {
         first_name,
         last_name,
         email,
-        phone_number,
         password,
     }: SignUpInputType) {
         let country_code = "91";
@@ -36,7 +35,7 @@ const SignUpForm: React.FC = () => {
             first_name,
             last_name,
             email,
-            phone_number:"0000",
+            phone_number: "0000",
             password,
             country_code,
         });
@@ -50,6 +49,7 @@ const SignUpForm: React.FC = () => {
                 <p className="text-sm md:text-base text-body mt-2 mb-8 sm:mb-10">
                     {t("common:registration-helper")}{" "}
                     <Link
+                        onClick={closeModal}
                         href={ROUTES.TERMS}
                         className="text-heading underline hover:no-underline focus:outline-none"
                     >
@@ -57,6 +57,7 @@ const SignUpForm: React.FC = () => {
                     </Link>{" "}
                     &amp;{" "}
                     <Link
+                        onClick={closeModal}
                         href={ROUTES.POLICY}
                         className="text-heading underline hover:no-underline focus:outline-none"
                     >
@@ -75,20 +76,20 @@ const SignUpForm: React.FC = () => {
                         type="text"
                         variant="solid"
                         {...register("first_name", {
-                            required: "forms:first_name-required",
+                            required: "First name required",
                         })}
                         errorKey={errors.first_name?.message}
                     />
-                     <Input
+                    <Input
                         labelKey="Last Name"
                         type="text"
                         variant="solid"
                         {...register("last_name", {
-                            required: "forms:last_name-required",
+                            required: "Last name required",
                         })}
                         errorKey={errors.last_name?.message}
                     />
-                    
+
                     <Input
                         labelKey="Email"
                         type="email"
