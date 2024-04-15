@@ -3,7 +3,7 @@ import { getToken } from "./get-token";
 import { AxiosRequestHeaders } from "axios";
 
 const http = axios.create({
-    baseURL: "http://api.youngsta.in/api/v1/",
+    baseURL: "https://api.youngsta.in/api/v1/",
     timeout: 30000,
     headers: {
         Accept: "application/json",
