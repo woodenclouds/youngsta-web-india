@@ -30,10 +30,6 @@ export const useCheckoutMutation = () => {
                 });
 
                 // Cookies.remove("purchaseId");
-                console.log(
-                    data?.data?.app_data?.data?.strape.id,
-                    "______stra"
-                );
 
                 Cookies.set(
                     "purchaseId",

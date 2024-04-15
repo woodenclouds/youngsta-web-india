@@ -13,19 +13,26 @@ import { useFetchCartItemsQuery } from "@framework/cart/get-cart-items";
 import { useEffect, useState } from "react";
 import { useEditCartMutation } from "@framework/cart/edit-cart";
 import { usedeleteCartMutation } from "@framework/cart/delet-from-cart";
+import { countryData } from "@utils/currencies";
 
 export default function Cart() {
     const { t } = useTranslation("common");
-    const { closeCart } = useUI();
+    const { closeCart, changeCart } = useUI();
 
     const { data } = useFetchCartItemsQuery({
         limit: 10,
     });
 
+    useEffect(() => {
+        if (data) {
+            setCartItems(data);
+        }
+    }, [data]);
+
     const [cartItems, setCartItems] = useState(data);
 
     const { mutate: editCart } = useEditCartMutation();
-    const { mutate: deleteFromCart } = usedeleteCartMutation();
+    const { mutate: deleteFromCart } = usedeleteCartMutation(changeCart);
 
     function editCartItems(item: any, quantity: number) {
         let attribute_id = item?.attribute_id;
@@ -51,7 +58,7 @@ export default function Cart() {
 
     const calculateTotalPrice = () => {
         return cartItems?.reduce(
-            (total, item) => total + item?.price * item?.quantity,
+            (total, item: any) => total + item?.price * item?.quantity,
             0
         );
     };
@@ -126,7 +133,8 @@ export default function Cart() {
                     </span>
                     <span className="rtl:mr-auto ltr:ml-auto flex-shrink-0 -mt-0.5 py-0.5 flex">
                         <span className="ltr:border-l rtl:border-r border-white ltr:pr-5 rtl:pl-5 py-0.5" />
-                        ${cartTotal}
+                        {countryData.symbol}
+                        {cartTotal}
                     </span>
                 </Link>
             </div>

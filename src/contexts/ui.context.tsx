@@ -15,6 +15,7 @@ export interface State {
     modalData: any;
     drawerView: string | null;
     toastText: string;
+    is_cart_updated: string;
 }
 
 const initialState = {
@@ -24,6 +25,7 @@ const initialState = {
     displayModal: false,
     displayShop: false,
     displayCart: false,
+    is_cart_updated: false,
     displayWishlist: false,
     displaySearch: false,
     modalView: "LOGIN_VIEW",
@@ -115,7 +117,7 @@ export const UIContext = React.createContext<State | any>(initialState);
 
 UIContext.displayName = "UIContext";
 
-function uiReducer(state: State, action: Action) {
+function uiReducer(state: any, action: any) {
     switch (action.type) {
         case "SET_AUTHORIZED": {
             return {
@@ -146,6 +148,12 @@ function uiReducer(state: State, action: Action) {
             return {
                 ...state,
                 displayCart: true,
+            };
+        }
+        case "CHANGE_CART": {
+            return {
+                ...state,
+                is_cart_updated: action.is_cart_updated,
             };
         }
         case "CLOSE_CART": {
@@ -252,6 +260,12 @@ export const UIProvider: React.FC = (props) => {
     const [state, dispatch] = React.useReducer(uiReducer, initialState);
 
     const authorize = () => dispatch({ type: "SET_AUTHORIZED" });
+    const changeCart = () =>
+        dispatch({
+            type: "CHANGE_CART",
+            is_cart_updated: !state.is_cart_updated,
+        });
+
     const unauthorize = () => dispatch({ type: "SET_UNAUTHORIZED" });
     const openSidebar = () => dispatch({ type: "OPEN_SIDEBAR" });
     const closeSidebar = () => dispatch({ type: "CLOSE_SIDEBAR" });
@@ -326,6 +340,7 @@ export const UIProvider: React.FC = (props) => {
             setDrawerView,
             setUserAvatar,
             setModalData,
+            changeCart,
         }),
         [state]
     );

@@ -31,8 +31,7 @@ const ProductsFeatured: React.FC<ProductsProps> = ({
         limit: limit,
         demoVariant,
     });
-    console.log(data);
-    
+
     return (
         <div className={className}>
             <SectionHeader

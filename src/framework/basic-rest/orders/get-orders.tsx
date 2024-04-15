@@ -4,12 +4,16 @@ import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import { useQuery } from "@tanstack/react-query";
 
 export const fetchOrderedItems = async () => {
-    const { data } = await http.get(API_ENDPOINTS.VIEW_ORDERS);
+    const {
+        data: {
+            app_data: { data },
+        },
+    } = await http.get(API_ENDPOINTS.ORDERS);
     return data as Category[];
 };
 export const useOrderedItemsQuery = (options: QueryOptionsType) => {
     return useQuery<Category[], Error>({
-        queryKey: [API_ENDPOINTS.VIEW_ORDERS, options],
+        queryKey: [API_ENDPOINTS.ORDERS, options],
         queryFn: fetchOrderedItems,
     });
 };

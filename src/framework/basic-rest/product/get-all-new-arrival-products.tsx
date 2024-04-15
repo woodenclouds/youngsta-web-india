@@ -6,11 +6,11 @@ import { useQuery } from "@tanstack/react-query";
 export const fetchNewArrivalProducts = async () => {
     const {
         data: {
-            app_data: { data, status },
+            app_data: { data, StatusCode },
         },
     } = await http.get(API_ENDPOINTS.NEW_ARRIVAL_PRODUCTS);
 
-    if (status === 6000) {
+    if (StatusCode === 6000) {
         return data as Product[];
     } else {
         return [] as Product[];

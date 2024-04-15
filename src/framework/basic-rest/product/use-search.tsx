@@ -3,13 +3,19 @@ import http from "@framework/utils/http";
 import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import { useQuery } from "@tanstack/react-query";
 
-export const fetchSearchedProducts = async () => {
-  const { data } = await http.get(API_ENDPOINTS.SEARCH);
-  return data;
+export const fetchSearchedProducts = async (options: any) => {
+    const { data } = await http.get(
+        `${API_ENDPOINTS.PRODUCTS}?search=${options?.search}`
+    );
+    if (data?.app_data?.StatusCode === 6000) {
+        return data.app_data.data;
+    } else {
+        return [];
+    }
 };
-export const useSearchQuery = (options: QueryOptionsType) => {
-  return useQuery<Product[], Error>({
-    queryKey: [API_ENDPOINTS.SEARCH, options],
-    queryFn: fetchSearchedProducts
-  });
+export const useSearchQuery = (options: any) => {
+    return useQuery<Product[], Error>({
+        queryKey: [API_ENDPOINTS.PRODUCTS, options],
+        queryFn: () => fetchSearchedProducts(options),
+    });
 };

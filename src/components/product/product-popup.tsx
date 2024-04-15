@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import isEmpty from "lodash/isEmpty";
 import { ROUTES } from "@utils/routes";
 import { useUI } from "@contexts/ui.context";
 import Button from "@components/ui/button";
 import Counter from "@components/common/counter";
 import { ProductAttributes } from "@components/product/product-attributes";
-import { getVariations } from "@framework/utils/get-variations";
 import { useTranslation } from "next-i18next";
 import { useAddToCartMutation } from "@framework/cart/add-to-cart";
+import Cookies from "js-cookie";
+import { countryData } from "@utils/currencies";
+import { toast } from "react-toastify";
+import { useSsrCompatible } from "@utils/use-ssr-compatible";
+import { useWindowSize } from "react-use";
 
 export default function ProductPopup() {
     const { t } = useTranslation("common");
@@ -16,43 +19,57 @@ export default function ProductPopup() {
         modalData: { data },
         closeModal,
         openCart,
+        changeCart,
     } = useUI();
     const router = useRouter();
     const [quantity, setQuantity] = useState(1);
     const [attribute_id, setSize] = useState("");
-    const [attributes, setAttributes] = useState<{ [key: string]: string }>({});
     const [viewCartBtn, setViewCartBtn] = useState<boolean>(false);
 
-    const variations = getVariations(data.variations);
     const {
         id,
-        slug,
         attribute,
         name,
         description,
         price,
-        purchase_price,
+        selling_price,
         thumbnail,
     } = data;
-    const { mutate: addToCart, isPending } = useAddToCartMutation();
 
-    console.log("slug", data);
+    const setCartButton = () => {
+        setViewCartBtn(true);
+        changeCart();
+    };
+    const { width } = useSsrCompatible(useWindowSize(), {
+        width: 0,
+        height: 0,
+    });
 
-    const isSelected = !isEmpty(variations)
-        ? !isEmpty(attributes) &&
-          Object.keys(variations).every((variation) =>
-              attributes.hasOwnProperty(variation)
-          )
-        : true;
+    const errorCart = (data: any) => {
+        toast.error(data?.message, {
+            progressClassName: "fancy-progress-bar",
+            position: width > 768 ? "bottom-right" : "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
+
+    const { mutate: addToCart, isPending } = useAddToCartMutation(
+        setCartButton,
+        errorCart
+    );
+    const accessToken = Cookies.get("auth_token");
 
     function addItemToTheCart() {
         addToCart({ attribute_id, quantity, id });
-        setViewCartBtn(true);
     }
 
     function navigateToProductPage() {
         closeModal();
-        router.push(`${ROUTES.PRODUCT}/${slug}`, undefined, {
+        router.push(`${ROUTES.PRODUCT}/${id}`, undefined, {
             locale: router.locale,
         });
     }
@@ -92,7 +109,8 @@ export default function ProductPopup() {
 
                         <div className="flex items-center mt-3">
                             <div className="text-heading font-semibold text-base md:text-xl lg:text-2xl">
-                                {purchase_price}
+                                {countryData?.symbol}
+                                {selling_price}
                             </div>
                             {price && (
                                 <del className="font-segoe text-gray-400 text-base lg:text-xl ltr:pl-2.5 rtl:pr-2.5 -mt-0.5 md:mt-0">
@@ -111,32 +129,35 @@ export default function ProductPopup() {
                     />
 
                     <div className="pt-2 md:pt-4">
-                        <div className="flex items-center justify-between mb-4 gap-x-3 sm:gap-x-4">
-                            <Counter
-                                quantity={quantity}
-                                onIncrement={() =>
-                                    setQuantity((prev) => prev + 1)
-                                }
-                                onDecrement={() =>
-                                    setQuantity((prev) =>
-                                        prev !== 1 ? prev - 1 : 1
-                                    )
-                                }
-                                disableDecrement={quantity === 1}
-                            />
-                            <Button
-                                onClick={addItemToTheCart}
-                                variant="flat"
-                                className={`w-full h-11 md:h-12 px-1.5 ${
-                                    !isSelected &&
-                                    "bg-gray-400 hover:bg-gray-400"
-                                }`}
-                                disabled={!isSelected}
-                                loading={isPending}
-                            >
-                                {t("text-add-to-cart")}
-                            </Button>
-                        </div>
+                        {accessToken && (
+                            <div className="flex items-center justify-between mb-4 gap-x-3 sm:gap-x-4">
+                                <Counter
+                                    quantity={quantity}
+                                    onIncrement={() =>
+                                        setQuantity((prev) => prev + 1)
+                                    }
+                                    onDecrement={() =>
+                                        setQuantity((prev) =>
+                                            prev !== 1 ? prev - 1 : 1
+                                        )
+                                    }
+                                    disableDecrement={quantity === 1}
+                                    setQuantity={() => {}}
+                                />
+                                <Button
+                                    onClick={addItemToTheCart}
+                                    variant="flat"
+                                    className={`w-full h-11 md:h-12 px-1.5 ${
+                                        !attribute_id &&
+                                        "bg-gray-400 hover:bg-gray-400"
+                                    }`}
+                                    disabled={!attribute_id}
+                                    loading={isPending}
+                                >
+                                    {t("text-add-to-cart")}
+                                </Button>
+                            </div>
+                        )}
 
                         {viewCartBtn && !isPending && (
                             <button

@@ -1,6 +1,5 @@
 import Container from "@components/ui/container";
 import Layout from "@components/layout/layout";
-import Subscription from "@components/common/subscription";
 import StickyBox from "react-sticky-box";
 import { ProductGrid } from "@components/product/product-grid";
 import ActiveLink from "@components/ui/active-link";
@@ -39,16 +38,17 @@ export default function Collections({ slug }: any) {
                                     </ActiveLink>
                                 </BreadcrumbItems>
                             </div>
+
                             <CollectionFilters />
                         </StickyBox>
                     </div>
 
                     <div className="w-full ltr:lg:-ml-9 rtl:lg:-mr-9">
                         <CollectionTopBar />
+
                         <ProductGrid param={`?collections=${slug}`} />
                     </div>
                 </div>
-                <Subscription />
             </Container>
         </div>
     );

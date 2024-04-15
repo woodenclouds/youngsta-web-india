@@ -2,27 +2,25 @@ import React, { useRef } from "react";
 import SearchIcon from "@components/icons/search-icon";
 import Image from "next/image";
 import like from "../../../../public/icons/whish-icon.svg";
-import wallet from "../../../../public/icons/wallet.svg";
-import { siteSettings } from "@settings/site-settings";
 import HeaderMenu from "@components/layout/header/header-menu";
 import Logo from "@components/ui/logo";
 import { useUI } from "@contexts/ui.context";
 import { ROUTES } from "@utils/routes";
 import { addActiveScroll } from "@utils/add-active-scroll";
 import dynamic from "next/dynamic";
-import { useTranslation } from "next-i18next";
+import UserIcon from "@components/icons/user-icon";
+import { useHeaderMenuQuery } from "@framework/category/get-header-menu";
+import Cookies from "js-cookie";
 const AuthMenu = dynamic(() => import("./auth-menu"), { ssr: false });
 const CartButton = dynamic(() => import("@components/cart/cart-button"), {
     ssr: false,
 });
 
 type DivElementRef = React.MutableRefObject<HTMLDivElement>;
-const { site_header } = siteSettings;
 const Header: React.FC = () => {
     const { openSearch, openModal, setModalView, isAuthorized, openWishlist } =
         useUI();
 
-    const { t } = useTranslation("common");
     const siteHeaderRef = useRef() as DivElementRef;
     addActiveScroll(siteHeaderRef);
 
@@ -30,6 +28,9 @@ const Header: React.FC = () => {
         setModalView("LOGIN_VIEW");
         return openModal();
     }
+
+    const { data } = useHeaderMenuQuery({});
+    const accessToken = Cookies.get("auth_token");
 
     return (
         <header
@@ -42,18 +43,14 @@ const Header: React.FC = () => {
                     <div>
                         <Logo />
                     </div>
+
                     <div className=" items-center cursor-pointer  hidden max-lg:flex ">
-                        <div className="mr-5 cursor-pointer">
+                        <div
+                            className="mr-5 cursor-pointer"
+                            onClick={openWishlist}
+                        >
                             <Image
                                 src={like}
-                                alt="whishIcon"
-                                width={25}
-                                height={25}
-                            />
-                        </div>
-                        <div className="cursor-pointer">
-                            <Image
-                                src={wallet}
                                 alt="whishIcon"
                                 width={25}
                                 height={25}
@@ -62,7 +59,7 @@ const Header: React.FC = () => {
                     </div>
 
                     <HeaderMenu
-                        data={site_header.menu}
+                        data={data?.length > 0 ? data : []}
                         className="hidden lg:flex ltr:md:ml-6 rtl:md:mr-6 ltr:xl:ml-10 rtl:xl:mr-10"
                     />
 
@@ -75,7 +72,27 @@ const Header: React.FC = () => {
                             <SearchIcon />
                         </button>
 
-                        <div className="-mt-0.5 flex-shrink-0">
+                        <CartButton
+                            isAuthorized={isAuthorized}
+                            handleLogin={handleLogin}
+                        />
+                        {accessToken && (
+                            <div
+                                className="flex items-center cursor-pointer .d-lg-none "
+                                onClick={
+                                    isAuthorized ? openWishlist : handleLogin
+                                }
+                            >
+                                <Image
+                                    src={like}
+                                    alt="whishIcon"
+                                    width={25}
+                                    height={25}
+                                />
+                            </div>
+                        )}
+
+                        <div className="flex content-end flex-shrink-0">
                             <AuthMenu
                                 isAuthorized={isAuthorized}
                                 href={ROUTES.ACCOUNT}
@@ -84,36 +101,13 @@ const Header: React.FC = () => {
                                     className:
                                         "text-sm xl:text-base text-heading font-semibold focus:outline-none",
                                     // @ts-ignore
-                                    children: t("text-sign-in"),
+                                    children: <UserIcon />,
                                     onClick: handleLogin,
                                 }}
                             >
-                                {t("text-account")}
+                                <UserIcon />
                             </AuthMenu>
                         </div>
-                        <div
-                            className="flex items-center cursor-pointer .d-lg-none "
-                            onClick={openWishlist}
-                        >
-                            <Image
-                                src={like}
-                                alt="whishIcon"
-                                width={25}
-                                height={25}
-                            />
-                        </div>
-                        <a
-                            href={ROUTES.WALLET}
-                            className="flex items-center cursor-pointer  d-none"
-                        >
-                            <Image
-                                src={wallet}
-                                alt="whishIcon"
-                                width={25}
-                                height={25}
-                            />
-                        </a>
-                        <CartButton />
                     </div>
                 </div>
             </div>
