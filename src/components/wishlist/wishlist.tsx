@@ -1,30 +1,30 @@
 import Scrollbar from "@components/common/scrollbar";
-import { useCart } from "@contexts/cart/cart.context";
 import { motion } from "framer-motion";
 import { fadeInOut } from "@utils/motion/fade-in-out";
 import { useUI } from "@contexts/ui.context";
-import usePrice from "@framework/product/use-price";
 import { IoClose } from "react-icons/io5";
-import Link from "@components/ui/link";
-import { ROUTES } from "@utils/routes";
-import cn from "classnames";
-import { useTranslation } from "next-i18next";
 import CartItem from "@components/cart/cart-item";
 import { useFetchWishlistItemsQuery } from "@framework/wishlist/get-wishlist-items";
 import EmptyCart from "@components/cart/empty-cart";
+import { useState } from "react";
+import { usedeleteWishlistMutation } from "@framework/wishlist/delete-wishlist";
 
 export default function Wishlist() {
-    const { t } = useTranslation("common");
-    const { closeCart } = useUI();
-    const { items, total, isEmpty } = useCart();
-    const { price: cartTotal } = usePrice({
-        amount: total,
-        currencyCode: "USD",
-    });
+    const { closeWishlist } = useUI();
+    const [wishlistItems, setwishlistItems] = useState(false);
+
+    const { mutate: deleteFromWishlist } = usedeleteWishlistMutation(() =>
+        setwishlistItems(!wishlistItems)
+    );
 
     const { data } = useFetchWishlistItemsQuery({
         limit: 10,
+        wishlistItems,
     });
+
+    function deleteWishlistItems(id: any) {
+        deleteFromWishlist({ id });
+    }
 
     return (
         <div className="flex flex-col justify-between w-full h-full">
@@ -34,17 +34,22 @@ export default function Wishlist() {
                 </h2>
                 <button
                     className="flex items-center justify-center px-4 py-6 text-2xl text-gray-500 transition-opacity md:px-6 lg:py-8 focus:outline-none hover:opacity-60"
-                    onClick={closeCart}
+                    onClick={closeWishlist}
                     aria-label="close"
                 >
                     <IoClose className="text-black mt-1 md:mt-0.5" />
                 </button>
             </div>
-            {!isEmpty ? (
+            {data?.length > 0 ? (
                 <Scrollbar className="flex-grow w-full cart-scrollbar">
                     <div className="w-full px-5 md:px-7">
-                        {items?.map((item) => (
-                            <CartItem item={item} key={item.id} />
+                        {data?.map((item) => (
+                            <CartItem
+                                item={item}
+                                key={item.id}
+                                deleteCartItems={deleteWishlistItems}
+                                isWishlist={true}
+                            />
                         ))}
                     </div>
                 </Scrollbar>

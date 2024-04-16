@@ -14,12 +14,12 @@ export const fetchCartItems = async () => {
     } = await http.get(API_ENDPOINTS.VIEW_CART_ITEMS);
 
     if (data?.app_data?.StatusCode === 6000) {
-        return cart_items as Category[];
+        return cart_items;
     } else {
         return [] as Category[];
     }
 };
-export const useFetchCartItemsQuery = (options: QueryOptionsType) => {
+export const useFetchCartItemsQuery = (options: any) => {
     return useQuery<Category[], Error>({
         queryKey: [API_ENDPOINTS.VIEW_CART_ITEMS, options],
         queryFn: fetchCartItems,

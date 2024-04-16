@@ -28,7 +28,6 @@ const Card: React.FC<Props> = ({
 }) => {
     const { name, image } = item ?? {};
 
-    console.log("image", image);
     const imageSize: any =
         (imgSize === "large" && 375) ||
         (size === "small" && 180) ||

@@ -24,32 +24,28 @@ const TrendingProductFeedWithTabs: React.FC<any> = () => {
                         as="li"
                         className={({ selected }) =>
                             selected ? "tab-li-selected" : "tab-li"
-                        }
-                    >
+                        }>
                         <p className="">{t("tab-all-collection")}</p>
                     </Tab>
                     <Tab
                         as="li"
                         className={({ selected }) =>
                             selected ? "tab-li-selected" : "tab-li"
-                        }
-                    >
+                        }>
                         <p>{t("tab-flash-sale")}</p>
                     </Tab>
                     <Tab
                         as="li"
                         className={({ selected }) =>
                             selected ? "tab-li-selected" : "tab-li"
-                        }
-                    >
+                        }>
                         <p>{t("tab-best-sellers")}</p>
                     </Tab>
                     <Tab
                         as="li"
                         className={({ selected }) =>
                             selected ? "tab-li-selected" : "tab-li"
-                        }
-                    >
+                        }>
                         <p>{t("tab-featured")}</p>
                     </Tab>
                 </Tab.List>

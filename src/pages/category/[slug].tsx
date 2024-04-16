@@ -14,10 +14,9 @@ export default function Category({ slug }: any) {
                 <div className="pb-16 lg:pb-20">
                     <ProductGrid
                         className="3xl:grid-cols-6"
-                        param={`?category=${slug}`}
+                        param={`category=${slug}`}
                     />
                 </div>
-                <Subscription />
             </Container>
         </div>
     );

@@ -5,11 +5,16 @@ import { ManagedUIContext } from "@contexts/ui.context";
 import ManagedModal from "@components/common/modal/managed-modal";
 import ManagedDrawer from "@components/common/drawer/managed-drawer";
 import { useEffect, useRef } from "react";
-import { QueryClient, QueryClientProvider, HydrationBoundary } from "@tanstack/react-query";
+import {
+    QueryClient,
+    QueryClientProvider,
+    HydrationBoundary,
+} from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 // import { ReactQueryDevtools } from "@tanstack/react-query/devtools";
 import { appWithTranslation } from "next-i18next";
 import { DefaultSeo } from "@components/common/default-seo";
+import AuthCheck from "@components/auth/AuthCheck"; // Adjust the import path as necessary
 
 // Load Open Sans and satisfy typeface font
 import "@fontsource/open-sans";
@@ -27,47 +32,49 @@ import "@styles/rc-drawer.css";
 import { getDirection } from "@utils/get-direction";
 
 function handleExitComplete() {
-  if (typeof window !== "undefined") {
-    window.scrollTo({ top: 0 });
-  }
+    if (typeof window !== "undefined") {
+        window.scrollTo({ top: 0 });
+    }
 }
 
 function Noop({ children }: React.PropsWithChildren<{}>) {
-  return <>{children}</>;
+    return <>{children}</>;
 }
 
 const CustomApp = ({ Component, pageProps }: AppProps) => {
-  const queryClientRef = useRef<any>();
-  if (!queryClientRef.current) {
-    queryClientRef.current = new QueryClient();
-  }
-  const router = useRouter();
-  const dir = getDirection(router.locale);
-  useEffect(() => {
-    document.documentElement.dir = dir;
-  }, [dir]);
-  const Layout = (Component as any).Layout || Noop;
+    const queryClientRef = useRef<any>();
+    if (!queryClientRef.current) {
+        queryClientRef.current = new QueryClient();
+    }
+    const router = useRouter();
+    const dir = getDirection(router.locale);
+    useEffect(() => {
+        document.documentElement.dir = dir;
+    }, [dir]);
+    const Layout = (Component as any).Layout || Noop;
 
-  return (
-    <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
-      <QueryClientProvider client={queryClientRef.current}>
-        {/* @ts-ignore */}
-        <HydrationBoundary state={pageProps.dehydratedState}>
-          {/* @ts-ignore */}
-          <ManagedUIContext>
-            <Layout pageProps={pageProps}>
-              <DefaultSeo />
-              <Component {...pageProps} key={router.route} />
-              <ToastContainer />
-            </Layout>
-            <ManagedModal />
-            <ManagedDrawer />
-          </ManagedUIContext>
-        </HydrationBoundary>
-        {/* <ReactQueryDevtools /> */}
-      </QueryClientProvider>
-    </AnimatePresence>
-  );
+    return (
+        <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
+            <QueryClientProvider client={queryClientRef.current}>
+                {/* @ts-ignore */}
+                <HydrationBoundary state={pageProps.dehydratedState}>
+                    {/* @ts-ignore */}
+                    <ManagedUIContext>
+                        <Layout pageProps={pageProps}>
+                            <DefaultSeo />
+                            <AuthCheck>
+                                <Component {...pageProps} key={router.route} />
+                            </AuthCheck>
+                            <ToastContainer />
+                        </Layout>
+                        <ManagedModal />
+                        <ManagedDrawer />
+                    </ManagedUIContext>
+                </HydrationBoundary>
+                {/* <ReactQueryDevtools /> */}
+            </QueryClientProvider>
+        </AnimatePresence>
+    );
 };
 
 export default appWithTranslation(CustomApp);
