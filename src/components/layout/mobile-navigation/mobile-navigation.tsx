@@ -66,7 +66,10 @@ const BottomNavigation: React.FC = () => {
                 <Link href="/" className="flex-shrink-0">
                     <HomeIcon />
                 </Link>
-                <CartButton />
+                <CartButton
+                    isAuthorized={isAuthorized}
+                    handleLogin={handleLogin}
+                />
                 <AuthMenu
                     isAuthorized={isAuthorized}
                     href={ROUTES.ACCOUNT}

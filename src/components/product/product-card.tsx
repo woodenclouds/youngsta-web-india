@@ -85,6 +85,7 @@ const ProductCard: FC<ProductProps> = ({
             pauseOnHover: true,
             draggable: true,
         });
+        setIsActive(!isActive);
     };
 
     const onError = (data: any) => {
@@ -108,10 +109,10 @@ const ProductCard: FC<ProductProps> = ({
         setModalView("LOGIN_VIEW");
         return openModal();
     }
+
     const handleToggleAndAddToWishList = (productId: any) => {
         if (isAuthorized) {
             addToWishList({ id: productId });
-            setIsActive(!isActive);
         } else {
             handleLogin();
         }
@@ -163,7 +164,7 @@ const ProductCard: FC<ProductProps> = ({
             {accessToken && (
                 <div
                     className={`absolute right-[6px] top-[6px] bg-[#ffff] p-[11px] flex items-center z-[1] rounded-[50%] cursor-pointer ${
-                        isActive ? "text-red-500" : ""
+                        product?.is_wishlist || isActive ? "text-red-500" : ""
                     }`}
                     onClick={(e) => {
                         e.stopPropagation();

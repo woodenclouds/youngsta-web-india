@@ -50,7 +50,7 @@ const ProductSingleDetails: React.FC = () => {
 
     const successCart = () => {
         changeCart();
-        toast("Added to the Wishlist", {
+        toast("Added to the Cart", {
             progressClassName: "fancy-progress-bar",
             position: width > 768 ? "bottom-right" : "top-right",
             autoClose: 2000,
