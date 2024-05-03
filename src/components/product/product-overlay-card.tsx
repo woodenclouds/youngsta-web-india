@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useUI } from "@contexts/ui.context";
-import usePrice from "@framework/product/use-price";
+import Link from "@components/ui/link";
 import { Product } from "@framework/types";
 import Text from "@components/ui/text";
 import cn from "classnames";
@@ -112,8 +112,8 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
     };
 
     return (
-        <div
-            onClick={handlePopupView}
+        <Link
+            href={"/products/" + product?.id}
             className={`${classes} cursor-pointer group flex flex-col bg-gray-200 ${
                 !disableBorderRadius && "rounded-md"
             } relative items-center justify-between overflow-hidden`}
@@ -124,6 +124,7 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
                 }`}
                 onClick={(e) => {
                     e.stopPropagation();
+                    e.preventDefault();
                     handleToggleAndAddToWishList(product?.id);
                 }}
             >
@@ -190,7 +191,7 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 };
 

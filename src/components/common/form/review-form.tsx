@@ -3,7 +3,6 @@ import Button from "@components/ui/button";
 import { useForm } from "react-hook-form";
 import TextArea from "@components/ui/text-area";
 import ReactStars from "react-rating-stars-component";
-import { CheckBox } from "@components/ui/checkbox";
 import { useTranslation } from "next-i18next";
 
 interface ReviewFormValues {
@@ -50,14 +49,14 @@ const ReviewForm: React.FC = () => {
                 />
                 <div className="flex flex-col md:flex-row space-y-5 md:space-y-0">
                     <Input
-                        labelKey="forms:label-name-star"
+                        labelKey="Name"
                         {...register("name", { required: "Name is required" })}
                         className="w-full md:w-1/2 "
                         errorKey={errors.name?.message}
                         variant="solid"
                     />
                     <Input
-                        labelKey="forms:label-email-star"
+                        labelKey="Email"
                         type="email"
                         {...register("email", {
                             required: "forms:email-required",
@@ -71,10 +70,7 @@ const ReviewForm: React.FC = () => {
                         variant="solid"
                     />
                 </div>
-                <CheckBox
-                    {...register("cookie")}
-                    labelKey="forms:label-save-review-information"
-                />
+
                 <div className="pt-1">
                     <Button
                         type="submit"
