@@ -4,6 +4,8 @@ import { useState, type FC } from "react";
 import { useUI } from "@contexts/ui.context";
 import usePrice from "@framework/product/use-price";
 import { Product } from "@framework/types";
+import Link from "@components/ui/link";
+
 // import ProductIcon1 from '../../../public/assets/images/products/icons/product-icon1.svg'
 // import ProductIcon2 from '../../../public/assets/images/products/icons/product-icon2.svg'
 // import ProductIcon3 from '../../../public/assets/images/products/icons/product-icon3.svg'
@@ -126,7 +128,7 @@ const ProductCard: FC<ProductProps> = ({
     const accessToken = Cookies.get("auth_token");
 
     return (
-        <div
+        <Link
             className={cn(
                 `relative ${
                     isScroll ? "fit-content mr-[15px]" : ""
@@ -157,9 +159,9 @@ const ProductCard: FC<ProductProps> = ({
                 },
                 className
             )}
-            onClick={handlePopupView}
-            role="button"
-            title={product?.name}
+            href={"/products/" + product.id}
+            // onClick={handlePopupView}
+            // role="button"
         >
             {accessToken && (
                 <div
@@ -168,6 +170,7 @@ const ProductCard: FC<ProductProps> = ({
                     }`}
                     onClick={(e) => {
                         e.stopPropagation();
+                        e.preventDefault();
                         handleToggleAndAddToWishList(product?.id);
                     }}
                 >
@@ -388,7 +391,7 @@ const ProductCard: FC<ProductProps> = ({
                     <ProductCompareIcon className="transition ease-in duration-300 sm:opacity-0 group-hover:opacity-100 delay-300 w-[35px] sm:w-[42px] lg:w-[52px] bg-[#F1F3F4] rounded-md" />
                 </div>
             )}
-        </div>
+        </Link>
     );
 };
 
