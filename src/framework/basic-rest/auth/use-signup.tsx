@@ -27,7 +27,6 @@ export const useSignUpMutation = () => {
             }
         },
         onError: (data) => {
-            console.log(data, "login error response");
         },
     });
 };

@@ -36,7 +36,7 @@ export const API_ENDPOINTS = {
 
     // orders endpoints
     VIEW_ORDERS: "activities/viewPurchase/",
-    CHECKOUT: "activities/purchase_items/",
+    CHECKOUT: "payments/create-order/",
     SUCCESS_CHECKOUT: "activities/success/",
     ORDERS: "activities/orders/",
     WALLET: "activities/wallet/",

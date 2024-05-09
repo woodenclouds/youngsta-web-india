@@ -40,15 +40,14 @@ const ContactForm: React.FC = () => {
             );
             alert("Your message has been sent successfully!");
             reset();
-        } catch (error) {
-            console.error("There was an error sending your message:", error);
-        }
+        } catch (error) {}
     };
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
             className="w-full mx-auto flex flex-col justify-center "
-            noValidate>
+            noValidate
+        >
             <div className="flex flex-col space-y-5">
                 <div className="flex flex-col md:flex-row space-y-5 md:space-y-0">
                     <Input
@@ -94,7 +93,8 @@ const ContactForm: React.FC = () => {
                 <div className="relative">
                     <Button
                         type="submit"
-                        className="h-12 lg:h-14 mt-1 text-sm lg:text-base w-full sm:w-auto">
+                        className="h-12 lg:h-14 mt-1 text-sm lg:text-base w-full sm:w-auto"
+                    >
                         {t("common:button-send-message")}
                     </Button>
                 </div>

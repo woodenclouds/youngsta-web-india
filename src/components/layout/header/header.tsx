@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import SearchIcon from "@components/icons/search-icon";
 import Image from "next/image";
 import like from "../../../../public/icons/whish-icon.svg";
@@ -30,7 +30,14 @@ const Header: React.FC = () => {
     }
 
     const { data } = useHeaderMenuQuery({});
-    const accessToken = Cookies.get("auth_token");
+    const [accessToken, setAccessToken] = React.useState<string | null>(null);
+    const token = Cookies.get("auth_token");
+
+    useEffect(() => {
+        if (token) {
+            setAccessToken(token);
+        }
+    }, [token]);
 
     return (
         <header

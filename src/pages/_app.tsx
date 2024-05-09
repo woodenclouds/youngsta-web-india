@@ -4,7 +4,7 @@ import { AnimatePresence } from "framer-motion";
 import { ManagedUIContext } from "@contexts/ui.context";
 import ManagedModal from "@components/common/modal/managed-modal";
 import ManagedDrawer from "@components/common/drawer/managed-drawer";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     QueryClient,
     QueryClientProvider,
@@ -31,6 +31,8 @@ import "@styles/tailwind.css";
 import "@styles/rc-drawer.css";
 import { getDirection } from "@utils/get-direction";
 
+import Loader from "../components/Loader"; // Adjust the import path as necessary
+
 function handleExitComplete() {
     if (typeof window !== "undefined") {
         window.scrollTo({ top: 0 });
@@ -42,6 +44,8 @@ function Noop({ children }: React.PropsWithChildren<{}>) {
 }
 
 const CustomApp = ({ Component, pageProps }: AppProps) => {
+    const [loading, setLoading] = useState(false);
+
     const queryClientRef = useRef<any>();
     if (!queryClientRef.current) {
         queryClientRef.current = new QueryClient();
@@ -53,6 +57,22 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
     }, [dir]);
     const Layout = (Component as any).Layout || Noop;
 
+    useEffect(() => {
+        const handleStart = (url: any) =>
+            url !== router.asPath && setLoading(true);
+        const handleComplete = () => setLoading(false);
+
+        router.events.on("routeChangeStart", handleStart);
+        router.events.on("routeChangeComplete", handleComplete);
+        router.events.on("routeChangeError", handleComplete);
+
+        return () => {
+            router.events.off("routeChangeStart", handleStart);
+            router.events.off("routeChangeComplete", handleComplete);
+            router.events.off("routeChangeError", handleComplete);
+        };
+    }, [router]);
+
     return (
         <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
             <QueryClientProvider client={queryClientRef.current}>
@@ -63,6 +83,8 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
                         <Layout pageProps={pageProps}>
                             <DefaultSeo />
                             <AuthCheck>
+                                {loading && <Loader />}
+
                                 <Component {...pageProps} key={router.route} />
                             </AuthCheck>
                             <ToastContainer />

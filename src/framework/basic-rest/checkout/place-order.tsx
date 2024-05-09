@@ -14,7 +14,6 @@ export const usePlaceOrderMutation = (onSuccess: any) => {
             }
         },
         onError: (data) => {
-            console.log(data, "ADD_ADDRESS error response");
         },
     });
 };

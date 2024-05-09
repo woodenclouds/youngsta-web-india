@@ -19,7 +19,6 @@ export const usedeleteCartMutation = (onSuccess: any) => {
             }
         },
         onError: (data) => {
-            console.log(data, "add cart error response");
         },
     });
 };

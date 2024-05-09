@@ -23,7 +23,6 @@ export const useEditCartMutation = () => {
             }
         },
         onError: (data) => {
-            console.log(data, "add cart error response");
         },
     });
 };

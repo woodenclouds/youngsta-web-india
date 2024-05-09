@@ -62,14 +62,8 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
 
     const [isActive, setIsActive] = useState(false);
 
-    function handlePopupView() {
-        setModalData({ data: product });
-        setModalView("PRODUCT_VIEW");
-        return openModal();
-    }
-
     const onSuccess = (data: any) => {
-        toast(data?.message, {
+        toast.success(data?.data?.message ?? "Operation Successful", {
             progressClassName: "fancy-progress-bar",
             position: width > 768 ? "bottom-right" : "top-right",
             autoClose: 2000,

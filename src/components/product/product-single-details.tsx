@@ -50,7 +50,7 @@ const ProductSingleDetails: React.FC = () => {
 
     const successCart = () => {
         changeCart();
-        toast("Added to the Cart", {
+        toast.success("Added to the Cart", {
             progressClassName: "fancy-progress-bar",
             position: width > 768 ? "bottom-right" : "top-right",
             autoClose: 2000,
@@ -111,7 +111,7 @@ const ProductSingleDetails: React.FC = () => {
         if (refferal_code) {
             try {
                 await navigator.clipboard.writeText(path);
-                toast("Product link copied", {
+                toast.success("Product link copied", {
                     progressClassName: "fancy-progress-bar",
                     position: width > 768 ? "bottom-right" : "top-right",
                     autoClose: 2000,
@@ -277,7 +277,7 @@ const ProductSingleDetails: React.FC = () => {
                     </ul>
                 </div>
 
-                <ProductMetaReview data={data} />
+                {/* <ProductMetaReview data={data} /> */}
             </div>
         </div>
     );

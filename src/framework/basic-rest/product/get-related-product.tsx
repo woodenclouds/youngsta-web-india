@@ -9,7 +9,6 @@ export const fetchRelatedProducts = async ({
     queryKey: [string, { slug: string }];
 }) => {
     const [, options] = queryKey;
-    console.log("options", options);
 
     const {
         data: {

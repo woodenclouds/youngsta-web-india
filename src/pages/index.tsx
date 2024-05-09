@@ -1,9 +1,7 @@
 import BannerCard from "@components/common/banner-card";
 import Container from "@components/ui/container";
-import CategoryBlock from "@containers/category-block";
 import Layout from "@components/layout/layout";
 import BannerWithProducts from "@containers/banner-with-products";
-import BannerBlock from "@containers/banner-block";
 import Divider from "@components/ui/divider";
 import ProductsFlashSaleBlock from "@containers/product-flash-sale-block";
 import ProductsFeatured from "@containers/products-featured";
@@ -11,7 +9,6 @@ import BannerSliderBlock from "@containers/banner-slider-block";
 import ExclusiveBlock from "@containers/exclusive-block";
 import NewArrivalsProductFeed from "@components/product/feeds/new-arrivals-product-feed";
 import { homeThreeBanner as banner } from "@framework/static/banner";
-import { homeThreeMasonryBanner as masonryBanner } from "@framework/static/banner";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { ROUTES } from "@utils/routes";
 import { GetStaticProps } from "next";
@@ -20,19 +17,13 @@ export default function Home() {
     return (
         <>
             <ExclusiveBlock className="mb-12 md:mb-14 xl:mb-16 px-2.5 mx-auto max-w-[1920px]" />
-            {/* <Container>
-                <CategoryBlock sectionHeading="text-shop-by-category" />
-                <ProductsFeatured
-                    sectionHeading="text-featured-products"
-                    variant="center"
-                />
-            </Container> */}
+
             <Container>
                 <ProductsFlashSaleBlock date={"2024-03-01T01:02:03"} />
                 <BannerCard
                     key={`banner--key${banner[0].id}`}
                     banner={banner[0]}
-                    href={`${ROUTES.COLLECTIONS}/${banner[0].slug}`}
+                    href={`/category/${banner[0].slug}`}
                     className="mb-12 lg:mb-14 xl:mb-16 pb-0.5 lg:pb-1 xl:pb-0"
                 />
                 <ProductsFeatured
@@ -40,8 +31,6 @@ export default function Home() {
                     variant="center"
                 />
             </Container>
-
-            {/* <BannerBlock data={masonryBanner} /> */}
 
             <BannerSliderBlock />
             <Container>

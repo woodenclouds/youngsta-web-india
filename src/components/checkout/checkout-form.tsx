@@ -6,15 +6,13 @@ import { CheckBox } from "@components/ui/checkbox";
 import Button from "@components/ui/button";
 import { useAddresses } from "@framework/cart/view-address";
 import { useTranslation } from "next-i18next";
-import { useCheckoutMutation } from "@framework/auth/use-checkout";
 import { useEffect, useState } from "react";
 import Script from "next/script";
-import { getToken } from "@framework/utils/get-token";
 import { usePlaceOrderMutation } from "@framework/checkout/place-order";
 import { toast } from "react-toastify";
 import { useSsrCompatible } from "@utils/use-ssr-compatible";
 import { useWindowSize } from "react-use";
-import { useOrderSuccessMutation } from "@framework/checkout/order-success";
+import { useRouter } from "next/router";
 
 interface AddAddressInputType {
     first_name: string;
@@ -31,6 +29,7 @@ interface AddAddressInputType {
 
 const CheckoutForm: React.FC = () => {
     const { t } = useTranslation();
+    const router = useRouter();
 
     const { width } = useSsrCompatible(useWindowSize(), {
         width: 0,
@@ -38,7 +37,7 @@ const CheckoutForm: React.FC = () => {
     });
 
     const handleAddAddressSuccess = () => {
-        toast("Address added successfully", {
+        toast.success("Address added successfully", {
             progressClassName: "fancy-progress-bar",
             position: width > 768 ? "bottom-right" : "top-right",
             autoClose: 2000,
@@ -51,21 +50,10 @@ const CheckoutForm: React.FC = () => {
         reset();
     };
 
-    const razorPayFunction = (response: any) => {
-        const options = {
-            currency: "INR",
-            amount: response.razorpay.amount,
-            order_id: response.razorpay.order_id,
-            handler: function (response: any) {
-                orderSuccess(response?.purchase);
-            },
-        };
-        const paymentObject = new window.Razorpay(options);
-        paymentObject.open();
-        paymentObject.on("payment.failed", function (response: any) {
-            alert("Payment failed. Please try again. Contact support for help");
-        });
+    const paymentFunction = (response: any) => {
+        router.push(response?.payment_url);
     };
+
     const {
         register,
         handleSubmit,
@@ -76,8 +64,7 @@ const CheckoutForm: React.FC = () => {
     const { mutate: addAddress, isPending } = useAddAddressMutation(
         handleAddAddressSuccess
     );
-    const { mutate: placeOrder } = usePlaceOrderMutation(razorPayFunction);
-    const { mutate: orderSuccess } = useOrderSuccessMutation();
+    const { mutate: placeOrder } = usePlaceOrderMutation(paymentFunction);
 
     const [addressId, setAddressId] = useState<string | undefined>(undefined);
 

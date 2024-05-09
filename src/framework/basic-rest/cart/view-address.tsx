@@ -28,7 +28,6 @@ export const fetchAddresses = async ({
             return [] as Address[];
         }
     } catch (error) {
-        console.error("Error fetching addresses:", error);
         return [] as Address[];
     }
 };

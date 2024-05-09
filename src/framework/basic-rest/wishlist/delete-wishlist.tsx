@@ -20,7 +20,6 @@ export const usedeleteWishlistMutation = (onSuccessUpdate: () => void) => {
             onSuccessUpdate();
         },
         onError: (data) => {
-            console.log(data, "add cart error response");
         },
     });
 };

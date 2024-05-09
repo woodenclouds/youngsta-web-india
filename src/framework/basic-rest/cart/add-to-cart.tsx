@@ -26,7 +26,6 @@ export const useAddToCartMutation = (onSuccess: any, onError: any) => {
             }
         },
         onError: (data) => {
-            console.log(data, "add cart error response");
         },
     });
 };

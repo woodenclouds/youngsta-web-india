@@ -40,7 +40,6 @@ export const useCheckoutMutation = () => {
             }
         },
         onError: (data) => {
-            console.log(data, "login error response");
         },
     });
 };

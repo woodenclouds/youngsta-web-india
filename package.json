@@ -9,6 +9,7 @@
         "start": "next start"
     },
     "dependencies": {
+        "@cashfreepayments/cashfree-js": "^1.0.4",
         "@fontsource/open-sans": "5.0.17",
         "@fontsource/satisfy": "5.0.17",
         "@headlessui/react": "1.7.17",

@@ -78,7 +78,7 @@ const ProductCard: FC<ProductProps> = ({
         return openModal();
     }
     const onSuccess = (data: any) => {
-        toast(data?.message, {
+        toast.success(data?.data?.message ?? "Operation Successful", {
             progressClassName: "fancy-progress-bar",
             position: width > 768 ? "bottom-right" : "top-right",
             autoClose: 2000,

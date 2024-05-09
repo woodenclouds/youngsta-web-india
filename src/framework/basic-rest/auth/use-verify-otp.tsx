@@ -33,7 +33,6 @@ export const useVerifyMutation = () => {
             }
         },
         onError: (data) => {
-            console.log(data, "login error response");
         },
     });
 };

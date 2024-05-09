@@ -914,6 +914,11 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
+"@cashfreepayments/cashfree-js@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/@cashfreepayments/cashfree-js/-/cashfree-js-1.0.4.tgz"
+  integrity sha512-xa5TwBKtYhOC+LFJxltFmWjexQCJzK7xdz0QcwrkVxIrAv78gdaYZKGxBHXeEb05O+S4xG9R4DUUO/enmjwD/g==
+
 "@emotion/is-prop-valid@^0.8.2":
   version "0.8.8"
   resolved "https://registry.npmjs.org/@emotion/is-prop-valid/-/is-prop-valid-0.8.8.tgz"

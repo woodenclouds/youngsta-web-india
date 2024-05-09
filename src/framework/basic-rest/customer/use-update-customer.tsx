@@ -20,10 +20,8 @@ export const useUpdateUserMutation = () => {
   return useMutation({
     mutationFn: (input: UpdateUserType) => updateUser(input),
     onSuccess: (data) => {
-      console.log(data, "UpdateUser success response");
     },
     onError: (data) => {
-      console.log(data, "UpdateUser error response");
     },
   });
 };

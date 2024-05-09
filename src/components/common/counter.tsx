@@ -71,7 +71,7 @@ const Counter: React.FC<CounterProps> = ({
                     }
                 )}
             >
-                {item?.quantity}
+                {item?.quantity ?? quantity}
             </span>
 
             <button

@@ -22,11 +22,9 @@ export const useAddAddressMutation = (onSuccess: any) => {
     return useMutation({
         mutationFn: (input: AddAddressInputType) => addAddress(input),
         onSuccess: (data) => {
-            console.log(data, "ADD_ADDRESS success response");
             onSuccess();
         },
         onError: (data) => {
-            console.log(data, "ADD_ADDRESS error response");
         },
     });
 };

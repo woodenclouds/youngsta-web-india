@@ -13,7 +13,6 @@ export const useOrderSuccessMutation = (onSuccess?: any) => {
             }
         },
         onError: (data) => {
-            console.log(data, "error response");
         },
     });
 };
