@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import http from "@framework/utils/http";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export interface editCartInputType {
     attribute_id: string;
@@ -16,13 +16,17 @@ async function editCart(input: editCartInputType) {
 }
 
 export const useEditCartMutation = () => {
+    const queryClient = useQueryClient(); // Access the query client
+
     return useMutation({
         mutationFn: (input: editCartInputType) => editCart(input),
         onSuccess: (data) => {
             if (data?.data?.app_data?.StatusCode === 6000) {
+                queryClient.invalidateQueries({
+                    queryKey: [API_ENDPOINTS.VIEW_CART_ITEMS],
+                });
             }
         },
-        onError: (data) => {
-        },
+        onError: (data) => {},
     });
 };

@@ -58,7 +58,8 @@ export default function Cart() {
 
     const calculateTotalPrice = () => {
         return cartItems?.reduce(
-            (total, item: any) => total + item?.price * item?.quantity,
+            (total, item: any) =>
+                total + item?.product_info?.selling_price * item?.quantity,
             0
         );
     };

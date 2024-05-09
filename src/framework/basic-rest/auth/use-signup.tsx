@@ -8,14 +8,14 @@ export interface SignUpInputType {
     email: string;
     password: string;
     first_name: string;
-    last_name: string
+    last_name: string;
     phone_number: string;
     country_code: string;
 }
 async function signUp(input: SignUpInputType) {
     return http.post(API_ENDPOINTS.REGISTER, input);
 }
-export const useSignUpMutation = () => {
+export const useSignUpMutation = (handleError: any) => {
     const { setModalView } = useUI();
 
     return useMutation({
@@ -24,9 +24,10 @@ export const useSignUpMutation = () => {
             if (data?.data?.app_data?.StatusCode === 6000) {
                 Cookies.set("signup_mail", variables.email);
                 setModalView("ENTER_OTP");
+            } else {
+                handleError(data?.data?.app_data?.data?.message);
             }
         },
-        onError: (data) => {
-        },
+        onError: (data) => {},
     });
 };

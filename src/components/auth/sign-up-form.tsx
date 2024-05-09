@@ -8,10 +8,16 @@ import { useSignUpMutation, SignUpInputType } from "@framework/auth/use-signup";
 import Link from "@components/ui/link";
 import { ROUTES } from "@utils/routes";
 import { useTranslation } from "next-i18next";
+import { useState } from "react";
 
 const SignUpForm: React.FC = () => {
     const { t } = useTranslation();
-    const { mutate: signUp, isPending } = useSignUpMutation();
+    const [errorMessage, setErrorMessage] = useState(null);
+
+    const handleError = (error: any) => {
+        setErrorMessage(error);
+    };
+    const { mutate: signUp, isPending } = useSignUpMutation(handleError);
     const { setModalView, openModal, closeModal } = useUI();
     const {
         register,
@@ -101,7 +107,7 @@ const SignUpForm: React.FC = () => {
                                 message: t("forms:email-error"),
                             },
                         })}
-                        errorKey={errors.email?.message}
+                        errorKey={errorMessage ?? errors.email?.message}
                     />
 
                     <PasswordInput
@@ -111,6 +117,7 @@ const SignUpForm: React.FC = () => {
                             required: `${t("forms:password-required")}`,
                         })}
                     />
+
                     <div className="relative">
                         <Button
                             type="submit"

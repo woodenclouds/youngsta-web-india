@@ -20,16 +20,18 @@ const CheckoutCard: React.FC = () => {
     });
 
     const calculateTotalPrice = () => {
+        console.log("calculateTotalPrice", items);
         return items?.reduce(
-            (total, item: any) => total + item?.price * item?.quantity,
+            (total, item: any) =>
+                total + item?.product_info?.selling_price * item?.quantity,
             0
         );
     };
 
-    const [cartTotal, setCartTotal] = useState(calculateTotalPrice());
+    const [cartTotal, setCartTotal] = useState(0);
 
     useEffect(() => {
-        setCartTotal(calculateTotalPrice());
+        if (items?.length) setCartTotal(calculateTotalPrice());
     }, [items]);
 
     const checkoutFooter = [

@@ -19,11 +19,11 @@ const EnterOtp: React.FC = () => {
         formState: { errors },
     } = useForm<LoginInputType>();
 
-    function onSubmit({ otp }: LoginInputType) {
-        let email = (
-            Cookies.get("signup_mail") ? Cookies.get("signup_mail") : ""
-        ) as string;
+    let email = (
+        Cookies.get("signup_mail") ? Cookies.get("signup_mail") : ""
+    ) as string;
 
+    function onSubmit({ otp }: LoginInputType) {
         verify({
             otp,
             email,
@@ -37,7 +37,7 @@ const EnterOtp: React.FC = () => {
                     <Logo />
                 </div>
                 <p className="mt-2 mb-8 text-sm md:text-base text-body sm:mb-10">
-                    Enter Your OTP
+                    Enter the OTP sent to your mail <b>{email}</b>
                 </p>
             </div>
             <form
