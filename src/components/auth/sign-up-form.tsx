@@ -35,13 +35,14 @@ const SignUpForm: React.FC = () => {
         last_name,
         email,
         password,
+        phone_number,
     }: SignUpInputType) {
         let country_code = "91";
         signUp({
             first_name,
             last_name,
             email,
-            phone_number: "0000",
+            phone_number: phone_number,
             password,
             country_code,
         });
@@ -107,12 +108,25 @@ const SignUpForm: React.FC = () => {
                                 message: t("forms:email-error"),
                             },
                         })}
-                        errorKey={errorMessage ?? errors.email?.message}
+                        errorKey={errors.email?.message}
+                    />
+                    <Input
+                        labelKey="Phone Number"
+                        type="text" // or 'number' depending on whether you need to allow negatives/decimals
+                        variant="solid"
+                        {...register("phone_number", {
+                            required: `${t("forms:phone-required")}`,
+                            pattern: {
+                                value: /^[0-9]+$/, // This regex matches a string of one or more digits
+                                message: t("Enter a valid phone number"), // Custom error message for invalid input
+                            },
+                        })}
+                        errorKey={errors.phone_number?.message}
                     />
 
                     <PasswordInput
                         labelKey="forms:label-password"
-                        errorKey={errors.password?.message}
+                        errorKey={errorMessage ?? errors.password?.message}
                         {...register("password", {
                             required: `${t("forms:password-required")}`,
                         })}
