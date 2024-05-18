@@ -21,14 +21,14 @@ export default function AccountPage() {
                 >
                     {t("text-recent-orders")}
                 </Link>
-                {", "}
-                {/* , {t("text-manage-your")}{" "}
+                {", "} {t("text-manage-your")}{" "}
                 <Link
                     href={ROUTES.ACCOUNT_DETAILS}
                     className="text-heading underline font-semibold"
                 >
                     {t("text-account-details")}
-                </Link>{" "} */}
+                </Link>
+                {", "}
                 <Link
                     href={ROUTES.WALLET}
                     className="text-heading underline font-semibold"

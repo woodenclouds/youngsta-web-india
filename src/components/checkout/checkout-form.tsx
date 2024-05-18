@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { useSsrCompatible } from "@utils/use-ssr-compatible";
 import { useWindowSize } from "react-use";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 interface AddAddressInputType {
     first_name: string;
@@ -30,6 +31,7 @@ interface AddAddressInputType {
 const CheckoutForm: React.FC = () => {
     const { t } = useTranslation();
     const router = useRouter();
+    const email = Cookies.get("email");
 
     const { width } = useSsrCompatible(useWindowSize(), {
         width: 0,
@@ -85,6 +87,12 @@ const CheckoutForm: React.FC = () => {
             }
         }
     }, [Array.isArray(addresses) && addresses?.[0]?.id]);
+
+    useEffect(() => {
+        if (Array.isArray(addresses) && addresses?.length <= 0) {
+            setAddAddress(true);
+        }
+    }, [Array.isArray(addresses) && addresses?.length]);
 
     const makePayment = async (id: string) => {
         placeOrder({ address: id });
@@ -163,6 +171,7 @@ const CheckoutForm: React.FC = () => {
 
                             <Input
                                 type="email"
+                                value={email}
                                 labelKey="Email"
                                 {...register("email", {
                                     required: "forms:email-required",

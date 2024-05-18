@@ -61,9 +61,9 @@ const OrdersTable: React.FC = () => {
                                 <th className="p-4 font-semibold bg-gray-100 text-heading ltr:text-left rtl:text-right lg:text-center">
                                     {t("text-total")}
                                 </th>
-                                {/* <th className="p-4 font-semibold bg-gray-100 text-heading ltr:text-left rtl:text-right ltr:lg:text-right rtl:lg:text-left ltr:last:rounded-tr-md rtl:last:rounded-tl-md">
+                                <th className="p-4 font-semibold bg-gray-100 text-heading ltr:text-left rtl:text-right ltr:lg:text-right rtl:lg:text-left ltr:last:rounded-tr-md rtl:last:rounded-tl-md">
                                     {t("text-actions")}
-                                </th> */}
+                                </th>
                             </tr>
                         </thead>
                         <tbody className="text-sm lg:text-base">
@@ -90,14 +90,14 @@ const OrdersTable: React.FC = () => {
                                         {item?.total_amount} for{" "}
                                         {item?.purchase_items?.length} items
                                     </td>
-                                    {/* <td className="px-4 py-5 ltr:text-right rtl:text-left text-heading">
+                                    <td className="px-4 py-5 ltr:text-right rtl:text-left text-heading">
                                         <Link
                                             href="/my-account/orders/3203"
                                             className="text-sm leading-4 bg-heading text-white px-4 py-2.5 inline-block rounded-md hover:text-white hover:bg-gray-600"
                                         >
                                             {t("button-view")}
                                         </Link>
-                                    </td> */}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
