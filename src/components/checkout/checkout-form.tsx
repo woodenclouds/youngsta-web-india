@@ -50,6 +50,7 @@ const CheckoutForm: React.FC = () => {
         });
         setUpdated(!isUpdated);
         reset();
+        setAddAddress(false);
     };
 
     const paymentFunction = (response: any) => {
@@ -109,10 +110,21 @@ const CheckoutForm: React.FC = () => {
                     {t("text-shipping-address")}
                 </h2>
                 <Button
-                    className="w-full sm:w-auto bg-transparent hover:bg-transparent !text-[#212121] !shadow-none	"
+                    className={`w-full sm:w-auto bg-transparent hover:bg-transparent !text-[#212121] !shadow-none ${
+                        Array.isArray(addresses) && addresses?.length <= 0
+                            ? "!cursor-not-allowed"
+                            : "cursor-pointer"
+                    }	`}
                     loading={isPending}
                     onClick={(e) => {
-                        setAddAddress(!isAddAddress);
+                        if (
+                            Array.isArray(addresses) &&
+                            addresses?.length <= 0
+                        ) {
+                            e.preventDefault();
+                        } else {
+                            setAddAddress(!isAddAddress);
+                        }
                     }}
                     style={{
                         boxShadow: "none",
@@ -239,11 +251,7 @@ const CheckoutForm: React.FC = () => {
                                     className="cursor-pointer p-3 w-[48%] rounded-lg shadow-md ring-2 ring-offset-3 ring-gray-500"
                                     onClick={() => setAddressId(address?.id)}
                                 >
-                                    <div className="flex justify-between">
-                                        <h4>
-                                            {address.first_name}{" "}
-                                            {address.last_name}
-                                        </h4>
+                                    <div className="flex w-full justify-between mb-[10px]">
                                         <input
                                             type="radio"
                                             name="address"
@@ -253,6 +261,20 @@ const CheckoutForm: React.FC = () => {
                                                 setAddressId(address?.id)
                                             }
                                         />
+                                        <div>
+                                            <span className="text-[16px] mr-[10px] py-[5px] px-[10px] rounded hover:opacity-60 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-body text-center justify-center border-0 border-transparent  !text-[#212121] bg-[#fff]	">
+                                                Edit
+                                            </span>
+                                            <span className="text-[16px] py-[5px] px-[10px] rounded hover:opacity-60 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-body text-center justify-center border-0 border-transparent  !text-[#212121] bg-[#fff]	">
+                                                Delete
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <h4>
+                                            {address.first_name}{" "}
+                                            {address.last_name}
+                                        </h4>
                                     </div>
 
                                     <h4>{address?.phone}</h4>

@@ -92,7 +92,7 @@ const OrdersTable: React.FC = () => {
                                     </td>
                                     <td className="px-4 py-5 ltr:text-right rtl:text-left text-heading">
                                         <Link
-                                            href="/my-account/orders/3203"
+                                            href={`/my-account/orders/${item?.id}`}
                                             className="text-sm leading-4 bg-heading text-white px-4 py-2.5 inline-block rounded-md hover:text-white hover:bg-gray-600"
                                         >
                                             {t("button-view")}

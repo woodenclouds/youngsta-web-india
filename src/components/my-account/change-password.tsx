@@ -33,6 +33,7 @@ const ChangePassword: React.FC = () => {
             pauseOnHover: true,
             draggable: true,
         });
+        reset();
     };
     const { mutate: changePassword, isPending } =
         useChangePasswordMutation(renderToast);
@@ -41,6 +42,7 @@ const ChangePassword: React.FC = () => {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm<ChangePasswordInputType>({
         defaultValues,
     });

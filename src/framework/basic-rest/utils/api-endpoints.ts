@@ -7,6 +7,8 @@ export const API_ENDPOINTS = {
     VIEW_ADDRESS: "accounts/view_addresses/",
     ADD_ADDRESS: "accounts/add_address/",
     CREATE_REFERAL: "activities/create-refferal/",
+    GET_ACCOUNT: "accounts/account_details/",
+    UPDATE_ACCOUNT: "accounts/edit-account-details/",
 
     // authentication endpoints
     LOGIN: "accounts/login/",
@@ -39,5 +41,6 @@ export const API_ENDPOINTS = {
     CHECKOUT: "payments/create-order/",
     SUCCESS_CHECKOUT: "activities/success/",
     ORDERS: "activities/orders/",
+    SINGLE_ORDERS: "activities/admin/orders/",
     WALLET: "activities/wallet/",
 };
