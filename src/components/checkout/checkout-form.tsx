@@ -14,6 +14,9 @@ import { useSsrCompatible } from "@utils/use-ssr-compatible";
 import { useWindowSize } from "react-use";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
+import { useDeleteAddressMutation } from "@framework/checkout/use-delete-address";
+import { useEditAddressMutation } from "@framework/checkout/use-edit-address";
 
 interface AddAddressInputType {
     first_name: string;
@@ -32,6 +35,7 @@ const CheckoutForm: React.FC = () => {
     const { t } = useTranslation();
     const router = useRouter();
     const email = Cookies.get("email");
+    const [selectedAddress, setSelectedAddress] = useState({ id: null });
 
     const { width } = useSsrCompatible(useWindowSize(), {
         width: 0,
@@ -39,7 +43,47 @@ const CheckoutForm: React.FC = () => {
     });
 
     const handleAddAddressSuccess = () => {
-        toast.success("Address added successfully", {
+        toast.success("Address updated successfully", {
+            progressClassName: "fancy-progress-bar",
+            position: width > 768 ? "bottom-right" : "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+        setUpdated(!isUpdated);
+        reset({
+            first_name: "",
+            last_name: "",
+            address: "",
+            phone: "",
+            email: email,
+            city: "",
+            state: "",
+            zipCode: "",
+            note: "",
+        });
+        setAddAddress(false);
+    };
+
+    const handlDeleteAddressSuccess = () => {
+        toast.success("Address deleted successfully", {
+            progressClassName: "fancy-progress-bar",
+            position: width > 768 ? "bottom-right" : "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+        setUpdated(!isUpdated);
+        reset();
+        setAddAddress(false);
+    };
+
+    const handlDeleteAddressError = (data: any) => {
+        toast.error(data?.message, {
             progressClassName: "fancy-progress-bar",
             position: width > 768 ? "bottom-right" : "top-right",
             autoClose: 2000,
@@ -62,18 +106,53 @@ const CheckoutForm: React.FC = () => {
         handleSubmit,
         formState: { errors },
         reset,
-    } = useForm<AddAddressInputType>();
+    } = useForm<AddAddressInputType>({
+        defaultValues: {
+            first_name: "",
+            last_name: "",
+            address: "",
+            phone: "",
+            email: email,
+            city: "",
+            state: "",
+            zipCode: "",
+            note: "",
+        },
+    });
 
     const { mutate: addAddress, isPending } = useAddAddressMutation(
         handleAddAddressSuccess
     );
+
+    const { mutate: editAddress, isPending: isEdit } = useEditAddressMutation(
+        handleAddAddressSuccess,
+        handlDeleteAddressError
+    );
+
+    const { mutate: deleteAddress } = useDeleteAddressMutation(
+        handlDeleteAddressSuccess,
+        handlDeleteAddressError
+    );
+
     const { mutate: placeOrder } = usePlaceOrderMutation(paymentFunction);
 
     const [addressId, setAddressId] = useState<string | undefined>(undefined);
 
-    function onSubmit(input: AddAddressInputType) {
-        addAddress(input);
+    function onSubmit(input: any) {
+        if (selectedAddress?.id) {
+            editAddress({
+                ...input,
+                id: selectedAddress?.id,
+            });
+        } else {
+            addAddress(input);
+        }
     }
+
+    function onDelete(id: any) {
+        deleteAddress(id);
+    }
+
     const [isUpdated, setUpdated] = useState(false);
     const [isAddAddress, setAddAddress] = useState(false);
 
@@ -221,9 +300,7 @@ const CheckoutForm: React.FC = () => {
                                 className="w-full lg:w-1/2"
                             />
                         </div>
-                        <div className="relative flex items-center ">
-                            <CheckBox labelKey="forms:label-save-information" />
-                        </div>
+
                         <TextArea
                             labelKey="forms:label-order-notes"
                             {...register("note")}
@@ -233,10 +310,12 @@ const CheckoutForm: React.FC = () => {
                         <div className="flex w-full">
                             <Button
                                 className="w-full sm:w-auto"
-                                loading={isPending}
+                                loading={isPending || isEdit}
                                 disabled={isPending}
                             >
-                                Add Address
+                                {selectedAddress?.id
+                                    ? "Update Address"
+                                    : "Add Address"}
                             </Button>
                         </div>
                     </div>
@@ -262,10 +341,55 @@ const CheckoutForm: React.FC = () => {
                                             }
                                         />
                                         <div>
-                                            <span className="text-[16px] mr-[10px] py-[5px] px-[10px] rounded hover:opacity-60 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-body text-center justify-center border-0 border-transparent  !text-[#212121] bg-[#fff]	">
+                                            <span
+                                                className="text-[16px] mr-[10px] py-[5px] px-[10px] rounded hover:opacity-60 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-body text-center justify-center border-0 border-transparent  !text-[#212121] bg-[#fff]	"
+                                                onClick={() => {
+                                                    setSelectedAddress(address);
+                                                    setAddAddress(true);
+                                                    reset({
+                                                        first_name:
+                                                            address?.first_name,
+                                                        last_name:
+                                                            address?.last_name,
+                                                        address:
+                                                            address?.address,
+                                                        phone: address?.phone,
+                                                        email: email,
+                                                        city: address?.city,
+                                                        state: address?.state,
+                                                        zipCode:
+                                                            address?.zipCode,
+                                                        note: address?.note,
+                                                    });
+                                                }}
+                                            >
                                                 Edit
                                             </span>
-                                            <span className="text-[16px] py-[5px] px-[10px] rounded hover:opacity-60 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-body text-center justify-center border-0 border-transparent  !text-[#212121] bg-[#fff]	">
+                                            <span
+                                                className="text-[16px] py-[5px] px-[10px] rounded hover:opacity-60 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-body text-center justify-center border-0 border-transparent  !text-[#212121] bg-[#fff]	"
+                                                onClick={() => {
+                                                    Swal.fire({
+                                                        title: "Are you sure?",
+                                                        text: "You won't be able to revert this!",
+                                                        icon: "warning",
+                                                        showCancelButton: true,
+                                                        confirmButtonColor:
+                                                            "#3085d6",
+                                                        cancelButtonColor:
+                                                            "#d33",
+                                                        confirmButtonText:
+                                                            "Yes, delete it!",
+                                                    }).then((result) => {
+                                                        if (
+                                                            result.isConfirmed
+                                                        ) {
+                                                            onDelete(
+                                                                address?.id
+                                                            );
+                                                        }
+                                                    });
+                                                }}
+                                            >
                                                 Delete
                                             </span>
                                         </div>

@@ -6,6 +6,8 @@ export const API_ENDPOINTS = {
     // account endpoints
     VIEW_ADDRESS: "accounts/view_addresses/",
     ADD_ADDRESS: "accounts/add_address/",
+    EDIT_ADDRESS: "accounts/edit_address/",
+    DELETE_ADDRESS: "accounts/delete_address/",
     CREATE_REFERAL: "activities/create-refferal/",
     GET_ACCOUNT: "accounts/account_details/",
     UPDATE_ACCOUNT: "accounts/edit-account-details/",

@@ -16,7 +16,6 @@ export interface AddAddressInputType {
 
 async function addAddress(input: AddAddressInputType) {
     return http.post(API_ENDPOINTS.ADD_ADDRESS, input);
-    return input;
 }
 export const useAddAddressMutation = (onSuccess: any) => {
     return useMutation({
