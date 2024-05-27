@@ -196,6 +196,18 @@ const CheckoutForm: React.FC = () => {
                     }	`}
                     loading={isPending}
                     onClick={(e) => {
+                        setSelectedAddress({ id: null });
+                        reset({
+                            first_name: "",
+                            last_name: "",
+                            address: "",
+                            phone: "",
+                            email: email,
+                            city: "",
+                            state: "",
+                            zipCode: "",
+                            note: "",
+                        });
                         if (
                             Array.isArray(addresses) &&
                             addresses?.length <= 0

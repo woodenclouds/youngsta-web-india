@@ -45,4 +45,6 @@ export const API_ENDPOINTS = {
     ORDERS: "activities/orders/",
     SINGLE_ORDERS: "activities/admin/orders/",
     WALLET: "activities/wallet/",
+    RETURN_ITEM: "accounts/delete_address/",
+    CANCEL_ITEM: "accounts/delete_address/",
 };
