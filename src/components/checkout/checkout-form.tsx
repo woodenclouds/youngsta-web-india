@@ -97,6 +97,18 @@ const CheckoutForm: React.FC = () => {
         setAddAddress(false);
     };
 
+    const handlOrderError = (data: any) => {
+        toast.error(data?.title, {
+            progressClassName: "fancy-progress-bar",
+            position: width > 768 ? "bottom-right" : "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
+    };
+
     const paymentFunction = (response: any) => {
         router.push(response?.payment_url);
     };
@@ -134,7 +146,8 @@ const CheckoutForm: React.FC = () => {
         handlDeleteAddressError
     );
 
-    const { mutate: placeOrder } = usePlaceOrderMutation(paymentFunction);
+    const { mutate: placeOrder, isPending: isOrderPending } =
+        usePlaceOrderMutation(paymentFunction, handlOrderError);
 
     const [addressId, setAddressId] = useState<string | undefined>(undefined);
 
@@ -426,8 +439,8 @@ const CheckoutForm: React.FC = () => {
                     <div className="block !w-full">
                         <Button
                             className="!w-full sm:w-auto block"
-                            loading={isPending}
-                            disabled={isPending}
+                            loading={isOrderPending}
+                            disabled={isOrderPending}
                             onClick={(e) => {
                                 if (addressId) {
                                     makePayment(addressId);

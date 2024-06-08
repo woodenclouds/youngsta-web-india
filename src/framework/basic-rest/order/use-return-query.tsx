@@ -3,7 +3,7 @@ import http from "@framework/utils/http";
 import { useMutation } from "@tanstack/react-query";
 
 async function returnFunction(id: any) {
-    return http.delete(`${API_ENDPOINTS.RETURN_ITEM}${id}/`, {});
+    return http.post(`${API_ENDPOINTS.RETURN_ITEM}${id}/`, {});
 }
 export const useReturnMutation = (onSuccess: any, onError: any) => {
     return useMutation({

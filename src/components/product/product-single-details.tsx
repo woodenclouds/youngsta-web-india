@@ -72,7 +72,10 @@ const ProductSingleDetails: React.FC = () => {
             draggable: true,
         });
     };
-    const { mutate: addToCart } = useAddToCartMutation(successCart, errorCart);
+    const { mutate: addToCart, isPending } = useAddToCartMutation(
+        successCart,
+        errorCart
+    );
 
     const { data, isLoading } = useProductQuery(slug as string);
     const [quantity, setQuantity] = useState(1);
@@ -238,7 +241,7 @@ const ProductSingleDetails: React.FC = () => {
                             !attribute_id && "bg-gray-400 hover:bg-gray-400"
                         }`}
                         // disabled={!attribute_id}
-                        loading={addToCartLoader}
+                        loading={isPending}
                     >
                         <span className="py-2 3xl:px-8">Add to cart</span>
                     </Button>

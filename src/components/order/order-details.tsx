@@ -7,14 +7,22 @@ import { useReturnMutation } from "@framework/order/use-return-query";
 import { toast } from "react-toastify";
 import { useWindowSize } from "react-use";
 import { useSsrCompatible } from "@utils/use-ssr-compatible";
+import { useCancelMutation } from "@framework/order/cancel-item-query";
+import { useState } from "react";
 const OrderItemCard = ({
     product,
     onReturn,
     onCancel,
+    isReturnLoading,
+    isCancelLoading,
+    selectedId,
 }: {
     product: OrderItem;
     onReturn: any;
     onCancel: any;
+    isReturnLoading: boolean;
+    isCancelLoading: boolean;
+    selectedId: any;
 }) => {
     return (
         <tr
@@ -27,20 +35,70 @@ const OrderItemCard = ({
             <td className="p-4">₹{product?.price}</td>
             <td>
                 <div className="flex ">
-                    {product?.is_returnable && (
+                    {!product?.is_returned && !product?.is_cancelled && (
                         <button
+                            disabled={isReturnLoading}
                             onClick={() => onReturn(product?.id)}
-                            className="text-[12px]  mr-[10px] leading-4 bg-heading text-white px-4 py-2.5 inline-block rounded-md hover:text-white hover:bg-gray-600"
+                            className="text-[12px] inline-flex items-center  mr-[10px] leading-4 bg-heading text-white px-4 py-2.5  rounded-md hover:text-white hover:bg-gray-600"
                         >
-                            Return
+                            Return{" "}
+                            {isReturnLoading && selectedId === product?.id && (
+                                <>
+                                    <svg
+                                        className="animate-spin ltr:-mr-1 rtl:-ml-1 ltr:ml-3 rtl:mr-3 h-3 w-3 text-white"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <circle
+                                            className="opacity-25"
+                                            cx="12"
+                                            cy="12"
+                                            r="10"
+                                            stroke="currentColor"
+                                            strokeWidth="4"
+                                        />
+                                        <path
+                                            className="opacity-75"
+                                            fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                        />
+                                    </svg>
+                                </>
+                            )}
                         </button>
                     )}
-                    {product?.is_cancelable && (
+                    {!product?.is_cancelled && (
                         <button
+                            disabled={isCancelLoading}
                             onClick={() => onCancel(product?.id)}
-                            className="text-[12px]  mr-[10px] leading-4 bg-heading text-white px-4 py-2.5 inline-block rounded-md hover:text-white hover:bg-gray-600"
+                            className="text-[12px]  mr-[10px] leading-4 bg-heading text-white px-4 py-2.5 inline-flex items-center rounded-md hover:text-white hover:bg-gray-600"
                         >
                             Cancel
+                            {isCancelLoading && selectedId === product?.id && (
+                                <>
+                                    <svg
+                                        className="animate-spin ltr:-mr-1 rtl:-ml-1 ltr:ml-3 rtl:mr-3 h-3 w-3 text-white"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <circle
+                                            className="opacity-25"
+                                            cx="12"
+                                            cy="12"
+                                            r="10"
+                                            stroke="currentColor"
+                                            strokeWidth="4"
+                                        />
+                                        <path
+                                            className="opacity-75"
+                                            fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                        />
+                                    </svg>
+                                </>
+                            )}
                         </button>
                     )}
                 </div>
@@ -60,6 +118,7 @@ const OrderDetails: React.FC<{ className?: string }> = ({
         height: 0,
     });
     const { data: order, isLoading } = useOrderQuery(id?.toString()!);
+    const [selectedId, setSelectedId] = useState(null);
 
     const handleSuccess = (data: any) => {
         toast.success(data?.message ?? "Operation Successful", {
@@ -85,21 +144,19 @@ const OrderDetails: React.FC<{ className?: string }> = ({
         });
     };
 
-    const { mutate: returnItem } = useReturnMutation(
-        handleSuccess,
-        handleError
-    );
+    const { mutate: returnItem, isPending: isReturnLoading } =
+        useReturnMutation(handleSuccess, handleError);
 
-    const { mutate: cancelItem } = useReturnMutation(
-        handleSuccess,
-        handleError
-    );
+    const { mutate: cancelItem, isPending: isCancelLoading } =
+        useCancelMutation(handleSuccess, handleError);
 
     function onReturn(id: any) {
+        setSelectedId(id);
         returnItem(id);
     }
 
     function onCancel(id: any) {
+        setSelectedId(id);
         cancelItem(id);
     }
 
@@ -131,6 +188,9 @@ const OrderDetails: React.FC<{ className?: string }> = ({
                             product={product}
                             onReturn={onReturn}
                             onCancel={onCancel}
+                            isReturnLoading={isReturnLoading}
+                            isCancelLoading={isCancelLoading}
+                            selectedId={selectedId}
                         />
                     ))}
                 </tbody>

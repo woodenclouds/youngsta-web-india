@@ -5,15 +5,16 @@ import { useMutation } from "@tanstack/react-query";
 async function placeOrder(input: any) {
     return http.post(API_ENDPOINTS.CHECKOUT, input);
 }
-export const usePlaceOrderMutation = (onSuccess: any) => {
+export const usePlaceOrderMutation = (onSuccess: any, onError: any) => {
     return useMutation({
         mutationFn: (input: any) => placeOrder(input),
         onSuccess: (data) => {
             if (data?.data?.app_data?.StatusCode === 6000) {
                 onSuccess(data?.data?.app_data?.data);
+            } else {
+                onError(data?.data?.app_data?.data);
             }
         },
-        onError: (data) => {
-        },
+        onError: (data) => {},
     });
 };
