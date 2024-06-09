@@ -352,7 +352,7 @@ const CheckoutForm: React.FC = () => {
                             addresses?.map((address: any, index: any) => (
                                 <div
                                     key={index}
-                                    className="cursor-pointer p-3 w-[48%] rounded-lg shadow-md ring-2 ring-offset-3 ring-gray-500"
+                                    className="cursor-pointer p-3 w-[100%] rounded-lg shadow-md ring-2 ring-offset-3 ring-gray-500"
                                     onClick={() => setAddressId(address?.id)}
                                 >
                                     <div className="flex w-full justify-between mb-[10px]">
