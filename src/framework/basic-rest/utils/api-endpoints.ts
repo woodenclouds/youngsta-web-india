@@ -32,6 +32,8 @@ export const API_ENDPOINTS = {
     REMOVE_FROM_CART: "activities/remove_from_cart/",
     EDIT_CART: "activities/edit_cart_item/",
     VIEW_CART_ITEMS: "activities/view_cart_items/",
+    ADD_REFFERAL: "activities/add-refferal/",
+    ADD_COUPEN: "activities/apply-coupen/",
 
     // wislist endpoints
     VIEW_WISHLIST_ITEMS: "activities/view_wishlist/",
