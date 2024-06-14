@@ -6,14 +6,14 @@ const data = {
     exclusiveData: [
         {
             id: 1,
-            slug: "/search?category=womans-wear",
+            slug: "/search?category=women",
             buttonText: "button-women-exclusive",
             image: "/assets/images/exclusive/women.png",
             backgroundColor: "bg-gray-150",
         },
         {
             id: 2,
-            slug: "/search?category=mens-wear",
+            slug: "/search?category=men",
             buttonText: "button-men-exclusive",
             image: "/assets/images/exclusive/men.png",
             backgroundColor: "bg-linenSecondary",

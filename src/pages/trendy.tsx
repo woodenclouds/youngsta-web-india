@@ -35,6 +35,7 @@ export default function Home() {
 					variant="combined"
 					sectionHeading="text-featured-products"
 				/>
+
 				<ProductsFlashSaleCarousel />
 				<BannerCard
 					key={`banner--key${banner.id}`}
