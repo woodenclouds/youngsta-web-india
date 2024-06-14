@@ -12,7 +12,7 @@ interface ProductGridProps {
 }
 export const ProductGrid: FC<ProductGridProps> = ({ className, params }) => {
   const { query } = useRouter();
-  console.log(params,query, "____query");
+  console.log(params,query.category, "____query");
 
   const {
     isFetching: isLoading,
@@ -31,7 +31,7 @@ export const ProductGrid: FC<ProductGridProps> = ({ className, params }) => {
       : params
       ? params?.slug
       : null,
-    category: params?.slug ? params?.slug :  query?.slug ,
+    category: params?.slug ? params?.slug : query?.category ? query?.category : null,
   });
   if (error) return <p>{error.message}</p>;
 
