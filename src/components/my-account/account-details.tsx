@@ -114,6 +114,7 @@ const AccountDetails: React.FC = () => {
                         <Input
                             type="tel"
                             labelKey="Phone"
+                            disabled
                             {...register("phone_number", {
                                 required: "forms:phone-required",
                             })}
@@ -124,6 +125,7 @@ const AccountDetails: React.FC = () => {
                         <Input
                             type="email"
                             labelKey="Email"
+                            disabled
                             value={email}
                             {...register("email", {
                                 required: "forms:email-required",

@@ -31,12 +31,14 @@ export const ProductGrid: FC<ProductGridProps> = ({ className, params }) => {
       : params
       ? params?.slug
       : null,
-    category: params?.slug ? params?.slug : query?.category ? query?.category : null,
+    category: params?.slug ? params?.slug : query?.category ? query?.category : query?.slug ? query?.slug : '',
   });
+
   if (error) return <p>{error.message}</p>;
 
   const { t } = useTranslation("common");
-
+  console.log(params, query);
+  
   return (
     <>
       <div
