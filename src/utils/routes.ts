@@ -16,7 +16,7 @@ export const ROUTES = {
   LOGIN: "/signin",
   SIGN_UP: "/signup",
   SEARCH: "/search",
-  COLLECTIONS: "/collections",
+  COLLECTIONS: "/search",
   CATEGORY: "/category",
   ORDER: "/order",
 };
