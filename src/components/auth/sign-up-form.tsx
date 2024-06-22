@@ -112,18 +112,18 @@ const SignUpForm: React.FC = () => {
                     />
                     <Input
                         labelKey="Phone Number"
-                        type="text" // or 'number' depending on whether you need to allow negatives/decimals
+                        type="text"
                         variant="solid"
+                        maxLength={10} // This ensures only 10 digits can be entered
                         {...register("phone_number", {
                             required: `${t("forms:phone-required")}`,
                             pattern: {
-                                value: /^[0-9]+$/, // This regex matches a string of one or more digits
-                                message: t("Enter a valid phone number"), // Custom error message for invalid input
+                                value: /^[0-9]{10}$/, // This regex matches exactly 10 digits
+                                message: t("Enter a valid 10-digit phone number"), // Custom error message for invalid input
                             },
                         })}
                         errorKey={errors.phone_number?.message}
                     />
-
                     <PasswordInput
                         labelKey="forms:label-password"
                         errorKey={errorMessage ?? errors.password?.message}

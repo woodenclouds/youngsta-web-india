@@ -4,36 +4,36 @@ import http from "@framework/utils/http";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchProducts = async ({
-    queryKey,
+  queryKey,
 }: {
-    queryKey: [string, { param: string }];
+  queryKey: [string, QueryOptionsType];
 }) => {
-    const [, options] = queryKey;
-    const queryString = Object.keys(options)
-        .map(
-            (key) =>
-                `${encodeURIComponent(key)}=${encodeURIComponent(options[key])}`
-        )
-        .join("&");
+  const [, options] = queryKey;
+  const queryString = Object.entries(options)
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+    )
+    .join("&");
 
-    const {
-        data: {
-            app_data: { data },
-        },
-    } = await http.get(
-        `${API_ENDPOINTS.PRODUCTS}${queryString ? `?${queryString}` : ""}`
-    );
+  const {
+    data: {
+      app_data: { data },
+    },
+  } = await http.get(
+    `${API_ENDPOINTS.PRODUCTS}${queryString ? `?${queryString}` : ""}`
+  );
 
-    return {
-        data,
-    };
+  return {
+    data,
+  };
 };
 
 const useProductsQuery = (options: QueryOptionsType) => {
-    return useQuery<Product, Error>({
-        queryKey: [API_ENDPOINTS.PRODUCTS, options],
-        queryFn: fetchProducts,
-    });
+  return useQuery<Product[], Error>({
+    queryKey: [API_ENDPOINTS.PRODUCTS, options],
+    queryFn: fetchProducts,
+  });
 };
 
 export { useProductsQuery, fetchProducts };
