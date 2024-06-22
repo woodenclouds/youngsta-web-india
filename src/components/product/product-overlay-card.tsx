@@ -113,7 +113,7 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
             } relative items-center justify-between overflow-hidden`}
         >
             <div
-                className={`absolute right-[62px] top-[25px] bg-[#ffff] p-[11px] flex items-center z-[1] rounded-[50%] cursor-pointer ${
+                className={`absolute right-[11px] top-[6px] bg-[#ffff] p-[11px] flex items-center z-[1] rounded-[50%] cursor-pointer ${
                     isActive || product?.is_wishlist ? "text-red-500" : ""
                 }`}
                 onClick={(e) => {

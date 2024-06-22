@@ -23,7 +23,7 @@ const Copyright: React.FC<CopyrightProps> = ({ payment, variant }) => {
     <div className="pt-5 pb-16 mb-2 border-t border-gray-300 sm:pb-20 md:pb-5 sm:mb-0">
       <Container
         className={cn(
-          'flex flex-col-reverse md:flex-row text-center md:justify-between',
+          'flex flex-col-reverse md:flex-row text-center md:justify-center',
           {
             'items-center': variant === 'contemporary',
           }
@@ -44,25 +44,7 @@ const Copyright: React.FC<CopyrightProps> = ({ payment, variant }) => {
           &nbsp; {t('text-all-rights-reserved')}
         </p>
 
-        {payment && (
-          <ul className="flex-wrap items-center justify-center hidden mx-auto mb-1 md:flex gap-x-4 xs:gap-x-5 lg:gap-x-7 md:mb-0 md:mx-0">
-            {payment?.map((item) => (
-              <li
-                className="mb-2 transition md:mb-0 hover:opacity-80"
-                key={`payment-list--key${item.id}`}
-              >
-                <a href={item.path ? item.path : '/#'} target="_blank">
-                  <img
-                    src={item.image}
-                    alt={t(`${item.name}`)}
-                    height={item.height}
-                    width={item.width}
-                  />
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
+        
 
         {variant === 'contemporary' && (
           <p className="text-sm font-semibold leading-[19px] text-[#212121] cursor-pointer">
