@@ -4,14 +4,13 @@ import { useWindowSize } from "@utils/use-window-size";
 import cn from "classnames";
 import { LinkProps } from "next/link";
 import { useSsrCompatible } from "@utils/use-ssr-compatible";
-import { useGetBanners } from "@framework/product/get-banner";
 
 interface BannerProps {
   banner: any;
   variant?: "rounded" | "default";
   effectActive?: boolean;
   className?: string;
-  section: BigInteger;
+  section:any;
   classNameInner?: string;
   href: LinkProps["href"];
   disableBorderRadius?: boolean;
@@ -31,14 +30,12 @@ export default function BannerCard({
   href,
   disableBorderRadius = false,
 }: BannerProps) {
-  console.log(section,"___log__sect");
+  console.log(href,"href___");
   
   const { width } = useSsrCompatible(useWindowSize(), { width: 0, height: 0 });
-  const { title, image } = banner;
-  const selectedImage = getImage(width, image);
-  const { data } = useGetBanners({}, section);
-  console.log(data);
-  
+  // const { title, image } = banner;
+  // const selectedImage = getImage(width, image);
+  console.log(section, "nenenennen");
   
   return (
     <div className={cn("mx-auto", className)}>
@@ -50,10 +47,10 @@ export default function BannerCard({
         )}
       >
         <Image
-          src={selectedImage.url}
-          width={selectedImage.width}
-          height={selectedImage.height}
-          alt={title}
+          src={section?.image}
+          width={width}
+          height={500}
+          alt={"youngsta"}
           quality={100}
           className={cn("bg-gray-300 object-cover w-full", {
             "rounded-md": variant === "rounded" && !disableBorderRadius,
