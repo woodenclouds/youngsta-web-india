@@ -1,17 +1,19 @@
-import Link from '@components/ui/link';
-import Image from 'next/image';
-import { useWindowSize } from '@utils/use-window-size';
-import cn from 'classnames';
-import { LinkProps } from 'next/link';
-import { useSsrCompatible } from '@utils/use-ssr-compatible';
+import Link from "@components/ui/link";
+import Image from "next/image";
+import { useWindowSize } from "@utils/use-window-size";
+import cn from "classnames";
+import { LinkProps } from "next/link";
+import { useSsrCompatible } from "@utils/use-ssr-compatible";
+import { useGetBanners } from "@framework/product/get-banner";
 
 interface BannerProps {
   banner: any;
-  variant?: 'rounded' | 'default';
+  variant?: "rounded" | "default";
   effectActive?: boolean;
   className?: string;
+  section: BigInteger;
   classNameInner?: string;
-  href: LinkProps['href'];
+  href: LinkProps["href"];
   disableBorderRadius?: boolean;
 }
 
@@ -22,21 +24,28 @@ function getImage(deviceWidth: number, imgObj: any) {
 export default function BannerCard({
   banner,
   className,
-  variant = 'rounded',
+  variant = "rounded",
   effectActive = false,
   classNameInner,
+  section,
   href,
   disableBorderRadius = false,
 }: BannerProps) {
+  console.log(section,"___log__sect");
+  
   const { width } = useSsrCompatible(useWindowSize(), { width: 0, height: 0 });
   const { title, image } = banner;
   const selectedImage = getImage(width, image);
+  const { data } = useGetBanners({}, section);
+  console.log(data);
+  
+  
   return (
-    <div className={cn('mx-auto', className)}>
+    <div className={cn("mx-auto", className)}>
       <Link
         href={href}
         className={cn(
-          'h-full group flex justify-center relative overflow-hidden',
+          "h-full group flex justify-center relative overflow-hidden",
           classNameInner
         )}
       >
@@ -46,8 +55,8 @@ export default function BannerCard({
           height={selectedImage.height}
           alt={title}
           quality={100}
-          className={cn('bg-gray-300 object-cover w-full', {
-            'rounded-md': variant === 'rounded' && !disableBorderRadius,
+          className={cn("bg-gray-300 object-cover w-full", {
+            "rounded-md": variant === "rounded" && !disableBorderRadius,
           })}
           priority={true}
         />

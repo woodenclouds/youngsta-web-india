@@ -14,55 +14,56 @@ import { ROUTES } from "@utils/routes";
 import { GetStaticProps } from "next";
 
 export default function Home() {
-    return (
-        <>
-            <ExclusiveBlock className="mb-12 md:mb-14 xl:mb-16 px-2.5 mx-auto max-w-[1920px]" />
+  return (
+    <>
+      <ExclusiveBlock className="mb-12 md:mb-14 xl:mb-16 px-2.5 mx-auto max-w-[1920px]" />
 
-            <Container>
-                <ProductsFlashSaleBlock date={"2024-03-01T01:02:03"} />
-                <BannerCard
-                    key={`banner--key${banner[0].id}`}
-                    banner={banner[0]}
-                    href={`/category/${banner[0].slug}`}
-                    className="mb-12 lg:mb-14 xl:mb-16 pb-0.5 lg:pb-1 xl:pb-0"
-                />
-                <ProductsFeatured
-                    sectionHeading="text-featured-products"
-                    variant="center"
-                />
-            </Container>
+      <Container>
+        <ProductsFlashSaleBlock date={"2024-03-01T01:02:03"} />
+        <BannerCard
+          key={`banner--key${banner[0].id}`}
+          banner={banner[0]}
+          section={1}
+          href={`/category/${banner[0].slug}`}
+          className="mb-12 lg:mb-14 xl:mb-16 pb-0.5 lg:pb-1 xl:pb-0"
+        />
+        <ProductsFeatured
+          sectionHeading="text-featured-products"
+          variant="center"
+        />
+      </Container>
 
-            <BannerSliderBlock />
-            <Container>
-                <BannerWithProducts
-                    sectionHeading="text-on-selling-products"
-                    categorySlug="/search"
-                />
-                <BannerCard
-                    key={`banner--key${banner[1].id}`}
-                    banner={banner[1]}
-                    href={`${ROUTES.COLLECTIONS}/${banner[1].slug}`}
-                    className="mb-12 lg:mb-14 xl:mb-16 pb-0.5 lg:pb-1 xl:pb-0"
-                />
+      <BannerSliderBlock />
+      <Container>
+        <BannerWithProducts
+          sectionHeading="text-on-selling-products"
+          categorySlug="/search"
+        />
+        <BannerCard
+          key={`banner--key${banner[1].id}`}
+          banner={banner[1]}
+          href={`${ROUTES.COLLECTIONS}/${banner[1].slug}`}
+          className="mb-12 lg:mb-14 xl:mb-16 pb-0.5 lg:pb-1 xl:pb-0"
+        />
 
-                <NewArrivalsProductFeed />
-            </Container>
-            <Divider className="mb-0" />
-        </>
-    );
+        <NewArrivalsProductFeed />
+      </Container>
+      <Divider className="mb-0" />
+    </>
+  );
 }
 
 Home.Layout = Layout;
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-    return {
-        props: {
-            ...(await serverSideTranslations(locale!, [
-                "common",
-                "forms",
-                "menu",
-                "footer",
-            ])),
-        },
-    };
+  return {
+    props: {
+      ...(await serverSideTranslations(locale!, [
+        "common",
+        "forms",
+        "menu",
+        "footer",
+      ])),
+    },
+  };
 };

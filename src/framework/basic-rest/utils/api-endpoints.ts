@@ -49,4 +49,5 @@ export const API_ENDPOINTS = {
     WALLET: "activities/wallet/",
     RETURN_ITEM: "activities/return_items/",
     CANCEL_ITEM: "activities/cancel_items/",
+    BANNER_VIEW: "marketing/view-banners/",
 };
