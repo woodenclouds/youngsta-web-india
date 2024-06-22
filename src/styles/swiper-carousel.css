@@ -171,3 +171,8 @@
 .swiper-button-lock {
   @apply !hidden;
 }
+@media screen and (max-width: 480px) {
+  .carouselWrapper .swiper .swiper-pagination-bullets {
+    bottom: 3px;
+  }
+}
