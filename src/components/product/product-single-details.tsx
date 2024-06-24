@@ -18,7 +18,10 @@ import http from "@framework/utils/http";
 import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import { useUI } from "@contexts/ui.context";
 import { countryData } from "@utils/currencies";
+import type { Metadata } from 'next'
 
+
+ 
 const productGalleryCarouselResponsive = {
   "768": {
     slidesPerView: 2,
@@ -187,6 +190,10 @@ const ProductSingleDetails: React.FC = () => {
       handleLogin();
     }
   };
+  const metadata: Metadata = {
+    title: data?.name,
+    description: data?.description,
+  }
 
   return (
     <div className="block lg:grid grid-cols-9 gap-x-10 xl:gap-x-14 pt-7 pb-10 lg:pb-14 2xl:pb-20 items-start">
