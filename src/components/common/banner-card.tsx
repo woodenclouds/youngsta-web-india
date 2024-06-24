@@ -36,6 +36,7 @@ export default function BannerCard({
   // const { title, image } = banner;
   // const selectedImage = getImage(width, image);
   console.log(section, "nenenennen");
+  console.log(width,"width");
   
   return (
     <div className={cn("mx-auto", className)}>
@@ -49,7 +50,7 @@ export default function BannerCard({
         <Image
           src={section?.image}
           width={width}
-          height={500}
+          height={width < 600 ? 200 : 450}
           alt={"youngsta"}
           quality={100}
           className={cn("bg-gray-300 object-cover w-full", {
