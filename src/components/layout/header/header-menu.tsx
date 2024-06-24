@@ -12,7 +12,8 @@ interface MenuProps {
 
 const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
     const { t } = useTranslation("menu");
-
+    console.log(data, "_____data____");
+    
     function formatString(str: string) {
         return str?.toLowerCase().replace(/\s+/g, "-");
     }

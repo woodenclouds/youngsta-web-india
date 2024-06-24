@@ -1,7 +1,8 @@
-import type { FC } from 'react';
-import Link from 'next/link';
-import { useTranslation } from 'next-i18next';
-import Logo from '@components/ui/logo';
+import type { FC } from "react";
+import Link from "next/link";
+import { useTranslation } from "next-i18next";
+import Logo from "@components/ui/logo";
+import { useUI } from "@contexts/ui.context";
 
 interface Props {
   className?: string;
@@ -17,17 +18,17 @@ interface Props {
     description?: string;
     isCompanyIntroduction?: boolean;
   };
-  variant?: 'contemporary';
+  variant?: "contemporary";
 }
 
 const WidgetLink: FC<Props> = ({ className, data }) => {
   const { widgetTitle, lists } = data;
   const { logo, description } = data;
-  const { t } = useTranslation('footer');
-
+  const { t } = useTranslation("footer");
+  const { isAuthorized, setModalView, openModal } = useUI();
   return (
     <div
-      className={`${className} ${data?.isCompanyIntroduction && 'col-span-2'}`}
+      className={`${className} ${data?.isCompanyIntroduction && "col-span-2"}`}
     >
       {!data?.isCompanyIntroduction ? (
         <>
@@ -45,11 +46,15 @@ const WidgetLink: FC<Props> = ({ className, data }) => {
                     {list.icon}
                   </span>
                 )}
-                <Link href={list.path ? list.path : '#!'}>
-                  <a className="transition-colors duration-200 hover:text-black">
+                {list.title === "Login" || list.title === "Register" ? (
+                  <span className="cursor-pointer transition-colors duration-200 hover:text-black" onClick={() => { setModalView("LOGIN_VIEW"); openModal(); }}>{t(`${list.title}`)}</span>
+                ) : (
+                  <Link href={list.path ? list.path : "#!"}>
+                    <a className="transition-colors duration-200 hover:text-black">
                     {t(`${list.title}`)}
-                  </a>
-                </Link>
+                    </a>
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
