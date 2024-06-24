@@ -50,4 +50,6 @@ export const API_ENDPOINTS = {
     RETURN_ITEM: "activities/return_items/",
     CANCEL_ITEM: "activities/cancel_items/",
     BANNER_VIEW: "marketing/view-banners/",
+
+    CONTACT: "marketing/enquiry/"
 };
