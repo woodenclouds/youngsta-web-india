@@ -23,9 +23,9 @@ export default function ProductPage() {
   };
 
   if (data) {
-    meta.title = data.name;
-    meta.description = data.description;
-    meta.image = data.thumbnail;
+    meta.title = `youngsta | ${data.name}`;
+    meta.description = data.description ?? '';
+    meta.image = data.thumbnail ?? '';
   }
 
   console.log(data, "_log_data_");
