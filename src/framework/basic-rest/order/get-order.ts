@@ -8,7 +8,7 @@ export const fetchOrder = async (_id: string) => {
     const data = response.data;
 
     if (data?.app_data?.StatusCode === 6000) {
-        return data.app_data.data;
+        return data?.app_data?.data;
     } else {
         return [];
     }

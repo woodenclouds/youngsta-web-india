@@ -202,7 +202,7 @@ const ProductCard: FC<ProductProps> = ({
                     quality={100}
                     alt={product?.name || "Product Image"}
                     className={cn(
-                        `bg-gray-300 obFeatured Productsject-cover ${
+                        `bg-gray-300 obFeatured Productsject-cover object-cover ${
                             !disableBorderRadius && "rounded-s-md"
                         }`,
                         {
