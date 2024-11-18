@@ -19,16 +19,18 @@ const OrdersTable: React.FC = () => {
 
     function formatIsoDate(isoDateString: any) {
         const date = new Date(isoDateString);
-        const options = {
+        const options:any = {
             weekday: "long", // e.g., "Monday"
             year: "numeric", // e.g., "2024"
             month: "long", // e.g., "May"
             day: "numeric", // e.g., "3"
-            hour: "2-digit", // e.g., "10"
-            minute: "2-digit", // e.g., "35"
-            second: "2-digit", // e.g., "17"
-            timeZoneName: "short", // e.g., "CDT"
+            // hour: "2-digit", // e.g., "10"
+            // minute: "2-digit", // e.g., "35"
+            // second: "2-digit", // e.g., "17"
+            // timeZoneName: "short", // e.g., "CDT"
         };
+        console.log(new Intl.DateTimeFormat("en-US", options).format(date));
+        
         return new Intl.DateTimeFormat("en-US", options).format(date);
     }
     return (
@@ -70,12 +72,12 @@ const OrdersTable: React.FC = () => {
                             {data?.map((item: any) => (
                                 <tr className="border-b border-gray-300 last:border-b-0">
                                     <td className="px-4 py-5 ltr:text-left rtl:text-right">
-                                        <span
-                                            href="/my-account/orders/3203"
+                                        <Link
+                                            href={`/my-account/orders/${item?.id}`}
                                             className="underline hover:no-underline text-body"
                                         >
                                             #{item?.invoice_no}
-                                        </span>
+                                        </Link>
                                     </td>
                                     <td className="px-4 py-5 ltr:text-left rtl:text-right lg:text-center text-heading">
                                         {item?.created_at
@@ -109,12 +111,12 @@ const OrdersTable: React.FC = () => {
                                 <li className="flex items-center justify-between">
                                     {t("text-order")}
                                     <span className="font-normal">
-                                        <span
-                                            href="/my-account/orders/3203"
+                                        <Link
+                                            href={`/my-account/orders/${item?.id}`}
                                             className="underline hover:no-underline text-body"
                                         >
                                             #{item?.invoice_no}
-                                        </span>
+                                        </Link>
                                     </span>
                                 </li>
                                 <li className="flex items-center justify-between">
