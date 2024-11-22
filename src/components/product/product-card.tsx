@@ -194,39 +194,40 @@ const ProductCard: FC<ProductProps> = ({
                     imageContentClassName
                 )}
             >
-                <Image
-                    src={product?.thumbnail as string}
-                    width={demoVariant === "ancient" ? 352 : imgWidth}
-                    height={demoVariant === "ancient" ? 452 : imgHeight}
-                    loading={imgLoading}
-                    quality={100}
-                    alt={product?.name || "Product Image"}
-                    className={cn(
-                        `bg-gray-300 obFeatured Productsject-cover object-cover ${
-                            !disableBorderRadius && "rounded-s-md"
-                        }`,
-                        {
-                            "w-full transition duration-200 ease-in":
-                                variant === "grid" ||
-                                variant === "gridModern" ||
-                                variant === "gridModernWide" ||
-                                variant === "gridTrendy",
-                            "rounded-md group-hover:rounded-b-none":
-                                (variant === "grid" && !disableBorderRadius) ||
-                                (variant === "gridModern" &&
-                                    !disableBorderRadius) ||
-                                (variant === "gridModernWide" &&
-                                    !disableBorderRadius) ||
-                                (variant === "gridTrendy" &&
-                                    !disableBorderRadius),
-                            "rounded-md transition duration-150 ease-linear transform group-hover:scale-105":
-                                variant === "gridSlim",
-                            "rounded-s-md transition duration-200 ease-linear transform group-hover:scale-105":
-                                variant === "list",
-                        }
-                    )}
-                />
-
+                {product?.thumbnai && (
+                    <Image
+                        src={product?.thumbnail as string}
+                        width={demoVariant === "ancient" ? 352 : imgWidth}
+                        height={demoVariant === "ancient" ? 452 : imgHeight}
+                        loading={imgLoading}
+                        quality={100}
+                        alt={product?.name || "Product Image"}
+                        className={cn(
+                            `bg-gray-300 obFeatured Productsject-cover object-cover ${
+                                !disableBorderRadius && "rounded-s-md"
+                            }`,
+                            {
+                                "w-full transition duration-200 ease-in":
+                                    variant === "grid" ||
+                                    variant === "gridModern" ||
+                                    variant === "gridModernWide" ||
+                                    variant === "gridTrendy",
+                                "rounded-md group-hover:rounded-b-none":
+                                    (variant === "grid" && !disableBorderRadius) ||
+                                    (variant === "gridModern" &&
+                                        !disableBorderRadius) ||
+                                    (variant === "gridModernWide" &&
+                                        !disableBorderRadius) ||
+                                    (variant === "gridTrendy" &&
+                                        !disableBorderRadius),
+                                "rounded-md transition duration-150 ease-linear transform group-hover:scale-105":
+                                    variant === "gridSlim",
+                                "rounded-s-md transition duration-200 ease-linear transform group-hover:scale-105":
+                                    variant === "list",
+                            }
+                        )}
+                    />
+)}
                 <div className="absolute top-3.5 md:top-5 3xl:top-7 ltr:left-3.5 rtl:right-3.5 ltr:md:left-5 rtl:md:right-5 ltr:3xl:left-7 rtl:3xl:right-7 flex flex-col gap-y-1 items-start">
                     {discount &&
                         (variant === "gridModernWide" ||
