@@ -30,7 +30,7 @@ export const ProductGrid: FC<ProductGridProps> = ({ className, params }) => {
       ? query?.category
       : params
       ? params?.slug
-      : null,
+      : '',
     category: params?.slug ? params?.slug : query?.category ? query?.category : query?.slug ? query?.slug : '',
   });
 
