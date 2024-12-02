@@ -108,14 +108,12 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
     return (
         <Link
             href={"/products/" + product?.id}
-            className={`${classes} cursor-pointer group flex flex-col bg-gray-200 ${
-                !disableBorderRadius && "rounded-md"
-            } relative items-center justify-between overflow-hidden`}
+            className={`${classes} cursor-pointer group flex flex-col bg-gray-200 ${!disableBorderRadius && "rounded-md"
+                } relative items-center justify-between overflow-hidden`}
         >
             <div
-                className={`absolute right-[11px] top-[6px] bg-[#ffff] p-[11px] flex items-center z-[1] rounded-[50%] cursor-pointer ${
-                    isActive || product?.is_wishlist ? "text-red-500" : ""
-                }`}
+                className={`absolute right-[11px] top-[6px] bg-[#ffff] p-[11px] flex items-center z-[1] rounded-[50%] cursor-pointer ${isActive || product?.is_wishlist ? "text-red-500" : ""
+                    }`}
                 onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
@@ -133,15 +131,17 @@ const ProductOverlayCard: React.FC<ProductProps> = ({
                 )}
                 title={product?.name}
             >
-                <Image
-                    src={product?.thumbnail}
-                    width={size}
-                    height={size}
-                    objectFit="contain"
-                    loading={imgLoading}
-                    alt={product?.name || "Product Image"}
-                    className="transition duration-500 ease-in-out transform group-hover:scale-110"
-                />
+                {product?.thumbnail && (
+                    <Image
+                        src={product?.thumbnail}
+                        width={size}
+                        height={size}
+                        objectFit="contain"
+                        loading={imgLoading}
+                        alt={product?.name || "Product Image"}
+                        className="transition duration-500 ease-in-out transform group-hover:scale-110"
+                    />
+                )}
             </div>
 
             {variant === "modern" && (
