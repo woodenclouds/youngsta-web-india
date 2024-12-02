@@ -37,7 +37,6 @@ export const ProductGrid: FC<ProductGridProps> = ({ className, params }) => {
   if (error) return <p>{error.message}</p>;
 
   const { t } = useTranslation("common");
-  console.log(params, query);
   
   return (
     <>
