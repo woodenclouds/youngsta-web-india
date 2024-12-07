@@ -9,6 +9,7 @@ export const usePlaceOrderMutation = (onSuccess: any, onError: any) => {
     return useMutation({
         mutationFn: (input: any) => placeOrder(input),
         onSuccess: (data) => {
+            
             if (data?.data?.app_data?.StatusCode === 6000) {
                 onSuccess(data?.data?.app_data?.data);
             } else {

@@ -25,7 +25,7 @@ interface AddAddressInputType {
     email: string;
     address: string;
     city: string;
-    zipCode: string;
+    post_code: string;
     save: boolean;
     note: string;
     state: string;
@@ -61,7 +61,7 @@ const CheckoutForm: React.FC = () => {
             email: email,
             city: "",
             state: "",
-            zipCode: "",
+            post_code: "",
             note: "",
         });
         setAddAddress(false);
@@ -110,6 +110,7 @@ const CheckoutForm: React.FC = () => {
     };
 
     const paymentFunction = (response: any) => {
+        // window.open(response?.payment_url,"_blank");
         router.push(response?.payment_url);
     };
 
@@ -127,7 +128,7 @@ const CheckoutForm: React.FC = () => {
             email: email,
             city: "",
             state: "",
-            zipCode: "",
+            post_code: "",
             note: "",
         },
     });
@@ -218,7 +219,7 @@ const CheckoutForm: React.FC = () => {
                             email: email,
                             city: "",
                             state: "",
-                            zipCode: "",
+                            post_code: "",
                             note: "",
                         });
                         if (
@@ -320,7 +321,7 @@ const CheckoutForm: React.FC = () => {
                             {" "}
                             <Input
                                 labelKey="Postcode"
-                                {...register("zipCode")}
+                                {...register("post_code")}
                                 variant="solid"
                                 className="w-full lg:w-1/2"
                             />
@@ -382,8 +383,8 @@ const CheckoutForm: React.FC = () => {
                                                         email: email,
                                                         city: address?.city,
                                                         state: address?.state,
-                                                        zipCode:
-                                                            address?.zipCode,
+                                                        post_code:
+                                                            address?.post_code,
                                                         note: address?.note,
                                                     });
                                                 }}

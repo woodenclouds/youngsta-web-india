@@ -1,6 +1,6 @@
 import ProductCard from "@components/product/product-card";
 import Button from "@components/ui/button";
-import type { FC } from "react";
+import { Fragment, type FC } from "react";
 import { useProductsQuery } from "@framework/product/get-all-products";
 import { useRouter } from "next/router";
 import ProductFeedLoader from "@components/ui/loaders/product-feed-loader";
@@ -12,7 +12,7 @@ interface ProductGridProps {
 }
 export const ProductGrid: FC<ProductGridProps> = ({ className, params }) => {
   const { query } = useRouter();
-  console.log(params,query.category, "____query");
+  console.log(params, query.category, "____query");
 
   const {
     isFetching: isLoading,
@@ -21,6 +21,7 @@ export const ProductGrid: FC<ProductGridProps> = ({ className, params }) => {
     hasNextPage,
     data,
     error,
+    
   } = useProductsQuery({
     limit: 10,
     // ...query,
@@ -30,32 +31,44 @@ export const ProductGrid: FC<ProductGridProps> = ({ className, params }) => {
       ? query?.category
       : params
       ? params?.slug
-      : '',
-    category: params?.slug ? params?.slug : query?.category ? query?.category : query?.slug ? query?.slug : '',
+      : "",
+    category: params?.slug
+      ? params?.slug
+      : query?.category
+      ? query?.category
+      : query?.slug
+      ? query?.slug
+      : "",
   });
+
+  console.log(hasNextPage);
+  
 
   if (error) return <p>{error.message}</p>;
 
   const { t } = useTranslation("common");
-  console.log(params, query);
-  
+
   return (
     <>
       <div
         className={`grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-3 lg:gap-x-5 xl:gap-x-7 gap-y-3 xl:gap-y-5 2xl:gap-y-8 ${className}`}
       >
-        {isLoading && !data?.data?.length ? (
+        {isLoading && !data?.pages?.length ? (
           <ProductFeedLoader limit={20} uniqueKey="search-product" />
         ) : (
-          data?.data?.map((product) => {
-            return (
-              <ProductCard
-                key={`product--key${product.id}`}
-                product={product}
-                variant="grid"
-              />
-            );
-          })
+          data?.pages.map((page,i) => (
+            <Fragment key={i}>
+              {page?.data?.map((product) => {
+                return (
+                  <ProductCard
+                    key={`product--key${product.id}`}
+                    product={product}
+                    variant="grid"
+                  />
+                );
+              })}
+            </Fragment>
+          ))
         )}
       </div>
       <div className="text-center pt-8 xl:pt-14">

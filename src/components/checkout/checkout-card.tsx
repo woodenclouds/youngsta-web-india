@@ -32,8 +32,8 @@ const CheckoutCard: React.FC = () => {
   };
 
   const [cartTotal, setCartTotal] = useState(0);
-  const [isCoupen, setCoupen] = useState(true);
-  const [isRefferal, setRefferal] = useState(true);
+  const [isCoupen, setCoupen] = useState(false);
+  const [isRefferal, setRefferal] = useState(false);
   const [refferalCode, setRefferalCode] = useState("");
   const [coupenCode, setCoupenCode] = useState("");
   useEffect(() => {

@@ -18,10 +18,8 @@ import http from "@framework/utils/http";
 import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import { useUI } from "@contexts/ui.context";
 import { countryData } from "@utils/currencies";
-import type { Metadata } from 'next'
+import type { Metadata } from "next";
 
-
- 
 const productGalleryCarouselResponsive = {
   "768": {
     slidesPerView: 2,
@@ -193,7 +191,27 @@ const ProductSingleDetails: React.FC = () => {
   const metadata: Metadata = {
     title: data?.name,
     description: data?.description,
-  }
+  };
+
+  const attributes = Object.values(
+    data?.attribute?.reduce((acc, item) => {
+      const { attributeDescription, attributeDescription_name, ...rest } = item;
+
+      if (!acc[attributeDescription]) {
+        acc[attributeDescription] = {
+          id: attributeDescription,
+          name: attributeDescription_name,
+          values: [],
+        };
+      }
+
+      acc[attributeDescription].values.push(rest);
+
+      return acc;
+    }, {})
+  );
+
+  console.log(attributes);
 
   return (
     <div className="block lg:grid grid-cols-9 gap-x-10 xl:gap-x-14 pt-7 pb-10 lg:pb-14 2xl:pb-20 items-start">
@@ -263,13 +281,15 @@ const ProductSingleDetails: React.FC = () => {
         </div>
 
         <div className="pb-3 border-b border-gray-300">
-          <ProductAttributes
-            key={`popup-attribute-key${data?.attribute}`}
-            title={"Size"}
-            attributes={data?.attribute}
-            size={attribute_id}
-            setSize={setSize}
-          />
+          {attributes?.map((item) => (
+            <ProductAttributes
+              key={`popup-attribute-key${data?.attribute}`}
+              title={item?.name}
+              attributes={item.values}
+              size={attribute_id}
+              setSize={setSize}
+            />
+          ))}
         </div>
 
         <div className="flex items-center gap-x-4 ltr:md:pr-32 rtl:md:pl-32 ltr:lg:pr-12 rtl:lg:pl-12 ltr:2xl:pr-32 rtl:2xl:pl-32 ltr:3xl:pr-48 rtl:3xl:pl-48  border-b border-gray-300 py-8">
