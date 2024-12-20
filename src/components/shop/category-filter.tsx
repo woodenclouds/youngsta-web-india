@@ -28,7 +28,7 @@ export const CategoryFilter = () => {
         const { value } = e.currentTarget;
         let currentFormState = formState.includes(value)
             ? formState.filter((i) => i !== value)
-            : [...formState, value];
+            : [ value];
         const { category, ...restQuery } = query;
         router.push(
             {
@@ -56,8 +56,8 @@ export const CategoryFilter = () => {
                         key={item.id}
                         label={item.name}
                         name={item?.name?.toLowerCase()}
-                        checked={formState.includes(item.slug)}
-                        value={item.slug}
+                        checked={formState.includes(item.name)}
+                        value={item.name}
                         onChange={handleItemClick}
                     />
                 ))}

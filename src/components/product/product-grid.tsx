@@ -39,6 +39,7 @@ export const ProductGrid: FC<ProductGridProps> = ({ className, params }) => {
       : query?.slug
       ? query?.slug
       : "",
+    price:query?.price ? query?.price:""
   });
   
 
