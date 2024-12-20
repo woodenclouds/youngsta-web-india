@@ -28,7 +28,7 @@ export default function Home() {
       <Container>
         <ProductsFlashSaleBlock date={"2024-03-01T01:02:03"} />
         <BannerCard
-          key={`banner--key${banner[0].id}`}
+          key={`banner--key${banner ? banner?.[0].id : ""}`}
           banner={section1}
           section={section1}
           href={`${ROUTES.COLLECTIONS}?${section1?.filter}`}
@@ -46,7 +46,7 @@ export default function Home() {
           categorySlug="/search"
         />
         <BannerCard
-          key={`banner--key${banner[1].id}`}
+          key={`banner--key${banner ? banner?.[1]?.id : ""}`}
           banner={section2}
           section={section2}
           href={`${ROUTES.COLLECTIONS}?${section2?.filter}`}
