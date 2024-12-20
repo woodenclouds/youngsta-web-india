@@ -40,8 +40,6 @@ export const ProductGrid: FC<ProductGridProps> = ({ className, params }) => {
       ? query?.slug
       : "",
   });
-
-  console.log(hasNextPage);
   
 
   if (error) return <p>{error.message}</p>;

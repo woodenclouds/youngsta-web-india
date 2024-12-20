@@ -195,17 +195,17 @@ const ProductSingleDetails: React.FC = () => {
 
   const attributes = Object.values(
     data?.attribute?.reduce((acc, item) => {
-      const { attributeDescription, attributeDescription_name, ...rest } = item;
+      const { attribute_type, attributeDescription_name, ...rest } = item;
 
-      if (!acc[attributeDescription]) {
-        acc[attributeDescription] = {
-          id: attributeDescription,
+      if (!acc[attribute_type]) {
+        acc[attribute_type] = {
+          id: attribute_type,
           name: attributeDescription_name,
           values: [],
         };
       }
 
-      acc[attributeDescription].values.push(rest);
+      acc[attribute_type].values.push(rest);
 
       return acc;
     }, {})
