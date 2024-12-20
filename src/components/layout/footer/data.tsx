@@ -88,22 +88,22 @@ export const footer = {
         {
           id: 1,
           title: "link-women-wear",
-          path: "/category/women",
+          path: "/category/Women",
         },
         {
           id: 2,
           title: "link-men-wear",
-          path: "/category/men",
+          path: "/category/Men",
         },
         {
           id: 3,
           title: "link-kids-wear",
-          path: "/category/kids",
+          path: "/category/Kids",
         },
         {
           id: 4,
           title: "link-sports-wear",
-          path: "/category/sports",
+          path: "/category/Sports",
         },
       ],
     },
