@@ -11,7 +11,7 @@ import Carousel from "@components/ui/carousel/carousel";
 import { SwiperSlide } from "swiper/react";
 import ProductMetaReview from "@components/product/product-meta-review";
 import { useSsrCompatible } from "@utils/use-ssr-compatible";
-import { useAddToCartMutation } from "@framework/cart/add-to-cart";
+import { addCartInputType, useAddToCartMutation } from "@framework/cart/add-to-cart";
 import { FaShareAlt } from "react-icons/fa";
 import Cookies from "js-cookie";
 import http from "@framework/utils/http";
@@ -93,7 +93,16 @@ const ProductSingleDetails: React.FC = () => {
   function addItemToTheCart() {
     if (attribute_id) {
       setAddToCartLoader(true);
-      addToCart({ attribute_id, quantity, id: slug });
+      const body:addCartInputType = {
+        attribute_id: attribute_id,
+        quantity: quantity,
+        id: slug,
+      }
+
+      if(refferal_code){
+        body["referral_code"] = refferal_code;
+      }
+      addToCart(body);
       setAddToCartLoader(false);
     } else {
       toast.error("Please select you size", {
@@ -210,8 +219,6 @@ const ProductSingleDetails: React.FC = () => {
       return acc;
     }, {})
   );
-
-  console.log(attributes);
 
   return (
     <div className="block lg:grid grid-cols-9 gap-x-10 xl:gap-x-14 pt-7 pb-10 lg:pb-14 2xl:pb-20 items-start">

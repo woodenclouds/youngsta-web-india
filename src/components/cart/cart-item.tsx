@@ -103,6 +103,11 @@ const CartItem: React.FC<CartItemProps> = ({
               setQuantity={setQuantity}
               onIncrement={editCartItems}
               onDecrement={editCartItems}
+              removeHandler={()=> {
+                deleteCartItems(item.id)
+                console.log("removeHandler");
+                
+              }}
               item={item}
               variant="dark"
             />

@@ -33,7 +33,7 @@ export const ProductAttributes: React.FC<Props> = ({
                             id === size ? "border-black" : "border-gray-100"
                         )}
                         onClick={() => {
-                            setSize(id);
+                            setSize(prev => prev === id ? "":id);
                         }}
                     >
                         {title === "color" ? (

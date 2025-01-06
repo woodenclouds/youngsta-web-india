@@ -110,6 +110,8 @@ const CheckoutForm: React.FC = () => {
     };
 
     const paymentFunction = (response: any) => {
+        console.log(response);
+        
         // window.open(response?.payment_url,"_blank");
         router.push(response?.payment_url);
     };
