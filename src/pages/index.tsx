@@ -17,8 +17,8 @@ import { useGetBanners } from "@framework/product/get-banner";
 export default function Home() {
   const { data: section1Data } = useGetBanners({}, 1);
   const { data: section2Data } = useGetBanners({}, 3);
-  const section1 = section1Data?.data[0];
-  const section2 = section2Data?.data[0];
+  const section1 = section1Data?.data?.[0];
+  const section2 = section2Data?.data?.[0];
   console.log(section2, "000000", section1);
 
   return (
