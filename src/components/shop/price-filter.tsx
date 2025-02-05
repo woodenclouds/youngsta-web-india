@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useTranslation } from "next-i18next";
 import { countryData } from "@utils/currencies";
+import RangeSelector from "@components/general/RangeSelector";
 const priceFilterItems = [
   {
     id: "1",
@@ -72,6 +73,22 @@ export const PriceFilter = () => {
     );
   }
 
+  const handlePriceChange = (e)=>{
+    const { price, ...restQuery } = query;
+    router.push(
+      {
+        pathname,
+        query: {
+          ...restQuery,
+          ...(e.target.value ? { price: e.target.value } : {}), // Only one price can be selected
+          //   ...(value ? { price: value } : {}), // Only one price can be selected
+        },
+      },
+      undefined,
+      { scroll: false }
+    );
+  }
+
   const items = priceFilterItems;
 
   return (
@@ -80,7 +97,8 @@ export const PriceFilter = () => {
         {t("text-price")}
       </h3>
       <div className="mt-2 flex flex-col space-y-4">
-        {items?.map((item: any) => (
+        <RangeSelector onChange={handlePriceChange} value={query?.price} />
+        {/* {items?.map((item: any) => (
           <CheckBox
             key={item.id}
             label={item.name}
@@ -89,7 +107,7 @@ export const PriceFilter = () => {
             value={item.slug}
             onChange={handlePriceItemClick}
           />
-        ))}
+        ))} */}
       </div>
     </div>
   );

@@ -200,7 +200,7 @@ const ProductCard: FC<ProductProps> = ({
                         quality={100}
                         alt={product?.name || "Product Image"}
                         className={cn(
-                            `bg-gray-300 obFeatured Productsject-cover ${!disableBorderRadius && "rounded-s-md"
+                            `bg-gray-300 object-cover obFeatured Productsject-cover ${!disableBorderRadius && "rounded-s-md"
                             }`,
                             {
                                 "w-full transition duration-200 ease-in":

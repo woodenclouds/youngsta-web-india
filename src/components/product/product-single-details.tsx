@@ -82,8 +82,16 @@ const ProductSingleDetails: React.FC = () => {
   const [quantity, setQuantity] = useState(1);
   const [addToCartLoader, setAddToCartLoader] = useState<boolean>(false);
   const [attribute_id, setSize] = useState("");
-
+  const [selling_price,set_selling_price] = useState(data?.selling_price)
+  
   if (isLoading) return <p>Loading...</p>;
+  
+
+  // useEffect(()=>{
+  //   if(data?.selling_price){
+  //     set_selling_price(data?.selling_price)
+  //   }
+  // },[data?.selling_price])
 
   function handleLogin() {
     setModalView("LOGIN_VIEW");
@@ -91,10 +99,10 @@ const ProductSingleDetails: React.FC = () => {
   }
 
   function addItemToTheCart() {
-    if (attribute_id) {
+    if (attribute_id?.id) {
       setAddToCartLoader(true);
       const body:addCartInputType = {
-        attribute_id: attribute_id,
+        attribute_id: attribute_id?.id,
         quantity: quantity,
         id: slug,
       }
@@ -277,7 +285,7 @@ const ProductSingleDetails: React.FC = () => {
           <div className="flex items-center mt-5">
             <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
               {countryData?.symbol}
-              {data?.selling_price}
+              {selling_price || data?.selling_price}
             </div>
             {/* {discount && (
                             <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
@@ -294,7 +302,13 @@ const ProductSingleDetails: React.FC = () => {
               title={item?.name}
               attributes={item.values}
               size={attribute_id}
-              setSize={setSize}
+              setSize={
+                (size)=>{
+                  setSize(size)
+                  console.log(size)
+                  set_selling_price(size? size?.price:null)
+                }
+              }
             />
           ))}
         </div>
