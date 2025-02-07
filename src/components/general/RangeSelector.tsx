@@ -18,7 +18,7 @@ const RangeSelector: React.FC = ({
       <input
         id="default-range"
         type="range"
-        min={50}
+        min={0}
         max={10000}
         step={100}
         value={rangeValue}

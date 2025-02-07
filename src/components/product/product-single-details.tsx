@@ -345,12 +345,12 @@ const ProductSingleDetails: React.FC = () => {
             >
               Copy Referral Link
             </button>
-            <button
+            {/* <button
               className="bg-[#fff] border-solid border-2 border-[#F5B528] px-[24px] py-[10px] rounded cursor-pointer text-[#000] max-[517px]:mb-[16px]"
               onClick={renderShareCodeFunction}
             >
               Copy Referral Code
-            </button>
+            </button> */}
           </div>
         </div>
 

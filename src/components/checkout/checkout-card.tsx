@@ -9,7 +9,11 @@ import { useAddReferralMutation } from "@framework/cart/add-refferal-code";
 import { toast } from "react-toastify";
 import { useAddCoupenMutation } from "@framework/cart/add-coupen-code";
 
-const CheckoutCard: React.FC = () => {
+const CheckoutCard: React.FC = ({
+  set_coupon_code,
+}: {
+  set_coupon_code: () => void;
+}) => {
   const { t } = useTranslation("common");
 
   const { mutate: editCart } = useEditCartMutation();
@@ -25,8 +29,7 @@ const CheckoutCard: React.FC = () => {
   const calculateTotalPrice = () => {
     console.log("calculateTotalPrice", items);
     return items?.reduce(
-      (total, item: any) =>
-        total + item?.attribute?.price * item?.quantity,
+      (total, item: any) => total + item?.attribute?.price * item?.quantity,
       0
     );
   };
@@ -36,6 +39,7 @@ const CheckoutCard: React.FC = () => {
   const [isRefferal, setRefferal] = useState(false);
   const [refferalCode, setRefferalCode] = useState("");
   const [coupenCode, setCoupenCode] = useState("");
+  const [couponCodeAmount, setCouponCodeAmount] = useState(null);
   useEffect(() => {
     if (items?.length) setCartTotal(calculateTotalPrice());
   }, [items]);
@@ -46,15 +50,28 @@ const CheckoutCard: React.FC = () => {
   const onError = (error: any) => {
     toast.error(`Failed to add referral: ${error}`);
   };
+  const onCouponSuccess = (data) => {
+    set_coupon_code(coupenCode)
+    setCouponCodeAmount(data?.data?.app_data?.data?.coupon_discount_amount);
+    toast.success("Coupon added successfully!");
+  };
+
+  const onCouponError = (error: any) => {
+    setCouponCodeAmount(null);
+    toast.error(`Failed to add Coupon: ${error}`);
+  };
 
   const { mutate } = useAddReferralMutation(onSuccess, onError);
-  const { mutate: coupenMutation } = useAddCoupenMutation(onSuccess, onError);
+  const { mutate: coupenMutation } = useAddCoupenMutation(
+    onCouponSuccess,
+    onCouponError
+  );
   const handleAddReferral = () => {
     mutate({ referral_code: refferalCode });
   };
   const handleCoupen = () => {
     coupenMutation({ coupen_code: coupenCode });
-  }
+  };
 
   const checkoutFooter = [
     {
@@ -67,12 +84,21 @@ const CheckoutCard: React.FC = () => {
       name: "Shipping",
       price: "Free",
     },
+    couponCodeAmount && isCoupen
+      ? {
+          id: 4,
+          name: "Coupon Discount",
+          price: couponCodeAmount,
+        }
+      : null,
     {
       id: 3,
       name: "Total",
-      price: `${countryData?.symbol}${cartTotal}`,
+      price: `${countryData?.symbol}${
+        couponCodeAmount && isCoupen ? cartTotal - couponCodeAmount : cartTotal
+      }`,
     },
-  ];
+  ].filter(Boolean);
 
   return (
     <div className="pt-12 md:pt-0 ltr:2xl:pl-4 rtl:2xl:pr-4">
@@ -94,14 +120,15 @@ const CheckoutCard: React.FC = () => {
           isCheckout={true}
         />
       ))}
-      <div className="gap-2">
+      {/* <div className="gap-2">
         <input
           type="checkbox"
           checked={isRefferal}
           onChange={() => setRefferal(!isRefferal)}
-          name="coupon"
+          name="referral"
+          id="referral"
         />
-        <label htmlFor="coupon" className="ml-2">
+        <label htmlFor="referral" className="ml-2">
           I have a refferal
         </label>
         {isRefferal && (
@@ -120,13 +147,14 @@ const CheckoutCard: React.FC = () => {
             </button>
           </div>
         )}
-      </div>
+      </div> */}
       <div className="gap-2">
         <input
           type="checkbox"
           checked={isCoupen}
           onChange={() => setCoupen(!isCoupen)}
           name="coupon"
+          id="coupon"
         />
         <label htmlFor="coupon" className="ml-2">
           I have a coupon
@@ -137,9 +165,14 @@ const CheckoutCard: React.FC = () => {
               type="text"
               placeholder="Coupon code"
               className="w-3/4 py-2 px-2 border border-gray-400 rounded"
-              onChange={(e)=>setCoupenCode(e.target.value)}
+              onChange={(e) => setCoupenCode(e.target.value)}
             />
-            <button className="w-1/4 bg-black rounded text-white" onClick={handleCoupen}>Check</button>
+            <button
+              className="w-1/4 bg-black rounded text-white"
+              onClick={handleCoupen}
+            >
+              Check
+            </button>
           </div>
         )}
       </div>

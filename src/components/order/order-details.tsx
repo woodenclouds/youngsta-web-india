@@ -247,11 +247,31 @@ const OrderDetails: React.FC<{ className?: string }> = ({
             ))}
           </tbody>
           <tfoot className="">
-            <tr className="odd:bg-gray-150">
-              <td className="p-4 italic">{t("text-sub-total")}:</td>
-              <td className="p-4">₹{order?.total_amount}</td>
-              <td className="p-4"></td>
-            </tr>
+            {order?.is_coupon_applied ? (
+              <>
+                <tr className="">
+                  <td className="p-4 italic">{t("coupon-discount")}:</td>
+                  <td className="p-4">₹{order?.coupon_discount}</td>
+                  <td className="p-4"></td>
+                </tr>
+                <tr className="bg-gray-150">
+                  <td className="p-4 italic">{t("text-sub-total")}:</td>
+                  <td className="p-4">
+                    ₹{order?.total_amount}{" "}
+                    <span className="line-through">
+                    ₹{order?.total_without_discount}
+                    </span>
+                  </td>
+                  <td className="p-4"></td>
+                </tr>
+              </>
+            ) : (
+              <tr className="bg-gray-150">
+                <td className="p-4 italic">{t("text-sub-total")}:</td>
+                <td className="p-4">₹{order?.total_amount}</td>
+                <td className="p-4"></td>
+              </tr>
+            )}
           </tfoot>
         </table>
 
@@ -259,7 +279,8 @@ const OrderDetails: React.FC<{ className?: string }> = ({
         View Tracking
       </button> */}
 
-        {data?.data?.[order?.shipment_id!]?.tracking_data?.shipment_track?.length >0 && (
+        {data?.data?.[order?.shipment_id!]?.tracking_data?.shipment_track
+          ?.length > 0 && (
           <div className="max-w-lg mx-auto p-4 mt-10">
             <div className="p-6 rounded-lg shadow-lg">
               <h1 className="text-2xl font-bold mb-4 text-center">

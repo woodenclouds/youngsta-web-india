@@ -31,9 +31,9 @@ const Wallet: React.FC = () => {
                         Purchase product from wallet
                     </p>
                 </div>
-                <button className="w-[100%] bg-[#212121] p-[10px] rounded-[8px] text-[#fff] font-semibold mb-[12px]">
+                {/* <button className="w-[100%] bg-[#212121] p-[10px] rounded-[8px] text-[#fff] font-semibold mb-[12px]">
                     withdrawal
-                </button>
+                </button> */}
             </div>
             <div className="w-[48%] max-lg:w-[100%]">
                 <h4 className="mb-[16px] text-[18px] font-semibold text-[#000]">

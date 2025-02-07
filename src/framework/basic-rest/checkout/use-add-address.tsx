@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import http from "@framework/utils/http";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 export interface AddAddressInputType {
@@ -25,10 +25,12 @@ async function addAddress(input: AddAddressInputType) {
     return Promise.reject(response.data)
 }
 export const useAddAddressMutation = (onSuccess: any) => {
+    const query = useQueryClient()
     return useMutation({
         mutationFn: (input: AddAddressInputType) => addAddress(input),
         onSuccess: (data) => {
             onSuccess();
+            query.invalidateQueries({queryKey:['addresses']})
         },
         onError: (data) => {
             if(Object.keys(data?.app_data?.data).length){
