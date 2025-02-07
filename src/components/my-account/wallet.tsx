@@ -2,6 +2,7 @@ import React from "react";
 import rupee from "../../../public/assets/images/rupee.png";
 import Image from "next/image";
 import { useWalletItemsQuery } from "@framework/orders/get-wallet";
+import { formatDate } from "@utils/functions";
 
 const Wallet: React.FC = () => {
     const { data } = useWalletItemsQuery({
@@ -39,21 +40,25 @@ const Wallet: React.FC = () => {
                 <h4 className="mb-[16px] text-[18px] font-semibold text-[#000]">
                     Transaction
                 </h4>
-                <div className="flex justify-between items-center mb-[16px] flex-wrap">
+                {data?.transactions?.map?.(transaction =>(
+                    <div className="flex justify-between items-center mb-[16px] flex-wrap">
                     <div>
                         <span className="block text-[#000] font-semibold">
-                            17 jan '24
+                            {formatDate(new Date(transaction?.created_at))}
                         </span>
                         <p className="text-[14px]">
-                            upi/57646/payment from wazeer
+                            {transaction?.transaction_description}
                         </p>
                     </div>
                     <div className="flex items-end">
-                        <p className="mr-[5px] text-[#000] text-[18px]">150</p>
-                        <span className="text-[11px] text-[#21aa77]">Dr</span>
+                        <p className="mr-[5px] text-[#000] text-[18px]">{transaction?.transaction_status ==='processing' && <span className="text-[#ffd918] text-[14px]">Processing</span>} <span></span> {transaction?.amount}</p>
+                        {transaction?.transaction_status !=='processing' && (
+                            <span className={`text-[11px] ${transaction?.credit ?'text-[#21aa77]':'text-[red]'}`}>{transaction?.credit ? 'Cr':'Dr'}</span>
+                        )}
                     </div>
                 </div>
-                <div className="flex justify-between items-center">
+                ))}
+                {/* <div className="flex justify-between items-center">
                     <div>
                         <span className="block text-[#000] font-semibold">
                             20 jan '24
@@ -66,7 +71,7 @@ const Wallet: React.FC = () => {
                         <p className="mr-[5px] text-[#000] text-[18px]">200</p>
                         <span className="text-[11px] text-[red]">Cr</span>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

@@ -31,10 +31,12 @@ interface AddAddressInputType {
   state: string;
 }
 
-const CheckoutForm: React.FC = ({
+const CheckoutForm: React.FC<{
+  coupon_code: string|null,
+  accessWalletAmount:boolean
+}> = ({
   coupon_code,
-}: {
-  coupon_code: string|null
+  accessWalletAmount
 }) => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -115,9 +117,7 @@ const CheckoutForm: React.FC = ({
 
   const paymentFunction = (response: any) => {
     console.log(response);
-
-    // window.open(response?.payment_url,"_blank");
-    router.push(response?.payment_url);
+    // router.push(response?.payment_url);
   };
 
   const {
@@ -195,7 +195,7 @@ const CheckoutForm: React.FC = ({
   }, [Array.isArray(addresses) && addresses?.length]);
 
   const makePayment = async (id: string) => {
-    placeOrder({ address: id ,coupon_code:coupon_code});
+    placeOrder({ address: id ,coupon_code:coupon_code,use_wallet_balance:accessWalletAmount});
   };
 
   return (

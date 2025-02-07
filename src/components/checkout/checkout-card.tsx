@@ -9,11 +9,11 @@ import { useAddReferralMutation } from "@framework/cart/add-refferal-code";
 import { toast } from "react-toastify";
 import { useAddCoupenMutation } from "@framework/cart/add-coupen-code";
 
-const CheckoutCard: React.FC = ({
-  set_coupon_code,
-}: {
-  set_coupon_code: () => void;
-}) => {
+const CheckoutCard: React.FC<{
+  set_coupon_code: (coupon_code: string) => void;
+  setAccessWalletAmount: (accessWalletAmount: boolean) => void;
+  accessWalletAmount: boolean;
+}> = ({ set_coupon_code,setAccessWalletAmount,accessWalletAmount }) => {
   const { t } = useTranslation("common");
 
   const { mutate: editCart } = useEditCartMutation();
@@ -22,21 +22,22 @@ const CheckoutCard: React.FC = ({
     let id = item?.id;
     editCart({ attribute_id, quantity, id });
   }
-  const { data: items } = useFetchCartItemsQuery({
+  const { data: { cart_items, wallet_amount } = {} } = useFetchCartItemsQuery({
     limit: 10,
   });
+  const items = cart_items;
 
   const calculateTotalPrice = () => {
-    console.log("calculateTotalPrice", items);
     return items?.reduce(
-      (total, item: any) => total + item?.attribute?.price * item?.quantity,
+      (total: number, item: any) =>
+        total + item?.attribute?.price * item?.quantity,
       0
     );
   };
 
-  const [cartTotal, setCartTotal] = useState(0);
+  const [cartTotal, setCartTotal] = useState<number | undefined>(0);
   const [isCoupen, setCoupen] = useState(false);
-  const [isRefferal, setRefferal] = useState(false);
+  // const [isRefferal, setRefferal] = useState(false);
   const [refferalCode, setRefferalCode] = useState("");
   const [coupenCode, setCoupenCode] = useState("");
   const [couponCodeAmount, setCouponCodeAmount] = useState(null);
@@ -50,8 +51,8 @@ const CheckoutCard: React.FC = ({
   const onError = (error: any) => {
     toast.error(`Failed to add referral: ${error}`);
   };
-  const onCouponSuccess = (data) => {
-    set_coupon_code(coupenCode)
+  const onCouponSuccess = (data: any) => {
+    set_coupon_code(coupenCode);
     setCouponCodeAmount(data?.data?.app_data?.data?.coupon_discount_amount);
     toast.success("Coupon added successfully!");
   };
@@ -95,7 +96,7 @@ const CheckoutCard: React.FC = ({
       id: 3,
       name: "Total",
       price: `${countryData?.symbol}${
-        couponCodeAmount && isCoupen ? cartTotal - couponCodeAmount : cartTotal
+        couponCodeAmount && isCoupen ? cartTotal! - couponCodeAmount : cartTotal
       }`,
     },
   ].filter(Boolean);
@@ -176,6 +177,22 @@ const CheckoutCard: React.FC = ({
           </div>
         )}
       </div>
+      {Number(wallet_amount ||0) > 0 && (
+        <div className="flex items-center">
+          <input
+          type="checkbox"
+          disabled={wallet_amount == 0 || wallet_amount + 1000 > cartTotal!}
+          checked={accessWalletAmount}
+          onChange={() => setAccessWalletAmount(!accessWalletAmount)}
+          name="wallet"
+          id="wallet"
+        />
+        <label htmlFor="wallet" className="ml-2 flex items-center">
+          use your wallet balance - &nbsp;
+          <span className="text-[20px] text-black ">{wallet_amount}</span>
+        </label>
+      </div>
+      )}
       {checkoutFooter.map((item: any) => (
         <CheckoutCardFooterItem item={item} key={item.id} />
       ))}
