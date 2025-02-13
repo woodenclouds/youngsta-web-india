@@ -43,6 +43,8 @@ function Noop({ children }: React.PropsWithChildren<{}>) {
     return <>{children}</>;
 }
 
+const queryClient = new QueryClient()
+
 const CustomApp = ({ Component, pageProps }: AppProps) => {
     const [loading, setLoading] = useState(false);
 
@@ -75,7 +77,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
 
     return (
         <AnimatePresence mode="wait" onExitComplete={handleExitComplete}>
-            <QueryClientProvider client={queryClientRef.current}>
+            <QueryClientProvider client={queryClient}>
                 {/* @ts-ignore */}
                 <HydrationBoundary state={pageProps.dehydratedState}>
                     {/* @ts-ignore */}

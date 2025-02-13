@@ -41,6 +41,9 @@ export default function Header() {
         setDrawerView("MOBILE_MENU");
         return openSidebar();
     }
+
+    console.log(site_header);
+    
     return (
         <header
             id="siteHeader"

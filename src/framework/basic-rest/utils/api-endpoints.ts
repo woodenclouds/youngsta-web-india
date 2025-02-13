@@ -51,5 +51,8 @@ export const API_ENDPOINTS = {
     CANCEL_ITEM: "activities/cancel_items/",
     BANNER_VIEW: "marketing/view-banners/",
 
-    CONTACT: "marketing/enquiry/"
+    CONTACT: "marketing/enquiry/",
+
+    // order tracking
+    TRACK_ORDER:"activities/orders/track/",
 };

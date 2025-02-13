@@ -344,7 +344,7 @@ ul {
 }
 
 /* Breadcrumb truncate last child */
-.chawkbazarBreadcrumb li:last-child {
+.youngstaBreadcrumb li:last-child {
     @apply truncate;
 }
 

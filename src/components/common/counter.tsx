@@ -1,12 +1,13 @@
 import MinusIcon from "@components/icons/minus-icon";
 import PlusIcon from "@components/icons/plus-icon";
 import cn from "classnames";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 type CounterProps = {
     quantity: number;
     setQuantity: (item: any, quantity: number) => void;
     onDecrement: (item: any, quantity: number) => void;
     onIncrement: (quantity: number) => void;
+    removeHandler?: () => void;
     disableIncrement?: boolean;
     disableDecrement?: boolean;
     variant?: "default" | "dark";
@@ -18,6 +19,7 @@ const Counter: React.FC<CounterProps> = ({
     setQuantity,
     onDecrement,
     onIncrement,
+    removeHandler=()=>{},
     disableIncrement = false,
     item,
     variant = "default",
@@ -40,7 +42,9 @@ const Counter: React.FC<CounterProps> = ({
         >
             <button
                 onClick={(e) => {
-                    if (quantityValue <= 1) return;
+                    console.log(quantityValue,"quantityValue");
+                    
+                    if (quantityValue <= 1) removeHandler();
                     setQuantityValue((prev) => prev - 1);
                     if (setQuantity) {
                         setQuantity((prev) => prev - 1);
@@ -56,7 +60,7 @@ const Counter: React.FC<CounterProps> = ({
                             variant === "dark",
                     }
                 )}
-                disabled={quantity === 1}
+                // disabled={quantity === 1}
             >
                 <MinusIcon width={size} />
             </button>

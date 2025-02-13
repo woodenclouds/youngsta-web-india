@@ -11,7 +11,7 @@ import Carousel from "@components/ui/carousel/carousel";
 import { SwiperSlide } from "swiper/react";
 import ProductMetaReview from "@components/product/product-meta-review";
 import { useSsrCompatible } from "@utils/use-ssr-compatible";
-import { useAddToCartMutation } from "@framework/cart/add-to-cart";
+import { addCartInputType, useAddToCartMutation } from "@framework/cart/add-to-cart";
 import { FaShareAlt } from "react-icons/fa";
 import Cookies from "js-cookie";
 import http from "@framework/utils/http";
@@ -82,8 +82,16 @@ const ProductSingleDetails: React.FC = () => {
   const [quantity, setQuantity] = useState(1);
   const [addToCartLoader, setAddToCartLoader] = useState<boolean>(false);
   const [attribute_id, setSize] = useState("");
-
+  const [selling_price,set_selling_price] = useState(data?.selling_price)
+  
   if (isLoading) return <p>Loading...</p>;
+  
+
+  // useEffect(()=>{
+  //   if(data?.selling_price){
+  //     set_selling_price(data?.selling_price)
+  //   }
+  // },[data?.selling_price])
 
   function handleLogin() {
     setModalView("LOGIN_VIEW");
@@ -91,9 +99,18 @@ const ProductSingleDetails: React.FC = () => {
   }
 
   function addItemToTheCart() {
-    if (attribute_id) {
+    if (attribute_id?.id) {
       setAddToCartLoader(true);
-      addToCart({ attribute_id, quantity, id: slug });
+      const body:addCartInputType = {
+        attribute_id: attribute_id?.id,
+        quantity: quantity,
+        id: slug,
+      }
+
+      if(refferal_code){
+        body["referral_code"] = refferal_code;
+      }
+      addToCart(body);
       setAddToCartLoader(false);
     } else {
       toast.error("Please select you size", {
@@ -195,23 +212,21 @@ const ProductSingleDetails: React.FC = () => {
 
   const attributes = Object.values(
     data?.attribute?.reduce((acc, item) => {
-      const { attributeDescription, attributeDescription_name, ...rest } = item;
+      const { attribute_type, attributeDescription_name, ...rest } = item;
 
-      if (!acc[attributeDescription]) {
-        acc[attributeDescription] = {
-          id: attributeDescription,
+      if (!acc[attribute_type]) {
+        acc[attribute_type] = {
+          id: attribute_type,
           name: attributeDescription_name,
           values: [],
         };
       }
 
-      acc[attributeDescription].values.push(rest);
+      acc[attribute_type].values.push(rest);
 
       return acc;
     }, {})
   );
-
-  console.log(attributes);
 
   return (
     <div className="block lg:grid grid-cols-9 gap-x-10 xl:gap-x-14 pt-7 pb-10 lg:pb-14 2xl:pb-20 items-start">
@@ -270,7 +285,7 @@ const ProductSingleDetails: React.FC = () => {
           <div className="flex items-center mt-5">
             <div className="text-heading font-bold text-base md:text-xl lg:text-2xl 2xl:text-4xl ltr:pr-2 rtl:pl-2 ltr:md:pr-0 rtl:md:pl-0 ltr:lg:pr-2 rtl:lg:pl-2 ltr:2xl:pr-0 rtl:2xl:pl-0">
               {countryData?.symbol}
-              {data?.selling_price}
+              {selling_price || data?.selling_price}
             </div>
             {/* {discount && (
                             <span className="line-through font-segoe text-gray-400 text-sm md:text-base lg:text-lg xl:text-xl ltr:pl-2 rtl:pr-2">
@@ -287,7 +302,13 @@ const ProductSingleDetails: React.FC = () => {
               title={item?.name}
               attributes={item.values}
               size={attribute_id}
-              setSize={setSize}
+              setSize={
+                (size)=>{
+                  setSize(size)
+                  console.log(size)
+                  set_selling_price(size? size?.price:null)
+                }
+              }
             />
           ))}
         </div>
@@ -324,12 +345,12 @@ const ProductSingleDetails: React.FC = () => {
             >
               Copy Referral Link
             </button>
-            <button
+            {/* <button
               className="bg-[#fff] border-solid border-2 border-[#F5B528] px-[24px] py-[10px] rounded cursor-pointer text-[#000] max-[517px]:mb-[16px]"
               onClick={renderShareCodeFunction}
             >
               Copy Referral Code
-            </button>
+            </button> */}
           </div>
         </div>
 

@@ -15,7 +15,7 @@ const HeaderMenu: React.FC<MenuProps> = ({ data, className }) => {
     console.log(data, "_____data____");
     
     function formatString(str: string) {
-        return str?.toLowerCase().replace(/\s+/g, "-");
+        return str?.replace(/\s+/g, "-");
     }
     return (
         <nav

@@ -101,6 +101,9 @@ export type OrderItem = {
     name: string;
     price: number;
     quantity: number;
+    is_cancelled:boolean;
+    is_returned:boolean;
+    product_details:Product;
 };
 export type Order = {
     id: string | number;
@@ -114,7 +117,9 @@ export type Order = {
         email: string;
     };
     shipping_fee: number;
+    total_amount: number;
     payment_gateway: string;
+    shipment_id:string;
 };
 
 export type Shop = {
@@ -145,3 +150,7 @@ export type Address = {
     city: string;
     post_code: string;
 };
+
+export type OrderTrackingDetails = {
+    id: string | number;
+}

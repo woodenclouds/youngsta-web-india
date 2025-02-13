@@ -39,9 +39,8 @@ export const ProductGrid: FC<ProductGridProps> = ({ className, params }) => {
       : query?.slug
       ? query?.slug
       : "",
+    price:query?.price ? `0-${query?.price}`:""
   });
-
-  console.log(hasNextPage);
   
 
   if (error) return <p>{error.message}</p>;

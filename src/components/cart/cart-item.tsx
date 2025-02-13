@@ -27,17 +27,17 @@ const CartItem: React.FC<CartItemProps> = ({
 }) => {
   const { t } = useTranslation("common");
   const [totalPrice, setTotalPrice] = useState(
-    item?.product_info?.selling_price * item.quantity
+    item?.attribute?.price * item.quantity
   );
   const [quantity, setQuantity] = useState(item.quantity);
 
   useEffect(() => {
-    setTotalPrice(item?.product_info?.selling_price * item.quantity);
-  }, [item?.product_info?.selling_price, item.quantity]);
+    setTotalPrice(item?.attribute?.price * item.quantity);
+  }, [item?.attribute?.price, item.quantity]);
 
   useEffect(() => {
     if (quantity !== item.quantity) {
-      setTotalPrice(item?.product_info?.selling_price * quantity);
+      setTotalPrice(item?.attribute?.price * quantity);
     }
   }, [quantity]);
 
@@ -86,7 +86,7 @@ const CartItem: React.FC<CartItemProps> = ({
             {/* @ts-ignore */}
             <span className="text-sm text-gray-400">
               {t("text-unit-price")} : &nbsp; {countryData?.symbol}
-              {item?.product_info?.selling_price}
+              {item?.attribute?.price}
             </span>
           </div>
           <div className="right">
@@ -103,6 +103,11 @@ const CartItem: React.FC<CartItemProps> = ({
               setQuantity={setQuantity}
               onIncrement={editCartItems}
               onDecrement={editCartItems}
+              removeHandler={()=> {
+                deleteCartItems(item.id)
+                console.log("removeHandler");
+                
+              }}
               item={item}
               variant="dark"
             />

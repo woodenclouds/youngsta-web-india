@@ -42,9 +42,9 @@ const ProductsFlashSaleCarousel: React.FC<ProductsProps> = ({
 	const { data, isLoading, error } = useFlashSaleProductsQuery({
 		limit: 10,
 	});
+
 	return (
 		<div className={`${className} 2xl:pt-2`}>
-			<h1>Hello world</h1>
 			<div className="flex justify-between items-center flex-wrap mb-5 md:mb-6">
 				<SectionHeader sectionHeading={sectionHeading} className="mb-0" />
 			</div>
@@ -58,23 +58,23 @@ const ProductsFlashSaleCarousel: React.FC<ProductsProps> = ({
 					breakpoints={breakpoints}
 					buttonGroupClassName="-mt-10 md:-mt-12 xl:-mt-14"
 				>
-					{isLoading && data?.productFlashSellGridTwo?.length
+					{isLoading
 						? Array.from({ length: 10 }).map((_, idx) => (
-								<ProductCardGridLoader
-									key={idx}
-									uniqueKey={`flash-sale-${idx}`}
+							<ProductCardGridLoader
+								key={idx}
+								uniqueKey={`flash-sale-${idx}`}
+							/>
+						))
+						: data?.map((product: any) => (
+							<SwiperSlide key={`product--key-${product.id}`}>
+								<ProductCard
+									product={product}
+									imgWidth={335}
+									imgHeight={335}
+									variant="gridSlim"
 								/>
-						  ))
-						: data?.productFlashSellGridTwo?.map((product: any) => (
-								<SwiperSlide key={`product--key-${product.id}`}>
-									<ProductCard
-										product={product}
-										imgWidth={335}
-										imgHeight={335}
-										variant="gridSlim"
-									/>
-								</SwiperSlide>
-						  ))}
+							</SwiperSlide>
+						))}
 				</Carousel>
 			)}
 		</div>
