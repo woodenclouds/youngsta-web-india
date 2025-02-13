@@ -25,7 +25,7 @@ export default function Cart() {
 
     useEffect(() => {
         if (data) {
-            setCartItems(data);
+            setCartItems(data?.cart_items);
         }
     }, [data]);
 
