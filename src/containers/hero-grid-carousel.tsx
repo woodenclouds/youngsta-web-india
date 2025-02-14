@@ -45,6 +45,7 @@ const HeroGridCarousel: React.FC<HeroGridProps> = ({
 				{banners?.map((banner) => (
 					<SwiperSlide key={`hero-banner-grid--key-${banner.id}`}>
 						<BannerCard
+							section={banner}
 							banner={banner}
 							href={`${ROUTES.COLLECTIONS}/${banner.slug}`}
 							effectActive={true}

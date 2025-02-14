@@ -29,6 +29,11 @@ const accountMenu = [
         icon: <IoPersonOutline className="w-5 h-5" />,
     },
     {
+        slug: ROUTES.ADDRESS,
+        name: "Address",
+        icon: <IoPersonOutline className="w-5 h-5" />,
+    },
+    {
         slug: ROUTES.WALLET,
         name: "Wallet",
         icon: <IoWallet className="w-5 h-5" />,

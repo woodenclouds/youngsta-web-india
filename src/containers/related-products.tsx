@@ -22,6 +22,10 @@ const RelatedProducts: React.FC<ProductsProps> = ({
         slug: slug,
     });
 
+    if(data?.length == 0){
+        return null
+    }
+
     return (
         <div className={className}>
             <SectionHeader sectionHeading={sectionHeading} />

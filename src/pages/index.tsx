@@ -8,17 +8,19 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetStaticProps } from "next";
 import { useGetBanners } from "@framework/product/get-banner";
 import ProductsFlashSaleCarousel from "@containers/product-flash-sale-carousel";
+import HeroGridCarousel from "@containers/hero-grid-carousel";
+import HeroBlock from "@containers/hero-block";
 
 export default function Home() {
   const { data: section1Data } = useGetBanners({}, 1);
   const { data: section2Data } = useGetBanners({}, 3);
   const section1 = section1Data?.data ? section1Data?.data[0] : {};
   const section2 = section2Data?.data ? section2Data?.data[0] : {};
-  console.log(section2, "000000", section1);
 
   return (
     <>
-      <ExclusiveBlock className="mb-12 md:mb-14 xl:mb-16 px-2.5 mx-auto max-w-[1920px]" />
+    <HeroBlock />
+      {/* <ExclusiveBlock className="mb-12 md:mb-14 xl:mb-16 px-2.5 mx-auto max-w-[1920px]" /> */}
 
       <Container>
         <ProductsFlashSaleCarousel date={"2024-03-01T01:02:03"} />

@@ -20,7 +20,7 @@ const Loader = () => {
                     width: 36px;
                     height: 36px;
                     border-radius: 50%;
-                    border-left-color: #09f;
+                    border-left-color: #000;
                     animation: spin 1s infinite linear;
                 }
                 @keyframes spin {
