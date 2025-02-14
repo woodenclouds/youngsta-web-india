@@ -116,8 +116,8 @@ const CheckoutForm: React.FC<{
   };
 
   const paymentFunction = (response: any) => {
-    console.log(response);
-    // router.push(response?.payment_url);
+    // console.log(response);
+    router.push(response?.payment_url);
   };
 
   const {
