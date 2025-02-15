@@ -1,18 +1,21 @@
 import { API_ENDPOINTS } from "@framework/utils/api-endpoints";
 import http from "@framework/utils/http";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 async function cancelFunction(id: any) {
     return http.post(`${API_ENDPOINTS.CANCEL_ITEM}${id}/`, {});
 }
 export const useCancelMutation = (onSuccess: any, onError: any) => {
+    const client = useQueryClient()
     return useMutation({
         mutationFn: (input: any) => cancelFunction(input),
         onSuccess: (data) => {
-            if (data?.data?.app_data?.StatusCode === 6000) {
+            console.log(data);
+            if (data?.data?.StatusCode === 6000) {
+                client.invalidateQueries(API_ENDPOINTS.SINGLE_ORDERS)
                 onSuccess();
             } else {
-                onError(data?.data?.app_data);
+                onError(data?.data);
             }
         },
         onError: () => {},

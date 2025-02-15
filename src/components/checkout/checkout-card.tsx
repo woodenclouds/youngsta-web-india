@@ -74,6 +74,17 @@ const CheckoutCard: React.FC<{
     coupenMutation({ coupen_code: coupenCode });
   };
 
+  const getTotalAmount = ()=>{
+    let cart_total_amount = cartTotal!
+    if(accessWalletAmount){
+      cart_total_amount -= wallet_amount
+    }
+    if(couponCodeAmount && isCoupen){
+      cart_total_amount -= couponCodeAmount
+    }
+    return cart_total_amount
+  }
+
   const checkoutFooter = [
     {
       id: 1,
@@ -92,14 +103,24 @@ const CheckoutCard: React.FC<{
           price: couponCodeAmount,
         }
       : null,
+      accessWalletAmount
+      ? {
+          id: 4,
+          name: "Wallet Discount",
+          price: wallet_amount,
+        }
+      : null,
     {
       id: 3,
       name: "Total",
-      price: `${countryData?.symbol}${
-        couponCodeAmount && isCoupen ? cartTotal! - couponCodeAmount : cartTotal
-      }`,
+      price: `${countryData?.symbol}${getTotalAmount()}`,
+      // price: `${countryData?.symbol}${
+      //   couponCodeAmount && isCoupen ? cartTotal! - couponCodeAmount : cartTotal
+      // }`,
     },
   ].filter(Boolean);
+
+  console.log({wallet_amount,cartTotal})
 
   return (
     <div className="pt-12 md:pt-0 ltr:2xl:pl-4 rtl:2xl:pr-4">
@@ -177,11 +198,12 @@ const CheckoutCard: React.FC<{
           </div>
         )}
       </div>
-      {Number(wallet_amount ||0) > 0 && (
+      {/* {Number(wallet_amount ||0) > 0 && ( */}
+      {(
         <div className="flex items-center">
           <input
           type="checkbox"
-          disabled={wallet_amount == 0 || wallet_amount + 1000 > cartTotal!}
+          disabled={wallet_amount == 0 || wallet_amount > cartTotal!}
           checked={accessWalletAmount}
           onChange={() => setAccessWalletAmount(!accessWalletAmount)}
           name="wallet"
@@ -189,7 +211,7 @@ const CheckoutCard: React.FC<{
         />
         <label htmlFor="wallet" className="ml-2 flex items-center">
           use your wallet balance - &nbsp;
-          <span className="text-[20px] text-black ">{wallet_amount}</span>
+          <span className="text-[20px] text-black ">₹{wallet_amount}</span>
         </label>
       </div>
       )}

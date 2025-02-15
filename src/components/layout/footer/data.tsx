@@ -22,18 +22,13 @@ export const footer = {
         },
         {
           id: 2,
-          title: "link-email",
-          path: "/",
-        },
-        {
-          id: 3,
-          title: "link-email-two",
-          path: "/",
+          title: "youngstatech@gmail.com",
+          path: "mailto:youngstatech@gmail.com",
         },
         {
           id: 4,
-          title: "link-phone",
-          path: "/",
+          title: "Call Us: +91 7306 169 756",
+          path: "tel:+917306169756",
         },
       ],
     },
@@ -85,26 +80,26 @@ export const footer = {
       id: 5,
       widgetTitle: "widget-title-top-categories",
       lists: [
-        {
-          id: 1,
-          title: "link-women-wear",
-          path: "/category/Women",
-        },
+        // {
+        //   id: 1,
+        //   title: "link-women-wear",
+        //   path: "/category/Women",
+        // },
         {
           id: 2,
           title: "link-men-wear",
           path: "/category/Men",
         },
-        {
-          id: 3,
-          title: "link-kids-wear",
-          path: "/category/Kids",
-        },
-        {
-          id: 4,
-          title: "link-sports-wear",
-          path: "/category/Sports",
-        },
+        // {
+        //   id: 3,
+        //   title: "link-kids-wear",
+        //   path: "/category/Kids",
+        // },
+        // {
+        //   id: 4,
+        //   title: "link-sports-wear",
+        //   path: "/category/Sports",
+        // },
       ],
     },
     {
@@ -258,18 +253,13 @@ export const footerContemporary = {
         },
         {
           id: 2,
-          title: "link-email",
-          path: "/",
-        },
-        {
-          id: 3,
-          title: "link-email-two",
-          path: "/",
+          title: "youngstatech@gmail.com",
+          path: "mailto:youngstatech@gmail.com",
         },
         {
           id: 4,
-          title: "link-phone",
-          path: "/",
+          title: "Call Us: +91 7306 169 756",
+          path: "tel:+917306169756",
         },
       ],
     },

@@ -20,7 +20,10 @@ const ContactForm: React.FC = () => {
     formState: { errors },
     reset,
   } = useForm<ContactFormValues>();
-  const { mutate: submitContact, isPending } = useContactMutation();
+
+  const { mutate: submitContact, isPending } = useContactMutation(() =>
+    reset()
+  );
   const { t } = useTranslation();
 
   const onSubmit = async (values: ContactFormValues) => {

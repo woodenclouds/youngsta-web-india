@@ -14,11 +14,12 @@ async function submitContact(input: LoginInputType) {
     return http.post(API_ENDPOINTS.CONTACT, input);
 }
 
-export const useContactMutation = () => {
+export const useContactMutation = (successHandler=()=>{}) => {
     return useMutation({
         mutationFn: (input: LoginInputType) => submitContact(input),
         onSuccess: (data) => {
             if (data?.data?.app_data?.StatusCode === 6000) {
+                successHandler()
                 toast.success("Your message has been sent successfully!");
             } else {
                 toast.error(data?.data?.app_data?.data?.message);

@@ -6,7 +6,7 @@ const mapImage = "/assets/images/map-image.jpg";
 const data = [
     {
         id: 1,
-        slug: "/",
+        slug: '',
         icon: <IoLocationSharp />,
         name: "text-address",
         description:
@@ -14,14 +14,14 @@ const data = [
     },
     {
         id: 2,
-        slug: "/",
+        slug: "mailto:youngstatech@gmail.com",
         icon: <IoMail />,
         name: "text-email",
         description: "youngstatech@gmail.com",
     },
     {
         id: 3,
-        slug: "/",
+        slug: "tel:+917306169756",
         icon: <IoCallSharp />,
         name: "text-phone",
         description: "7306169756",

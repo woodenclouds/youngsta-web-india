@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 import { fadeInOut } from "@utils/motion/fade-in-out";
 import { useUI } from "@contexts/ui.context";
 import { IoClose } from "react-icons/io5";
-import CartItem from "@components/cart/cart-item";
 import { useFetchWishlistItemsQuery } from "@framework/wishlist/get-wishlist-items";
 import EmptyCart from "@components/cart/empty-cart";
 import { useState } from "react";
 import { usedeleteWishlistMutation } from "@framework/wishlist/delete-wishlist";
+import WishlistItem from "./wishlist-item";
 
 export default function Wishlist() {
     const { closeWishlist } = useUI();
@@ -44,7 +44,7 @@ export default function Wishlist() {
                 <Scrollbar className="flex-grow w-full cart-scrollbar">
                     <div className="w-full px-5 md:px-7">
                         {data?.map((item) => (
-                            <CartItem
+                            <WishlistItem
                                 item={item}
                                 key={item.id}
                                 deleteCartItems={deleteWishlistItems}
