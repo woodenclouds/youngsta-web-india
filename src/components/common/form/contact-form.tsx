@@ -40,7 +40,7 @@ const ContactForm: React.FC = () => {
       //     {
       //         from_name: values.name,
       //         from_email: values.email,
-      //         to_email: "youngstatech@gmail.com",
+      //         to_email: "support@youngsta.in",
       //         subject: values.subject,
       //         message_html: values.message,
       //     },

@@ -22,8 +22,8 @@ export const footer = {
         },
         {
           id: 2,
-          title: "youngstatech@gmail.com",
-          path: "mailto:youngstatech@gmail.com",
+          title: "support@youngsta.in",
+          path: "mailto:support@youngsta.in",
         },
         {
           id: 4,
@@ -253,8 +253,8 @@ export const footerContemporary = {
         },
         {
           id: 2,
-          title: "youngstatech@gmail.com",
-          path: "mailto:youngstatech@gmail.com",
+          title: "support@youngsta.in",
+          path: "mailto:support@youngsta.in",
         },
         {
           id: 4,

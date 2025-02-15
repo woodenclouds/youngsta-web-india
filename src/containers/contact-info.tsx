@@ -14,10 +14,10 @@ const data = [
     },
     {
         id: 2,
-        slug: "mailto:youngstatech@gmail.com",
+        slug: "mailto:support@youngsta.in",
         icon: <IoMail />,
         name: "text-email",
-        description: "youngstatech@gmail.com",
+        description: "support@youngsta.in",
     },
     {
         id: 3,
