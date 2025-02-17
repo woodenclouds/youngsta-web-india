@@ -12,8 +12,14 @@ import { useAddCoupenMutation } from "@framework/cart/add-coupen-code";
 const CheckoutCard: React.FC<{
   set_coupon_code: (coupon_code: string) => void;
   setAccessWalletAmount: (accessWalletAmount: boolean) => void;
+  deliveryOptions: object;
   accessWalletAmount: boolean;
-}> = ({ set_coupon_code,setAccessWalletAmount,accessWalletAmount }) => {
+}> = ({
+  set_coupon_code,
+  setAccessWalletAmount,
+  accessWalletAmount,
+  deliveryOptions,
+}) => {
   const { t } = useTranslation("common");
 
   const { mutate: editCart } = useEditCartMutation();
@@ -38,19 +44,19 @@ const CheckoutCard: React.FC<{
   const [cartTotal, setCartTotal] = useState<number | undefined>(0);
   const [isCoupen, setCoupen] = useState(false);
   // const [isRefferal, setRefferal] = useState(false);
-  const [refferalCode, setRefferalCode] = useState("");
+  // const [refferalCode, setRefferalCode] = useState("");
   const [coupenCode, setCoupenCode] = useState("");
   const [couponCodeAmount, setCouponCodeAmount] = useState(null);
   useEffect(() => {
     if (items?.length) setCartTotal(calculateTotalPrice());
   }, [items]);
-  const onSuccess = () => {
-    toast.success("Referral added successfully!");
-  };
+  // const onSuccess = () => {
+  //   toast.success("Referral added successfully!");
+  // };
 
-  const onError = (error: any) => {
-    toast.error(`Failed to add referral: ${error}`);
-  };
+  // const onError = (error: any) => {
+  //   toast.error(`Failed to add referral: ${error}`);
+  // };
   const onCouponSuccess = (data: any) => {
     set_coupon_code(coupenCode);
     setCouponCodeAmount(data?.data?.app_data?.data?.coupon_discount_amount);
@@ -62,28 +68,31 @@ const CheckoutCard: React.FC<{
     toast.error(`Failed to add Coupon: ${error}`);
   };
 
-  const { mutate } = useAddReferralMutation(onSuccess, onError);
+  // const { mutate } = useAddReferralMutation(onSuccess, onError);
   const { mutate: coupenMutation } = useAddCoupenMutation(
     onCouponSuccess,
     onCouponError
   );
-  const handleAddReferral = () => {
-    mutate({ referral_code: refferalCode });
-  };
+  // const handleAddReferral = () => {
+  //   mutate({ referral_code: refferalCode });
+  // };
   const handleCoupen = () => {
     coupenMutation({ coupen_code: coupenCode });
   };
 
-  const getTotalAmount = ()=>{
-    let cart_total_amount = cartTotal!
-    if(accessWalletAmount){
-      cart_total_amount -= wallet_amount
+  const getTotalAmount = () => {
+    let cart_total_amount = cartTotal!;
+    if (accessWalletAmount) {
+      cart_total_amount -= wallet_amount;
     }
-    if(couponCodeAmount && isCoupen){
-      cart_total_amount -= couponCodeAmount
+    if (couponCodeAmount && isCoupen) {
+      cart_total_amount -= couponCodeAmount;
     }
-    return cart_total_amount
-  }
+    if(deliveryOptions?.rate){
+      cart_total_amount += deliveryOptions?.rate;
+    }
+    return cart_total_amount;
+  };
 
   const checkoutFooter = [
     {
@@ -103,13 +112,20 @@ const CheckoutCard: React.FC<{
           price: couponCodeAmount,
         }
       : null,
-      accessWalletAmount
+    accessWalletAmount
       ? {
           id: 4,
           name: "Wallet Discount",
           price: wallet_amount,
         }
       : null,
+    {
+      id: 4,
+      name: "Delivery Charge",
+      price: deliveryOptions?.rate
+        ? `${countryData?.symbol}${deliveryOptions?.rate}`
+        : "Delivery not available for this pincode",
+    },
     {
       id: 3,
       name: "Total",
@@ -119,8 +135,6 @@ const CheckoutCard: React.FC<{
       // }`,
     },
   ].filter(Boolean);
-
-  console.log({wallet_amount,cartTotal})
 
   return (
     <div className="pt-12 md:pt-0 ltr:2xl:pl-4 rtl:2xl:pr-4">
@@ -199,22 +213,22 @@ const CheckoutCard: React.FC<{
         )}
       </div>
       {/* {Number(wallet_amount ||0) > 0 && ( */}
-      {(
+      {
         <div className="flex items-center">
           <input
-          type="checkbox"
-          disabled={wallet_amount == 0 || wallet_amount > cartTotal!}
-          checked={accessWalletAmount}
-          onChange={() => setAccessWalletAmount(!accessWalletAmount)}
-          name="wallet"
-          id="wallet"
-        />
-        <label htmlFor="wallet" className="ml-2 flex items-center">
-          use your wallet balance - &nbsp;
-          <span className="text-[20px] text-black ">₹{wallet_amount}</span>
-        </label>
-      </div>
-      )}
+            type="checkbox"
+            disabled={wallet_amount == 0 || wallet_amount > cartTotal!}
+            checked={accessWalletAmount}
+            onChange={() => setAccessWalletAmount(!accessWalletAmount)}
+            name="wallet"
+            id="wallet"
+          />
+          <label htmlFor="wallet" className="ml-2 flex items-center">
+            use your wallet balance - &nbsp;
+            <span className="text-[20px] text-black ">₹{wallet_amount}</span>
+          </label>
+        </div>
+      }
       {checkoutFooter.map((item: any) => (
         <CheckoutCardFooterItem item={item} key={item.id} />
       ))}

@@ -10,6 +10,8 @@ import { useSsrCompatible } from "@utils/use-ssr-compatible";
 import { useCancelMutation } from "@framework/order/cancel-item-query";
 import { useState } from "react";
 import { useTrackOrder } from "@framework/order/track-order";
+import Link from "next/link";
+import Image from "next/image";
 const OrderItemCard = ({
   product,
   onReturn,
@@ -30,9 +32,24 @@ const OrderItemCard = ({
       className="font-normal border-b border-gray-300 last:border-b-0"
       key={product.id}
     >
-      <td className="p-4">
-        {product.product_details?.name} * {product.quantity}
-      </td>
+      <Link href={`/products/${product?.product_details?.id}`} className="">
+        <td className="p-4 cursor-pointer">
+          <div className="img-container w-[100px] h-[100px]">
+            <Image
+              className="object-cover"
+              src={product.product_details?.thumbnail}
+              alt=""
+              width={100}
+              height={100}
+            />
+          </div>
+          <span className="block mt-2">
+            {product.product_details?.name} <br />
+            {`${product?.attribute?.key}/${product?.attribute?.value}`} *{" "}
+            {product.quantity}
+          </span>
+        </td>
+      </Link>
       <td className="p-4">₹{product?.price}</td>
       <td>
         <div className="flex ">
@@ -247,6 +264,11 @@ const OrderDetails: React.FC<{ className?: string }> = ({
             ))}
           </tbody>
           <tfoot className="">
+            <tr className="odd:bg-gray-150">
+              <td className="p-4 italic">Delivery Charge : </td>
+              <td className="p-4">₹{order?.delivery_charge!}</td>
+              <td className="p-4"></td>
+            </tr>
             {order?.is_coupon_applied ? (
               <>
                 <tr className="">
@@ -259,14 +281,14 @@ const OrderDetails: React.FC<{ className?: string }> = ({
                   <td className="p-4">
                     ₹{order?.total_amount}{" "}
                     <span className="line-through">
-                    ₹{order?.total_without_discount}
+                      ₹{order?.total_without_discount}
                     </span>
                   </td>
                   <td className="p-4"></td>
                 </tr>
               </>
             ) : (
-              <tr className="bg-gray-150">
+              <tr className="odd:bg-gray-150">
                 <td className="p-4 italic">{t("text-sub-total")}:</td>
                 <td className="p-4">₹{order?.total_amount}</td>
                 <td className="p-4"></td>

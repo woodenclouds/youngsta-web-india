@@ -34,6 +34,7 @@ export const API_ENDPOINTS = {
     VIEW_CART_ITEMS: "activities/view_cart_items/",
     ADD_REFFERAL: "activities/add-refferal/",
     ADD_COUPEN: "activities/apply-coupen/",
+    GET_DELIVERY_CHARGE: "activities/admin/get-delivery-charge/",
 
     // wislist endpoints
     VIEW_WISHLIST_ITEMS: "activities/view_wishlist/",

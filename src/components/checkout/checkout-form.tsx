@@ -17,6 +17,7 @@ import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { useDeleteAddressMutation } from "@framework/checkout/use-delete-address";
 import { useEditAddressMutation } from "@framework/checkout/use-edit-address";
+import { useGetDeliveryCharge } from "@framework/cart/get-delivery-charge";
 
 interface AddAddressInputType {
   first_name: string;
@@ -32,12 +33,11 @@ interface AddAddressInputType {
 }
 
 const CheckoutForm: React.FC<{
-  coupon_code: string|null,
-  accessWalletAmount:boolean
-}> = ({
-  coupon_code,
-  accessWalletAmount
-}) => {
+  coupon_code: string | null;
+  accessWalletAmount: boolean;
+  setDeliveryOptions: (address: object) => void;
+  deliveryOptions:object;
+}> = ({ coupon_code, accessWalletAmount, setDeliveryOptions,deliveryOptions }) => {
   const { t } = useTranslation();
   const router = useRouter();
   const email = Cookies.get("email");
@@ -143,6 +143,18 @@ const CheckoutForm: React.FC<{
     handleAddAddressSuccess
   );
 
+  const onGetDeliveryChargeSuccess = (data:any):void|any=>{
+    setDeliveryOptions(data);
+    
+  }
+
+  const onGetDeliveryChargeError = (error:any):void|any=>{
+    setDeliveryOptions(null)
+    toast.error(error?.data?.message)
+  }
+
+  const { mutate: getDeliveryCharge } = useGetDeliveryCharge(onGetDeliveryChargeSuccess,onGetDeliveryChargeError);
+
   const { mutate: editAddress, isPending: isEdit } = useEditAddressMutation(
     handleAddAddressSuccess,
     handlDeleteAddressError
@@ -167,6 +179,7 @@ const CheckoutForm: React.FC<{
     } else {
       addAddress(input);
     }
+    getDeliveryCharge({ pin_code: input?.post_code })
   }
 
   function onDelete(id: any) {
@@ -184,6 +197,7 @@ const CheckoutForm: React.FC<{
     if (Array.isArray(addresses)) {
       if (addresses?.[0]?.id) {
         setAddressId(addresses?.[0]?.id);
+        getDeliveryCharge({ pin_code: addresses?.[0]?.post_code })
       }
     }
   }, [Array.isArray(addresses) && addresses?.[0]?.id]);
@@ -195,7 +209,11 @@ const CheckoutForm: React.FC<{
   }, [Array.isArray(addresses) && addresses?.length]);
 
   const makePayment = async (id: string) => {
-    placeOrder({ address: id ,coupon_code:coupon_code,use_wallet_balance:accessWalletAmount});
+    placeOrder({
+      address: id,
+      coupon_code: coupon_code,
+      use_wallet_balance: accessWalletAmount,
+    });
   };
 
   return (
@@ -356,7 +374,11 @@ const CheckoutForm: React.FC<{
                 <div
                   key={index}
                   className="cursor-pointer p-3 w-[100%] rounded-lg shadow-md ring-2 ring-offset-3 ring-gray-500"
-                  onClick={() => setAddressId(address?.id)}
+                  onClick={() => {
+                    setAddressId(address?.id);
+                    // setAddressSelected(address);
+                    getDeliveryCharge({ pin_code: address?.post_code })
+                  }}
                 >
                   <div className="flex w-full justify-between mb-[10px]">
                     <input
@@ -364,7 +386,11 @@ const CheckoutForm: React.FC<{
                       name="address"
                       id={`address${index}`}
                       checked={addressId === address?.id}
-                      onChange={() => setAddressId(address?.id)}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        setAddressId(address?.id);
+                        setAddressSelected(address);
+                      }}
                     />
                     <div>
                       <span
@@ -390,7 +416,7 @@ const CheckoutForm: React.FC<{
                       <span
                         className="text-[16px] py-[5px] px-[10px] rounded hover:opacity-60 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-body text-center justify-center border-0 border-transparent  !text-[#212121] bg-[#fff]	"
                         onClick={(e) => {
-                            e.stopPropagation()
+                          e.stopPropagation();
                           Swal.fire({
                             title: "Are you sure?",
                             text: "You won't be able to revert this!",
@@ -429,10 +455,13 @@ const CheckoutForm: React.FC<{
             <Button
               className="!w-full sm:w-auto block"
               loading={isOrderPending}
+              // disabled={isOrderPending || !deliveryOptions?.rate}
               disabled={isOrderPending}
               onClick={(e) => {
-                if (addressId) {
+                if (addressId && deliveryOptions?.rate) {
                   makePayment(addressId);
+                }else {
+                  toast.error("Delivery not available for this pincode")
                 }
               }}
             >
