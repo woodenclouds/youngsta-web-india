@@ -24,13 +24,14 @@ export const homeOneHeroBanner = [
         image: {
             mobile: {
                 // url: "/assets/images/hero/banner-mobile-1.jpg",
-                url: "/assets/images/banner/slider/mobile/banner-new-1.png",
+                // url: "/assets/images/banner/slider/mobile/banner-new-1.png",
+                url: "/assets/images/banner/slider/mobile/banner-01.png",
                 width: 480,
                 height: 275,
             },
             desktop: {
                 // url: "/assets/images/hero/banner-1.jpg",
-                url: "/assets/images/banner/slider/banner-new-1.png",
+                url: "/assets/images/banner/slider/banner-01.png",
                 width: 1800,
                 height: 800,
             },
